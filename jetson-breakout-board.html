@@ -1,0 +1,243 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Jetson Breakout Board | Peter Shr</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300..400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "on-secondary-fixed": "#151c27",
+                    "secondary-container": "#404754",
+                    "primary-fixed": "#c0e9f7",
+                    "surface-container-lowest": "#070d1f",
+                    "secondary": "#c0c7d6",
+                    "on-primary": "#073540",
+                    "tertiary-fixed-dim": "#bcc7de",
+                    "secondary-fixed": "#dce2f3",
+                    "surface-container": "#191f31",
+                    "accent-glow": "rgba(161, 201, 214, 0.15)",
+                    "inverse-primary": "#3d646f",
+                    "on-tertiary": "#263143",
+                    "surface-container-low": "#151b2d",
+                    "tertiary": "#d4dff7",
+                    "outline-variant": "#41484a",
+                    "tertiary-fixed": "#d8e3fb",
+                    "tertiary-container": "#b8c3da",
+                    "background": "#000000",
+                    "on-tertiary-fixed": "#111c2d",
+                    "surface-bright": "#33394c",
+                    "primary-container": "#a1c9d6",
+                    "on-primary-fixed-variant": "#244c57",
+                    "on-secondary": "#2a313d",
+                    "inverse-on-surface": "#2a3043",
+                    "surface-tint": "#a5cdda",
+                    "surface-stroke": "#334155",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#c0c7d6",
+                    "terminal-white": "#F8FAFC",
+                    "surface-container-highest": "#2e3447",
+                    "primary": "#bde5f2",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-container": "#455064",
+                    "surface-variant": "#2e3447",
+                    "surface": "#0c1324",
+                    "on-secondary-fixed-variant": "#404754",
+                    "on-primary-container": "#2e5560",
+                    "on-surface-variant": "#c1c8ca",
+                    "surface-container-high": "#23293c",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "on-background": "#dce1fb",
+                    "surface-dim": "#0c1324",
+                    "primary-fixed-dim": "#a5cdda",
+                    "on-error": "#690005",
+                    "on-surface": "#dce1fb",
+                    "on-secondary-container": "#aeb5c5",
+                    "error": "#ffb4ab",
+                    "outline": "#8b9295",
+                    "on-primary-fixed": "#001f27",
+                    "inverse-surface": "#dce1fb"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "9999px"
+                },
+                "spacing": {
+                    "base": "4px",
+                    "container-max": "1200px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px"
+                },
+                "fontFamily": {
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "display": ["Hanken Grotesk"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "label-sm": ["JetBrains Mono"]
+                },
+                "fontSize": {
+                    "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                    "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "label-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                    "label-sm": ["12px", { "lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "400" }]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .card-hover { transition: all 0.3s ease; }
+    .card-hover:hover {
+        border-color: #bde5f2;
+        box-shadow: 0 0 20px rgba(161, 201, 214, 0.15);
+        transform: translateY(-2px);
+    }
+    .glass-panel {
+        background: rgba(25, 31, 49, 0.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+</style>
+</head>
+<body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col">
+
+<!-- TopNavBar Component (static version — links back to main page) -->
+<nav class="fixed top-0 w-full z-50 bg-white/[0.06] backdrop-blur-[18px] border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.18)] text-primary text-label-md font-label-md uppercase tracking-widest">
+  <div class="flex items-center justify-center py-4">
+    <a href="index.html" class="text-headline-md font-headline-md font-bold tracking-tighter text-terminal-white cursor-pointer">PETER SHR</a>
+  </div>
+</nav>
+
+<main class="flex-grow relative z-10 pt-32 pb-24">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+
+    <!-- Back link -->
+    <a href="index.html" class="group inline-flex items-center gap-2 text-label-md font-label-md font-bold uppercase tracking-widest text-terminal-white hover:text-primary transition-colors duration-300 mb-8">
+        <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-x-1">&larr;</span>
+        Back
+    </a>
+
+    <!-- Hero -->
+    <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden mb-6">
+        <div class="h-80 md:h-[420px] w-full overflow-hidden bg-surface-container-highest relative">
+            <img class="w-full h-full object-cover" src="jetson_pcb_3d.png" alt="Jetson Breakout Board 3D render">
+        </div>
+        <div class="p-6 md:p-8">
+            <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-2">Jetson Breakout Board</h1>
+            <p class="text-body-lg font-body-lg text-secondary mb-4">4-layer PCB connecting the BNO055 IMU and NVIDIA Jetson Orin Nano</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">PCB Design</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Hardware</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Feb 2026 &ndash; Mar 2026</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick facts -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Role</p>
+            <p class="text-body-md font-body-md text-terminal-white">PCB Designer</p>
+        </div>
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Tools</p>
+            <p class="text-body-md font-body-md text-terminal-white">Altium Designer</p>
+        </div>
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Layers</p>
+            <p class="text-body-md font-body-md text-terminal-white">4</p>
+        </div>
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Status</p>
+            <p class="text-body-md font-body-md text-terminal-white">Deployed &times;3</p>
+        </div>
+    </div>
+
+    <!-- Problem -->
+    <section class="mb-10 max-w-3xl">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Problem</h2>
+        <p class="text-body-md font-body-md text-secondary">
+            Wire connections between the Jetson Orin Nano and BNO055 IMU were unreliable, with poor debug accessibility.
+            The board needed to support sensor testing without removing the breakout board, all while staying within
+            tight size, budget, and temperature constraints.
+        </p>
+    </section>
+
+    <!-- Design & approach -->
+    <section class="mb-10">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Design and approach</h2>
+        <p class="text-body-md font-body-md text-secondary max-w-3xl mb-6">
+            Designed a 4-layer PCB with dedicated GND planes for shielding and improved signal integrity on IMU
+            communication lines. Used right-angle XH connectors for UART and I2C to make plugging and unplugging fast
+            during debug. Added a power switch wired to UART for manual on/off control, and included external pull-up
+            resistors as a backup to the Jetson's internal ones for more reliable I2C communication.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                <img class="w-full h-48 object-cover" src="jetson_layer1_signal.png" alt="First layer (signal)">
+                <p class="text-label-sm font-label-sm text-secondary text-center py-2">First layer (signal)</p>
+            </div>
+            <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                <img class="w-full h-48 object-cover" src="jetson_layer2_gnd.png" alt="Second layer (GND)">
+                <p class="text-label-sm font-label-sm text-secondary text-center py-2">Second layer (GND)</p>
+            </div>
+            <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                <img class="w-full h-48 object-cover" src="jetson_layer3_power.png" alt="Third layer (power + signal)">
+                <p class="text-label-sm font-label-sm text-secondary text-center py-2">Third layer (power + signal)</p>
+            </div>
+            <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                <img class="w-full h-48 object-cover" src="jetson_layer4_gnd.png" alt="Fourth layer (GND)">
+                <p class="text-label-sm font-label-sm text-secondary text-center py-2">Fourth layer (GND)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenges (placeholder — fill in with a real debugging story) -->
+    <section class="mb-10 max-w-3xl">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Challenges</h2>
+        <p class="text-body-md font-body-md text-secondary italic">
+            Add a sentence or two here on something that didn't work on the first try &mdash; this section is what
+            separates a case study from a spec sheet.
+        </p>
+    </section>
+
+    <!-- Results -->
+    <section class="mb-10 max-w-3xl">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Results</h2>
+        <p class="text-body-md font-body-md text-secondary">
+            Completed DRC and applied proper trace widths for power delivery and signal integrity. Fully manufactured
+            and assembled across all 3 Triton Robotics robots. Additional breakout pins eliminated the need for
+            rewiring during debug.
+        </p>
+    </section>
+
+</div>
+</main>
+
+<!-- Footer Component (identical to main page) -->
+<footer class="bg-surface-container-lowest text-primary text-label-sm font-label-sm w-full py-12 border-t border-surface-stroke flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter relative z-20">
+<div class="text-label-md font-label-md font-bold text-terminal-white">Peter Shr • Electrical Engineering @ UCSD</div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary underline underline-offset-4 transition-all duration-300 ease-in-out" href="https://www.linkedin.com/in/peter-shr/">LinkedIn</a>
+<a class="text-on-surface-variant hover:text-primary underline underline-offset-4 transition-all duration-300 ease-in-out" href="https://github.com/petershr">GitHub</a>
+<a class="text-on-surface-variant hover:text-primary underline underline-offset-4 transition-all duration-300 ease-in-out" href="#">Email</a>
+</div>
+</footer>
+
+</body></html>

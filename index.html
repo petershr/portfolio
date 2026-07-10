@@ -1,0 +1,1764 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Peter Shr | Electrical Engineering Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300..400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#151c27",
+                        "secondary-container": "#404754",
+                        "primary-fixed": "#c0e9f7",
+                        "surface-container-lowest": "#070d1f",
+                        "secondary": "#c0c7d6",
+                        "on-primary": "#073540",
+                        "tertiary-fixed-dim": "#bcc7de",
+                        "secondary-fixed": "#dce2f3",
+                        "surface-container": "#191f31",
+                        "accent-glow": "rgba(161, 201, 214, 0.15)",
+                        "inverse-primary": "#3d646f",
+                        "on-tertiary": "#263143",
+                        "surface-container-low": "#151b2d",
+                        "tertiary": "#d4dff7",
+                        "outline-variant": "#41484a",
+                        "tertiary-fixed": "#d8e3fb",
+                        "tertiary-container": "#b8c3da",
+                        "background": "#000000",
+                        "on-tertiary-fixed": "#111c2d",
+                        "surface-bright": "#33394c",
+                        "primary-container": "#a1c9d6",
+                        "on-primary-fixed-variant": "#244c57",
+                        "on-secondary": "#2a313d",
+                        "inverse-on-surface": "#2a3043",
+                        "surface-tint": "#a5cdda",
+                        "surface-stroke": "#334155",
+                        "error-container": "#93000a",
+                        "secondary-fixed-dim": "#c0c7d6",
+                        "terminal-white": "#F8FAFC",
+                        "surface-container-highest": "#2e3447",
+                        "primary": "#bde5f2",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#455064",
+                        "surface-variant": "#2e3447",
+                        "surface": "#0c1324",
+                        "on-secondary-fixed-variant": "#404754",
+                        "on-primary-container": "#2e5560",
+                        "on-surface-variant": "#c1c8ca",
+                        "surface-container-high": "#23293c",
+                        "on-tertiary-fixed-variant": "#3c475a",
+                        "on-background": "#dce1fb",
+                        "surface-dim": "#0c1324",
+                        "primary-fixed-dim": "#a5cdda",
+                        "on-error": "#690005",
+                        "on-surface": "#dce1fb",
+                        "on-secondary-container": "#aeb5c5",
+                        "error": "#ffb4ab",
+                        "outline": "#8b9295",
+                        "on-primary-fixed": "#001f27",
+                        "inverse-surface": "#dce1fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "container-max": "1200px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "display": ["Hanken Grotesk"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            border-color: #bde5f2;
+            box-shadow: 0 0 20px rgba(161, 201, 214, 0.15);
+            transform: translateY(-2px);
+        }
+        .glass-panel {
+            background: rgba(25, 31, 49, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .bio-paragraph {
+            opacity: 1;
+            transform: translateX(0);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease-out;
+            will-change: transform, opacity;
+        }
+
+        .bio-paragraph.is-exiting {
+            transform: translateX(48px);
+            opacity: 0;
+        }
+
+        .image-wipe-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 30;
+            background: linear-gradient(
+                to right,
+                transparent 0%,
+                var(--wipe-color, #000000) 18%,
+                var(--wipe-color, #000000) 100%
+            );
+            transform: translateX(100%);
+            transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .image-wipe-overlay.is-active {
+            transform: translateX(0);
+        }
+
+        #hero-shader {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 180vh;
+            z-index: 1;
+            pointer-events: none;
+            display: block;
+        }
+
+        .wave-transition {
+            position: relative;
+            z-index: 15;
+            width: 100%;
+            height: 80vh;
+            pointer-events: none;
+        }
+
+        .wave-transition__inner {
+            position: relative;
+            width: 100%;
+        }
+
+        .wave-layer {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 155vw;
+            transform-origin: bottom center;
+            transform: translateX(-50%);
+            will-change: transform;
+        }
+
+        .wave-layer svg {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .wave-layer path {
+            fill: currentColor;
+        }
+
+        .wave-layer--back {
+            z-index: 1;
+            color: #112452;
+            opacity: 1;
+            filter: none;
+        }
+
+        .wave-layer--middle {
+            z-index: 2;
+            color: #2451ac;
+            opacity: 1;
+            filter: none;
+        }
+
+        .wave-layer--front {
+            z-index: 3;
+            color: #FFFFFF;
+            opacity: 1;
+            filter: none;
+        }
+
+        /* Seamless Panning Horizontal Wave Drift Animations */
+        @keyframes waveIdleBack {
+            0%, 100% { transform: translate3d(-15vw, 0px, 0) rotate(-1deg); }
+            50% { transform: translate3d(15vw, 25px, 0) rotate(1deg); }
+        }
+        @keyframes waveIdleMiddle {
+            0%, 100% { transform: translate3d(18vw, 0px, 0) rotate(1.5deg); }
+            50% { transform: translate3d(-18vw, -30px, 0) rotate(-1.5deg); }
+        }
+        @keyframes waveIdleFront {
+            0%, 100% { transform: translate3d(-12vw, 0px, 0) rotate(-0.8deg); }
+            50% { transform: translate3d(12vw, 20px, 0) rotate(0.8deg); }
+        }
+        @keyframes heroGradientShift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .wave-layer--back svg {
+            animation: waveIdleBack 10s ease-in-out infinite;
+        }
+
+        .wave-layer--middle svg {
+            animation: waveIdleMiddle 8s ease-in-out infinite;
+        }
+
+        .wave-layer--front svg {
+            animation: waveIdleFront 9s ease-in-out infinite;
+        }
+        
+        /* Hide scrollbar for slider */
+        html, body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        html::-webkit-scrollbar, body::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, and Opera */
+        }
+
+        /* Interactive Mask Styles */
+        .fluid-masked {
+            mask: url(#fluid-reveal-mask);
+            -webkit-mask: url(#fluid-reveal-mask);
+        }
+
+        @media (hover: none) {
+            .fluid-masked {
+                mask: none !important;
+                -webkit-mask: none !important;
+            }
+            #hero-cursor-dot {
+                display: none !important;
+            }
+            #hero-interactive-container {
+                cursor: default !important;
+            }
+        }
+        nav {
+            transition: background 0.4s ease, backdrop-filter 0.4s ease;
+        }
+
+        nav.nav--dark {
+            background: rgba(7, 13, 31, 0.62) !important;   /* much darker, still glassy */
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        main, footer {
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col" style="overflow: hidden;">
+<!-- TopNavBar Component -->
+<nav class="fixed top-0 w-full z-50 bg-white/[0.06] backdrop-blur-[18px] border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.18)] flat no shadows text-primary text-label-md font-label-md uppercase tracking-widest">
+<div class="flex items-center px-margin-desktop py-4 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+    <a id="nav-home" class="text-headline-md font-headline-md font-bold tracking-tighter text-terminal-white flex-1 cursor-pointer transition-colors duration-300">PETER SHR</a>
+    <div class="hidden md:flex gap-gutter justify-center flex-1">
+        <a id="nav-projects" class="text-secondary hover:text-primary transition-colors duration-300 cursor-pointer" href="#">Projects</a>
+        <a id="nav-resume" class="text-secondary hover:text-primary transition-colors duration-300 cursor-pointer" href="#">Resume</a>
+    </div>
+    <div class="flex gap-4 flex-1 justify-end"></div>
+</div>
+</nav>
+<main class="flex-grow relative z-10">
+<!-- WebGL Shader Background (Rain Canvas) -->
+<canvas id="hero-shader" width="1280" height="1024"></canvas>
+<!-- Hero Section -->
+<section class="h-screen w-full relative overflow-hidden flex items-center bg-transparent z-10" id="hero-section">
+    <!-- Subtle background grid effect -->
+    <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, #334155 1px, transparent 0); background-size: 32px 32px;"></div>
+
+    <!-- 👇 THIS WRAPPER WAS MISSING -->
+    <div class="flex w-[200vw] h-full relative z-10 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" id="hero-slider" style="transform: translateX(0vw);">
+
+        <!-- Slide 1: Main Title -->
+        <div class="w-[100vw] h-full flex items-center justify-center px-margin-mobile md:px-margin-desktop shrink-0 relative pointer-events-none">
+            <div class="w-full max-w-container-max mx-auto relative">
+                <div class="w-full max-w-4xl pointer-events-none">
+
+                    <h1 style="
+                        font-family: 'Space Grotesk', sans-serif;
+                        font-size: clamp(90px, 13vw, 160px);
+                        font-weight: 700;
+                        letter-spacing: -0.04em;
+                        line-height: 0.95;
+                        margin-bottom: 20px;
+                        margin-left: -10px;
+                        background: linear-gradient(
+                            125deg,
+                            #00aaff 0%,
+                            #00ffaa 20%,
+                            #ffffff 40%,
+                            #00ddff 60%,
+                            #00ff99 80%,
+                            #00aaff 100%
+                        );
+                        background-size: 400% 400%;
+                        animation: heroGradientShift 4s ease infinite;
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        -webkit-text-fill-color: rgba(255, 255, 255, 0.65);
+                        color: transparent;
+                    ">PETER SHR</h1>
+
+                    <p style="
+                        font-family: 'Space Grotesk', sans-serif;
+                        font-size: clamp(16px, 2vw, 26px);
+                        font-weight: 300;
+                        margin-top: -20px;
+                        letter-spacing: 0.18em;
+                        text-transform: uppercase;
+                        background: linear-gradient(
+                            125deg,
+                            #00aaff 0%,
+                            #00ffaa 20%,
+                            #ffffff 40%,
+                            #00ddff 60%,
+                            #00ff99 80%,
+                            #00aaff 100%
+                        );
+                        background-size: 400% 400%;
+                        animation: heroGradientShift 4s ease infinite;
+                        animation-delay: -4s;
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                        -webkit-text-fill-color: rgba(255, 255, 255, 0.65);
+                        color: transparent;
+                        filter: blur(0.4px);
+                    ">Electrical Engineering @ UCSD</p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Technical Data Grid -->
+        <div class="w-[100vw] h-full flex items-center justify-center px-margin-mobile md:px-margin-desktop shrink-0 relative pointer-events-auto pt-20">
+            <div class="w-full max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="md:col-span-2 flex items-center justify-center md:-translate-x-12 lg:-translate-x-20 select-none">
+                    <div id="hero-interactive-container" class="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[460px] md:h-[460px] rounded-full overflow-hidden bg-surface-container-lowest cursor-none">
+                        <div id="image-wipe-overlay" class="image-wipe-overlay" aria-hidden="true"></div>
+                        
+                        <svg class="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+                            <defs>
+                                <filter id="gooey-reveal">
+                                    <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur" />
+                                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -14" result="goo" />
+                                </filter>
+                                <mask id="fluid-reveal-mask">
+                                    <g filter="url(#gooey-reveal)">
+                                        <rect width="100%" height="100%" fill="black" />
+                                        <circle id="mask-main-blob" cx="0" cy="0" r="0" fill="white" />
+                                        <circle id="mask-sub-blob-1" cx="0" cy="0" r="0" fill="white" />
+                                        <circle id="mask-sub-blob-2" cx="0" cy="0" r="0" fill="white" />
+                                        <circle id="mask-sub-blob-3" cx="0" cy="0" r="0" fill="white" />
+                                    </g>
+                                </mask>
+                            </defs>
+                        </svg>
+
+                        <img class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none z-10" 
+                             src="royal_guard.svg" 
+                             alt="Star Wars Silhouette">
+                        <img class="fluid-masked absolute inset-0 w-full h-full object-cover select-none pointer-events-none z-20" 
+                             src="keyboard_performance.jpg" 
+                             alt="Peter Shr Profile Photo">
+                        <div id="hero-cursor-dot" class="absolute w-6 h-6 -ml-3 -mt-3 rounded-full bg-primary/40 border border-primary pointer-events-none z-40 transition-opacity duration-300 opacity-0 shadow-[0_0_15px_rgba(161,201,214,0.6)]"></div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Biography -->
+                <div class="md:col-start-3 md:col-span-2 flex flex-col justify-center pr-margin-desktop md:pr-24 max-w-xl ml-auto">
+                    <div class="space-y-6">
+                        <p id="bio-paragraph-1" class="bio-paragraph text-[19px] leading-relaxed mb-4 text-white" style="font-family: 'Google Sans Flex', 'Inter', sans-serif; font-weight: 300;">
+                            I'm an Electrical Engineering student at UC San Diego with a focus on PCB design, embedded systems, and power electronics. My experience includes designing IMU boards and power management systems for internships and project teams, focusing closely on noise reduction and power routing practices that optimize circuit behavior.
+                        </p>
+                        <p id="bio-paragraph-2" class="bio-paragraph text-[19px] leading-relaxed text-white" style="font-family: 'Google Sans Flex', 'Inter', sans-serif; font-weight: 300;">
+                            I'm interested in how physics and chemistry connect with electrical engineering. Long term, I'm drawn toward semiconductor devices and am considering graduate school in that direction. Outside of engineering, I'm a badminton player, pianist, and One Piece fan from Fremont, CA.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- closes #hero-slider -->
+</section>
+<!-- Wave Transition -->
+<section class="wave-transition" id="wave-transition" aria-hidden="true">
+    <div class="wave-transition__inner">
+        <div class="wave-layer wave-layer--back">
+            <svg viewBox="0 0 1440 1400" preserveAspectRatio="xMidYMid slice">
+                <path d="M0 1200C180 1060 340 980 560 1040C744 1096 948 1220 1140 1160C1250 1128 1348 1068 1440 1030L1440 1400L0 1400Z" />
+            </svg>
+        </div>
+        <div class="wave-layer wave-layer--middle">
+            <svg viewBox="0 0 1440 1400" preserveAspectRatio="xMidYMid slice">
+                <path d="M0 1180C200 1048 364 960 580 1028C780 1096 960 1220 1160 1152C1260 1116 1352 1060 1440 1024L1440 1400L0 1400Z" />
+            </svg>
+        </div>
+        <div class="wave-layer wave-layer--front">
+            <svg viewBox="0 0 1440 1400" preserveAspectRatio="xMidYMid slice">
+                <path d="M0 1160C232 1040 420 964 640 1004C844 1044 1006 1160 1220 1120C1298 1104 1374 1076 1440 1048L1440 1400L0 1400Z" />
+            </svg>
+            <div id="dynamic-wave-bridge" class="absolute left-0 w-full bg-white origin-top" style="top: 98.5%; height: 100vh; pointer-events: none;"></div>
+        </div>
+    </div>
+</section>
+
+<!--<div class="w-full bg-white relative" style="height: 100vh; margin-top: -50px; z-index: 10;"></div> -->
+
+<!-- Projects Section -->
+<section class="w-full relative z-20 bg-white border-0 shadow-none" id="projects" style="margin-top: 0px; padding-top: 3rem; padding-bottom: 6rem; overflow: hidden; position: relative;">
+
+     <!-- ShaderGradient Background -->
+  <canvas id="projects-gradient" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
+
+  <script>
+  (function() {
+    function initShader() {
+      const canvas = document.getElementById('projects-gradient');
+      const section = document.getElementById('projects');
+      if (!canvas || !section) return;
+
+      function syncSize() {
+        canvas.width = section.offsetWidth;
+        canvas.height = section.offsetHeight;
+      }
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { syncSize(); });
+      });
+
+      new ResizeObserver(syncSize).observe(section);
+
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (!gl) return;
+
+      const vsSource = `
+        attribute vec2 a_position;
+        varying vec2 v_uv;
+        void main() {
+          v_uv = a_position * 0.5 + 0.5;
+          gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+      `;
+
+      const fsSource = `
+        precision highp float;
+        varying vec2 v_uv;
+        uniform float u_time;
+        uniform vec2 u_resolution;
+
+        vec3 colWhite = vec3(1.000, 1.000, 1.000);
+        vec3 colGreen = vec3(0.720, 0.960, 0.780);
+        vec3 colBlue  = vec3(0.380, 0.800, 0.960);
+
+        float hash(vec2 p) {
+            return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+        }
+
+        float noise(vec2 p) {
+            vec2 i = floor(p);
+            vec2 f = fract(p);
+            vec2 u = f * f * (3.0 - 2.0 * f);
+            return mix(
+            mix(hash(i),               hash(i + vec2(1.0, 0.0)), u.x),
+            mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
+            u.y
+            );
+        }
+
+        float fbm(vec2 p) {
+            float v = 0.0;
+            float amp = 0.55;
+            for (int i = 0; i < 4; i++) {
+            v += amp * noise(p);
+            p = p * 2.1 + vec2(3.1, 1.7);
+            amp *= 0.42;
+            }
+            return v;
+        }
+
+        void main() {
+            vec2 uv = v_uv;
+            float aspect = u_resolution.x / u_resolution.y;
+            uv.x *= aspect;
+
+            float t = u_time * 0.12;
+
+            // Domain warp pass 1
+            vec2 q = vec2(
+                fbm(uv + vec2(0.0, 0.0) + t),
+                fbm(uv + vec2(5.2, 1.3) - t * 0.7)
+            );
+
+            // Domain warp pass 2
+            vec2 r = vec2(
+                fbm(uv + 3.5 * q + vec2(1.7, 9.2) + t * 0.4),
+                fbm(uv + 3.5 * q + vec2(8.3, 2.8) - t * 0.3)
+            );
+
+            float f = fbm(uv + 3.0 * r + t * 0.2);
+            f = clamp(f, 0.0, 1.0);
+            f = smoothstep(0.2, 0.8, f);
+
+            float g = fbm(uv + 2.0 * q - vec2(1.3, 4.1) + t * 0.25);
+            g = clamp(g, 0.0, 1.0);
+            g = smoothstep(0.25, 0.75, g);
+
+            vec3 colorMix = mix(colBlue, colGreen, g);
+            vec3 col = mix(colorMix, colWhite, f * 0.75);
+
+            float lum = dot(col, vec3(0.299, 0.587, 0.114));
+            col = mix(vec3(lum), col, 1.4);
+            col = clamp(col, 0.0, 1.0);
+
+            // White fade at the top — v_uv.y is 1.0 at top, 0.0 at bottom
+            // Fade from pure white at top to full gradient by 35% down
+            float topFade = smoothstep(0.5, 1.0, v_uv.y);
+            col = mix(col, vec3(1.0), topFade);
+
+            gl_FragColor = vec4(col, 1.0);
+        }
+        `;
+
+      function compileShader(type, src) {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+          console.error('Shader error:', gl.getShaderInfoLog(s));
+        }
+        return s;
+      }
+
+      const prog = gl.createProgram();
+      gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSource));
+      gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSource));
+      gl.linkProgram(prog);
+      gl.useProgram(prog);
+
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+        -1, -1,  1, -1,  -1,  1,  1,  1
+      ]), gl.STATIC_DRAW);
+
+      const posLoc = gl.getAttribLocation(prog, 'a_position');
+      gl.enableVertexAttribArray(posLoc);
+      gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+      const uTime = gl.getUniformLocation(prog, 'u_time');
+      const uRes  = gl.getUniformLocation(prog, 'u_resolution');
+
+      function render(t) {
+        syncSize();
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform1f(uTime, t * 0.001);
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        requestAnimationFrame(render);
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    if (document.readyState === 'complete') {
+      initShader();
+    } else {
+      window.addEventListener('load', initShader);
+    }
+  })();
+  </script>
+  
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" style="position: relative; z-index: 1;">
+<div class="mb-12 border-b border-slate-200 pb-4">
+<h2 class="text-headline-lg font-headline-lg text-slate-900 flex items-center gap-2" style="width: 100%;">
+    <span id="selected-works-text" style="display: inline-block; will-change: transform; font-size: 72px; letter-spacing: -0.03em;">SELECTED WORKS</span>
+</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+
+<!-- Project 1: Custom ISM330DLC IMU PCB -->
+<article class="glass-panel border border-surface-stroke rounded-lg overflow-hidden card-hover flex flex-col h-full bg-surface">
+    <div class="h-64 overflow-hidden bg-surface-container-highest border-b border-surface-stroke relative">
+        <img class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" src="custom_ism.png" alt="Custom ISM330DLC IMU PCB">
+        <div class="absolute top-4 right-4 bg-surface-container text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Apr 2026</div>
+    </div>
+    <div class="p-6 flex-grow flex flex-col">
+        <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Custom ISM330DLC IMU PCB</h3>
+        <p class="text-body-md font-body-md text-secondary mb-6 flex-grow">
+            Designed a custom ISM330DLC IMU PCB from scratch in EasyEDA, integrating XH connectors for I2C and implementing noise reduction techniques including strategic decoupling capacitor placement, controlled trace widths, and a ground plane with minimal penetration. Developed for Triton Robotics' autonomous subteam.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-auto">
+            <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">PCB Design</span>
+            <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">EasyEDA</span>
+            <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Embedded Systems</span>
+        </div>
+    </div>
+</article>
+<!-- Project 2: Jetson Breakout Board -->
+<a href="jetson-breakout-board.html" class="block">
+<article class="glass-panel border border-surface-stroke rounded-lg overflow-hidden card-hover flex flex-col h-full bg-surface">
+<div class="h-64 overflow-hidden bg-surface-container-highest border-b border-surface-stroke relative">
+<img class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" src="jetson_pcb.png" alt="Jetson Breakout Board">
+<div class="absolute top-4 right-4 bg-surface-container text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Feb 2026 - Mar 2026</div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Jetson Breakout Board</h3>
+<p class="text-body-md font-body-md text-secondary mb-6 flex-grow">
+                            Designed a 4-layer PCB connecting the BNO055 IMU and NVIDIA Jetson Orin Nano, with additional connectors for debugging and testing. Manufactured and implemented for the entire Triton Robotics fleet.
+                        </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">PCB Design</span>
+<span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Hardware</span>
+</div>
+</div>
+</article>
+</a>
+<!-- Project 3: PV System Compliance -->
+<article class="glass-panel border border-surface-stroke rounded-lg overflow-hidden card-hover flex flex-col h-full bg-surface">
+<div class="h-64 overflow-hidden bg-surface-container-highest border-b border-surface-stroke relative flex items-center justify-center">
+<img class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" src="pv_system.png" alt="PV System Compliance">
+<div class="absolute top-4 right-4 bg-surface-container text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Mar 2026</div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<h3 class="text-headline-md font-headline-md text-terminal-white mb-3">PV System Compliance</h3>
+<p class="text-body-md font-body-md text-secondary mb-6 flex-grow">
+                            Analyzed solar PV system electrical designs in HelioScope to verify NEC 120% busbar rule compliance, identifying compatible components for power control systems. Designed a 685 kW solar carport system for a Viasat parking structure, optimizing module layout, inverter selection, and tilt angle while maintaining AC voltage drop and NEC compliance.
+                        </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Power Systems</span>
+<span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Compliance</span>
+</div>
+</div>
+</article>
+<!-- Project 4: Hall Effect Sensor Joystick -->
+<article class="glass-panel border border-surface-stroke rounded-lg overflow-hidden card-hover flex flex-col h-full bg-surface">
+<div class="h-64 overflow-hidden bg-surface-container-highest border-b border-surface-stroke relative flex items-center justify-center">
+<img class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" src="joystick.png" alt="Hall Effect Sensor Joystick">
+<div class="absolute top-4 right-4 bg-surface-container text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Oct 2025 - Present</div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Hall Effect Sensor Joystick</h3>
+<p class="text-body-md font-body-md text-secondary mb-6 flex-grow">
+                            Designing a Hall effect sensor joystick for the Human Powered Submarine club. This provides the pilot an analog input to control the overall movement direction.
+                        </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Sensors</span>
+<span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Analog Design</span>
+</div>
+</div>
+</article>
+<!-- Project 5: Egyptian Wars -->
+<article class="glass-panel border border-surface-stroke rounded-lg overflow-hidden card-hover flex flex-col h-full bg-surface">
+
+    <div class="h-64 overflow-hidden bg-surface-container-highest border-b border-surface-stroke relative">
+        <img class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" src="egyptian_wars.png" alt="Egyptian Wars" style="object-position: center 20%;">        
+        <div class="absolute top-4 right-4 bg-surface-container text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Apr 2026</div>
+    </div>
+<div class="p-6 flex-grow flex flex-col">
+<h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Egyptian Wars</h3>
+<p class="text-body-md font-body-md text-secondary mb-6 flex-grow">
+                            I implemented this game with HTML, CSS, and JavaScript. You can check out the rules page, set the difficulty, and play 1-on-1 against the bot with the goal of winning all the cards.
+                        </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">JavaScript</span>
+<span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Web Dev</span>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+</main>
+
+<!-- ==========================================
+     Resume Page Overlay
+     ========================================== -->
+<div id="resume-page" style="
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 100px;
+    padding-bottom: 60px;
+    overflow-y: auto;
+    pointer-events: none;
+    background: #eaf3fb;
+">
+    <div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 1200px; padding: 0 16px;">
+
+        <!-- Resume image with tilt -->
+        <div id="tilt-perspective" style="width: min(860px, 92vw); perspective: 1400px;">
+            <div id="tilt-card" style="
+                border-radius: 0;
+                overflow: hidden;
+                box-shadow: 0 24px 64px rgba(8,20,35,0.45), 0 8px 24px rgba(8,20,35,0.28);
+                background: white;
+                transform-style: preserve-3d;
+                transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), box-shadow 0.6s ease;
+                will-change: transform;
+                position: relative;
+            ">
+                <img
+                    src="Resume - Peter Shr.png"
+                    alt="Peter Shr Resume"
+                    style="width: 100%; height: auto; display: block;"
+                >
+                <div id="tilt-glare" style="
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.35), transparent 60%);
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
+                    mix-blend-mode: overlay;
+                "></div>
+            </div>
+        </div>
+
+        <!-- Download Button -->
+        <button
+            id="resume-download-btn"
+            onclick="
+                const a = document.createElement('a');
+                a.href = 'Resume - Peter Shr.pdf';
+                a.download = 'Resume - Peter Shr.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            "
+            style="
+                margin-top: 24px;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 28px;
+                background: rgba(255,255,255,0.85);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border: 1px solid rgba(0,0,0,0.12);
+                border-radius: 999px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 14px;
+                font-weight: 500;
+                letter-spacing: 0.05em;
+                color: #1e3a4a;
+                cursor: pointer;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+                transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            "
+            onmouseover="this.style.background='rgba(255,255,255,1)';this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 24px rgba(0,0,0,0.15)';"
+            onmouseout="this.style.background='rgba(255,255,255,0.85)';this.style.transform='translateY(0)';this.style.boxShadow='0 2px 12px rgba(0,0,0,0.10)';"
+        >
+            <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+            DOWNLOAD RESUME
+        </button>
+
+    </div>
+</div>
+
+<!-- Fade-to-black overlay (used for transitions to/from resume) -->
+<div id="fade-overlay" style="
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    background: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+"></div>
+
+
+<!-- Footer Component -->
+<footer class="bg-surface-container-lowest text-primary text-label-sm font-label-sm w-full py-12 border-t border-surface-stroke flat no shadows flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-gutter transition-all duration-300 ease-in-out px-margin-mobile md:px-margin-desktop relative z-20">
+<div class="text-label-md font-label-md font-bold text-terminal-white">Peter Shr • Electrical Engineering @ UCSD
+    </div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary underline underline-offset-4 transition-all duration-300 ease-in-out" href="https://www.linkedin.com/in/peter-shr/">LinkedIn</a>
+<a class="text-on-surface-variant hover:text-primary underline underline-offset-4 transition-all duration-300 ease-in-out" href="https://github.com/petershr">GitHub</a>
+<a class="text-on-surface-variant hover:text-primary underline underline-offset-4 transition-all duration-300 ease-in-out" href="#">Email</a>
+</div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Handle scroll restoration
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        
+        // Force scroll to top on load/reload — unless we're restoring a saved
+        // scroll position from navigating back from a project page (see bottom
+        // of this script block).
+        const __savedProjectsScrollY = sessionStorage.getItem('ps_scrollY');
+        if (__savedProjectsScrollY === null) {
+            window.scrollTo(0, 0);
+        }
+
+        const slider = document.getElementById('hero-slider');
+        const nav = document.querySelector('nav');
+        
+        if (window.gsap && window.ScrollTrigger) {
+            window.gsap.registerPlugin(window.ScrollTrigger);
+
+            window.gsap.set('#selected-works-text', {
+                scale: 0.45,
+                x: 0,
+                transformOrigin: 'left center',
+                force3D: true,
+            });
+
+            const transitionSection = document.getElementById('wave-transition');
+            const waveLayers = Array.from(document.querySelectorAll('.wave-layer'));
+
+            if (transitionSection && waveLayers.length) {
+                window.gsap.set(waveLayers, { transformOrigin: 'bottom center' });
+
+                // Layer 1 (Back / Darkest): #223A63
+                window.gsap.fromTo(
+                    waveLayers[0],
+                    { y: '80vw', scaleY: 1.5, scaleX: 1.06 },
+                    {
+                        y: '0vh', scaleY: 0.78, scaleX: 1,
+                        ease: 'power1.out',
+                        scrollTrigger: { trigger: transitionSection, start: 'top bottom', end: 'bottom top', scrub: 1.2 }
+                    }
+                );
+
+                // Layer 2 (Middle / Steel Blue): #6A91C9
+                window.gsap.fromTo(
+                    waveLayers[1],
+                    { y: '95vw', scaleY: 1.3, scaleX: 1.03 },
+                    {
+                        y: '0vh', scaleY: 0.72, scaleX: 1,
+                        ease: 'power1.out',
+                        scrollTrigger: { trigger: transitionSection, start: 'top bottom', end: 'bottom top', scrub: 1.1 }
+                    }
+                );
+
+                // Layer 3 (Front / White): #FFFFFF
+                window.gsap.fromTo(
+                    waveLayers[2],
+                    { y: '110vw', scaleY: 1.1, scaleX: 1 },
+                    {
+                        y: '0vh', scaleY: 0.67, scaleX: 1,
+                        ease: 'power1.out',
+                        scrollTrigger: { trigger: transitionSection, start: 'top bottom', end: 'bottom top', scrub: 1.0 }
+                    }
+                );
+
+                window.gsap.fromTo(
+                    '#dynamic-wave-bridge',
+                    { scaleY: 1 },
+                    {
+                        scaleY: 1, // Elastica multiplier to keep the floor grounded below the projects text
+                        ease: 'power1.out',
+                        scrollTrigger: {
+                            trigger: transitionSection,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: 1.0 // Matches Layer 3 exactly to prevent visual drift or jitter
+                        }
+                    }
+                );
+                
+                // Dynamic Padding and Margin Counter-Balance Animation
+                window.gsap.fromTo(
+                    '#projects',
+                    { 
+                        paddingTop: "0rem",
+                        marginTop: "-8rem"
+                    },
+                    {
+                        paddingTop: "10rem",   // Grows padding downward seamlessly
+                        marginTop: "-18rem",   // Pulls margin up simultaneously (-11rem completely counterbalances the 11rem padding growth)
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: '#projects', 
+                            start: 'top bottom',  // Starts the moment the top of the projects section hits the bottom of the screen
+                            end: 'top top',       // Finishes when the section reaches the top of the screen
+                            scrub: true           // Links directly to scroll velocity
+                        }
+                    }
+                );
+            }
+            // Selected Works — fires once when scrolled past trigger point
+            window.ScrollTrigger.create({
+                trigger: '#projects',
+                start: 'top 60%',
+                onEnter: () => {
+                    const text = document.querySelector('#selected-works-text');
+                    const container = document.querySelector('#projects .mb-12');
+                    const endX = (container.offsetWidth / 2) - (text.offsetWidth / 2);
+
+                    window.gsap.killTweensOf('#selected-works-text');   // 👈 kill any reverse tween mid-flight
+                    window.gsap.to('#selected-works-text', {
+                        scale: 1,
+                        x: endX,
+                        transformOrigin: 'left center',
+                        duration: 0.8,
+                        ease: 'power2.out',
+                        force3D: true,
+                    });
+                },
+                onLeaveBack: () => {
+                    window.gsap.killTweensOf('#selected-works-text');   // 👈 kill any forward tween mid-flight
+                    window.gsap.to('#selected-works-text', {
+                        scale: 0.45,
+                        x: 0,
+                        transformOrigin: 'left center',
+                        duration: 0.6,
+                        ease: 'power2.inOut',
+                        force3D: true,
+                    });
+                }
+            });
+
+            window.ScrollTrigger.create({
+                trigger: '#projects',
+                start: 'top 70%',       
+                onEnter: () => nav.classList.add('nav--dark'),
+                onLeaveBack: () => nav.classList.remove('nav--dark'),
+            });
+        }
+        
+        let currentSlide = 0;
+        let isTransitioning = false;
+        let scrollAccumulator = 0;
+        const SCROLL_THRESHOLD = 150; // threshold for trigger
+        let textFaded = false;
+        let textAnimationActive = false;
+        const paragraphExitDuration = 350;
+        const paragraphExitDelay = 120;
+        
+        // Allow the page to scroll naturally so ScrollTrigger can drive the wave transition.
+        document.body.style.overflow = '';
+
+        // Set up WebGL Shader manually to replace webgl-shader element
+        const canvas = document.getElementById('hero-shader');
+        let gl;
+        let uWindLoc;
+        if (canvas) {
+            function syncSize() {
+                const w = canvas.clientWidth || window.innerWidth;
+                const h = canvas.clientHeight || window.innerHeight;
+                if (canvas.width !== w || canvas.height !== h) {
+                    canvas.width = w;
+                    canvas.height = h;
+                }
+            }
+            if (typeof ResizeObserver !== 'undefined') {
+                new ResizeObserver(syncSize).observe(canvas);
+            }
+            syncSize();
+
+            gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (gl) {
+                const vsSource = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+                const fsSource = `precision highp float;
+
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse; 
+
+float hash(float n) {
+    return fract(sin(n) * 43758.5453123);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec2 mouse = u_mouse;
+    
+    float aspect = u_resolution.x / u_resolution.y;
+    vec2 pUv = uv;
+    pUv.x *= aspect;
+    
+    float xDensity = 280.0;
+    float idX = floor(pUv.x * xDensity);
+    float gvX = fract(pUv.x * xDensity);
+    
+    float h = hash(idX);
+    float h2 = hash(idX + 567.89);
+    float h3 = hash(idX + 910.11); 
+    
+    // Vertical Timing Logic (Natural Rain Physics)
+    float tSlowTop = 0.2;    
+    float tFast = 0.1;       
+    float tSlowBottom = 0.5; 
+    float tTotal = tSlowTop + tFast + tSlowBottom;
+    
+    float timeCycle = fract((u_time * 0.2 + h) / tTotal) * tTotal;
+    
+    float yPos;
+    if (timeCycle < tSlowTop) {
+        yPos = 1.0 - (timeCycle * 0.5);
+    } else if (timeCycle < tSlowTop + tFast) {
+        yPos = 0.9 - ((timeCycle - tSlowTop) * 8.0);
+    } else {
+        yPos = 0.32 - ((timeCycle - tSlowTop - tFast) * 0.2); // was 0.1
+    }
+    
+    float thickness = 0.12;
+    float streak = smoothstep(thickness, thickness - 0.05, abs(gvX - 0.5));
+    
+    float baseHeight = 0.014;
+    float streakLen = baseHeight + (h3 - 0.5) * 0.006;
+    
+    float verticalDist = abs(uv.y - yPos);
+    streak *= smoothstep(streakLen, streakLen - 0.002, verticalDist);
+    
+    vec3 rainColor = vec3(0.878, 0.949, 0.996);
+    float alpha = streak * (0.4 + h2 * 0.3);
+    
+    // INVERSE VIGNETTE - SUBTLE BRIGHTNESS FLOOR
+    float dist = distance(uv, mouse);
+    
+    // Focus Radius
+    float focusRadius = 0.15;
+    float focus = smoothstep(focusRadius + 0.15, focusRadius, dist);
+    
+    // Blur/Softness simulation
+    float softness = mix(0.4, 1.0, focus);
+    alpha *= softness;
+    
+    // Vignette logic with 60% brightness floor
+    // 1.0 at center, 0.6 at edges
+    float vignette = smoothstep(focusRadius, focusRadius + 0.6, dist);
+    vignette = mix(1.0, 0.6, vignette); 
+    
+    gl_FragColor = vec4(rainColor * alpha, alpha * vignette);
+}`;
+                function createShader(type, src) {
+                    const s = gl.createShader(type);
+                    gl.shaderSource(s, src);
+                    gl.compileShader(s);
+                    return s;
+                }
+                const prog = gl.createProgram();
+                gl.attachShader(prog, createShader(gl.VERTEX_SHADER, vsSource));
+                gl.attachShader(prog, createShader(gl.FRAGMENT_SHADER, fsSource));
+                gl.linkProgram(prog);
+                gl.useProgram(prog);
+
+                const buf = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+                const pos = gl.getAttribLocation(prog, 'a_position');
+                gl.enableVertexAttribArray(pos);
+                gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+                const uTime = gl.getUniformLocation(prog, 'u_time');
+                const uRes = gl.getUniformLocation(prog, 'u_resolution');
+                const uMouseLoc = gl.getUniformLocation(prog, 'u_mouse');
+
+                let mouse = { x: 0.5, y: 0.5 };
+                window.addEventListener('mousemove', (event) => {
+                    const rect = canvas.getBoundingClientRect();
+                    if (rect.width && rect.height) {
+                        const nx = (event.clientX - rect.left) / rect.width;
+                        const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+                        mouse.x = nx;
+                        mouse.y = ny;
+                    }
+                });
+
+                function render() {
+                syncSize();
+                gl.viewport(0, 0, canvas.width, canvas.height);
+                gl.uniform1f(uTime, performance.now() * 0.001);
+                gl.uniform2f(uRes, canvas.width, canvas.height);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                requestAnimationFrame(render);
+                }
+
+                render();
+            }
+        }
+
+        const bioParagraph1 = document.getElementById('bio-paragraph-1');
+        const bioParagraph2 = document.getElementById('bio-paragraph-2');
+        const imageWipeOverlay = document.getElementById('image-wipe-overlay');
+
+        function resetBioParagraphs() {
+            textFaded = false;
+            textAnimationActive = false;
+            bioParagraph1?.classList.remove('is-exiting');
+            bioParagraph2?.classList.remove('is-exiting');
+            imageWipeOverlay?.classList.remove('is-active');
+            if (bioParagraph1) {
+                bioParagraph1.style.opacity = '';
+                bioParagraph1.style.transform = '';
+            }
+            if (bioParagraph2) {
+                bioParagraph2.style.opacity = '';
+                bioParagraph2.style.transform = '';
+            }
+        }
+
+        function runBioParagraphExit() {
+            if (!bioParagraph1 || !bioParagraph2 || textFaded || textAnimationActive) return;
+            textAnimationActive = true;
+            document.body.style.overflow = 'hidden';
+            imageWipeOverlay?.classList.add('is-active');
+            bioParagraph1.classList.add('is-exiting');
+
+            setTimeout(() => {
+                bioParagraph2.classList.add('is-exiting');
+
+                setTimeout(() => {
+                    textFaded = true;
+                    textAnimationActive = false;
+                    document.body.style.overflow = '';
+                }, paragraphExitDuration);
+            }, paragraphExitDelay);
+        }
+
+        function runBioParagraphReenter() {
+            if (!bioParagraph1 || !bioParagraph2 || textAnimationActive) return;
+            textAnimationActive = true;
+            document.body.style.overflow = 'hidden';
+            imageWipeOverlay?.classList.remove('is-active');
+            bioParagraph2.classList.remove('is-exiting');
+
+            setTimeout(() => {
+                bioParagraph1.classList.remove('is-exiting');
+
+                setTimeout(() => {
+                    textFaded = false;
+                    textAnimationActive = false;
+                    document.body.style.overflow = 'hidden';
+                }, paragraphExitDuration);
+            }, paragraphExitDelay);
+        }
+
+        resetBioParagraphs();
+
+        window.addEventListener('wheel', (e) => {
+            if (isResumePage) return;
+            if (isTransitioning) {
+                e.preventDefault();
+                return;
+            }
+
+            if (window.scrollY <= 10) {
+                if (currentSlide === 1) {
+                    if (e.deltaY > 0 && !textFaded && !textAnimationActive) {
+                        e.preventDefault();
+                        runBioParagraphExit();
+                        return;
+                    }
+
+                    if (e.deltaY < 0 && textFaded) {
+                        e.preventDefault();
+                        runBioParagraphReenter();
+                        return;
+                    }
+                }
+
+                if (currentSlide === 1 && e.deltaY < 0) {
+                    e.preventDefault();
+                    document.body.style.overflow = 'hidden';
+                    scrollAccumulator += e.deltaY;
+                    if (scrollAccumulator < -SCROLL_THRESHOLD) {
+                        goToSlide(0);
+                        runBioParagraphReenter(); // ← ensure bio resets to visible state
+                        textFaded = false;  
+                    }
+                    return;
+                }
+                
+                if (currentSlide === 0) {
+                    e.preventDefault();
+                    document.body.style.overflow = 'hidden';
+                    
+                    if (e.deltaY > 0) {
+                        scrollAccumulator += e.deltaY;
+                        if (scrollAccumulator > SCROLL_THRESHOLD) {
+                            goToSlide(1);
+                        }
+                    } else {
+                        scrollAccumulator = 0;
+                    }
+                    return;
+                }
+            }
+        }, { passive: false });
+
+        // Touch event handler to prevent scrolling on mobile while transitioning or on first slide
+        window.addEventListener('touchmove', (e) => {
+            if (isTransitioning || currentSlide === 0 || (currentSlide === 1 && !textFaded)) {
+                if (window.scrollY <= 10) {
+                    e.preventDefault();
+                }
+            }
+        }, { passive: false });
+
+        function goToSlide(index) {
+            if (isTransitioning) return;
+            
+            currentSlide = index;
+            isTransitioning = true;
+            isHovered = false;
+            if (cursorDot) cursorDot.style.opacity = '0';
+            scrollAccumulator = 0;
+            
+            if (index === 0) {
+                resetBioParagraphs();
+            }
+            
+            // Slide transition
+            slider.style.transform = `translateX(-${index * 100}vw)`;
+
+            setTimeout(() => {
+                isTransitioning = false;
+                if (index === 1) {
+                    document.body.style.overflow = textFaded ? '' : 'hidden';
+                } else {
+                    document.body.style.overflow = 'hidden';
+                }
+            }, 1000);
+        }
+
+
+        const navProjects = document.getElementById('nav-projects');
+        const navResume = document.getElementById('nav-resume');
+        const navHome = document.getElementById('nav-home');
+        let isNavTransitioning = false;
+        let isResumePage = false;
+        let isResumeTransitioning = false;
+
+        // 👇 REPLACE your entire setNavActive function and scroll listener with this
+        const PRIMARY = '#bde5f2';
+        const TERMINAL_WHITE = '#F8FAFC';
+        const SECONDARY = '#c0c7d6';
+
+        function setNavActive(active) {
+            // Reset all — no underlines, just color
+            navHome.style.color = SECONDARY;
+            navProjects.style.color = SECONDARY;
+            navResume.style.color = SECONDARY;
+
+            if (active === 'home')     navHome.style.color = TERMINAL_WHITE;
+            if (active === 'projects') navProjects.style.color = PRIMARY;
+            if (active === 'resume')   navResume.style.color = PRIMARY;
+        }
+
+        // Initial state
+        setNavActive('home');
+
+        window.addEventListener('scroll', () => {
+            if (isResumePage) return;
+            const projectsSection = document.getElementById('projects');
+            const navHeight = nav.offsetHeight;
+            const inProjects = window.scrollY >= projectsSection.offsetTop - navHeight - 50;
+            setNavActive(inProjects ? 'projects' : 'home');
+        }, { passive: true });
+        // ==========================================
+
+        // (the one that just did e.preventDefault() and returned — gone entirely)
+
+        navProjects.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (isNavTransitioning || isTransitioning) return;
+
+            if (isResumePage) {
+                if (isResumeTransitioning) return;
+                isResumeTransitioning = true;
+
+                fadeToBlack(() => {
+                    hideResumePage();
+                    document.querySelector('main').style.opacity = '1';
+                    document.querySelector('footer').style.opacity = '1';
+                    
+                    // Snap to slide 2, bio already reset by hideResumePage
+                    currentSlide = 1;
+                    slider.style.transition = 'none';
+                    slider.style.transform = 'translateX(-100vw)';
+                    resetBioParagraphs();
+                    document.body.style.overflow = '';
+
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            slider.style.transition = '';
+
+                            const projectsSection = document.getElementById('projects');
+                            const navHeight = nav.offsetHeight;
+                            const targetY = projectsSection.getBoundingClientRect().top + window.scrollY - navHeight - 32;
+
+                            runBioParagraphExit();
+                            setTimeout(() => {
+                                document.body.style.overflow = '';
+                                window.scrollTo({ top: targetY, behavior: 'smooth' });
+                                setNavActive('projects');
+                                fadeFromBlack();
+                                setTimeout(() => isNavTransitioning = false, 1000);
+                            }, paragraphExitDuration + paragraphExitDelay + 50);
+                        });
+                    });
+                });
+                return; // ← don't fall through to normal handler
+            }
+
+            const projectsSection = document.getElementById('projects');
+            if (!projectsSection) return;
+
+            const navHeight = document.querySelector('nav').offsetHeight;
+            const extraPadding = 32;
+            const targetY = projectsSection.getBoundingClientRect().top + window.scrollY - navHeight - extraPadding;
+
+            const alreadyThere = window.scrollY >= targetY - 50;
+            if (alreadyThere) return;
+
+            isNavTransitioning = true;
+
+            if (currentSlide === 0) {
+                resetBioParagraphs();
+                goToSlide(1);
+                setTimeout(() => {
+                    runBioParagraphExit();
+                    setTimeout(() => {
+                        document.body.style.overflow = '';
+                        window.scrollTo({ top: targetY, behavior: 'smooth' });
+                        setNavActive('projects');
+                        setTimeout(() => isNavTransitioning = false, 1000);
+                    }, paragraphExitDuration + paragraphExitDelay + 50);
+                }, 1100);
+
+            } else if (currentSlide === 1 && !textFaded) {
+                runBioParagraphExit();
+                setTimeout(() => {
+                    document.body.style.overflow = '';
+                    window.scrollTo({ top: targetY, behavior: 'smooth' });
+                    setNavActive('projects');
+                    setTimeout(() => isNavTransitioning = false, 1000);
+                }, paragraphExitDuration + paragraphExitDelay + 50);
+
+            } else {
+                document.body.style.overflow = '';
+                window.scrollTo({ top: targetY, behavior: 'smooth' });
+                setNavActive('projects');
+                setTimeout(() => isNavTransitioning = false, 1000);
+            }
+        });
+
+        const fadeOverlay = document.getElementById('fade-overlay');
+        const resumePage  = document.getElementById('resume-page');
+
+        function fadeToBlack(callback) {
+            fadeOverlay.style.pointerEvents = 'all';
+            fadeOverlay.style.opacity = '1';
+            setTimeout(callback, 500);
+        }
+
+        function fadeFromBlack() {
+            fadeOverlay.style.opacity = '0';
+            setTimeout(() => {
+                fadeOverlay.style.pointerEvents = 'none';
+                isResumeTransitioning = false;
+            }, 500);
+        }
+
+        function showResumePage() {
+            resumePage.style.display = 'flex';
+            resumePage.style.pointerEvents = 'all';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    resumePage.style.opacity = '1';
+                });
+            });
+            document.body.style.overflow = 'hidden';
+            isResumePage = true;
+            nav.classList.add('nav--dark');
+            setNavActive('resume');
+        }
+
+        function hideResumePage() {
+            resumePage.style.opacity = '0';
+            resumePage.style.pointerEvents = 'none';
+            nav.classList.remove('nav--dark');
+            setNavActive('home');
+            setTimeout(() => {
+                resumePage.style.display = 'none';
+                isResumePage = false;
+            }, 600);
+        }
+
+        // 👇 ONE single navResume listener — the full one
+        navResume?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (isNavTransitioning || isResumeTransitioning || isResumePage) return;
+            isResumeTransitioning = true;
+
+            fadeToBlack(() => {
+                document.querySelector('main').style.opacity = '0';
+                document.querySelector('footer').style.opacity = '0';
+                showResumePage();
+                fadeFromBlack();
+            });
+        });
+
+        navHome?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (isNavTransitioning || isResumeTransitioning) return;
+
+            if (isResumePage) {
+                isResumeTransitioning = true;
+                fadeToBlack(() => {
+                    hideResumePage();
+                    document.querySelector('main').style.opacity = '1';
+                    document.querySelector('footer').style.opacity = '1';
+                    currentSlide = 0;
+                    slider.style.transform = 'translateX(0vw)';
+                    resetBioParagraphs();
+                    document.body.style.overflow = 'hidden';
+                    window.scrollTo(0, 0);
+                    setNavActive('home');
+                    fadeFromBlack();
+                });
+
+            } else if (window.scrollY > window.innerHeight * 0.3) {
+                if (isNavTransitioning) return;
+                isNavTransitioning = true;
+                document.body.style.overflow = '';
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                setTimeout(() => {
+                    document.body.style.overflow = 'hidden';
+                    currentSlide = 1;
+                    slider.style.transition = 'none';
+                    slider.style.transform = 'translateX(-100vw)';
+
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            slider.style.transition = '';
+                            resetBioParagraphs();
+                            goToSlide(0);
+                            runBioParagraphReenter(); // ← ensure bio resets to visible state
+                            textFaded = false;  
+                            setNavActive('home');
+                            setTimeout(() => isNavTransitioning = false, 1100);
+                        });
+                    });
+                }, 900);
+
+            } else {
+                resetBioParagraphs();
+                if (currentSlide === 0) return;
+                if (isNavTransitioning) return;
+                goToSlide(0);
+                runBioParagraphReenter(); // ← ensure bio resets to visible state
+                textFaded = false;  
+                setNavActive('home');
+            }
+        });
+
+        // ==========================================
+        // Interactive Mouse-Tracking Fluid Reveal
+        // ==========================================
+        const container = document.getElementById('hero-interactive-container');
+        const cursorDot = document.getElementById('hero-cursor-dot');
+        const mainBlob = document.getElementById('mask-main-blob');
+        const subBlob1 = document.getElementById('mask-sub-blob-1');
+        const subBlob2 = document.getElementById('mask-sub-blob-2');
+        const subBlob3 = document.getElementById('mask-sub-blob-3');
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let isHovered = false;
+
+        let isScrolling = false;
+        let scrollTimer = null;
+
+        window.addEventListener('scroll', () => {
+            isScrolling = true;
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                isScrolling = false;
+            }, 150); //  ms after scroll stops before re-enabling
+        }, { passive: true });
+
+        // Blob physics variables
+        let mainX = 0, mainY = 0;
+        let sub1X = 0, sub1Y = 0;
+        let sub2X = 0, sub2Y = 0;
+        let sub3X = 0, sub3Y = 0;
+
+        // Radii variables (for smooth growing/shrinking)
+        let mainRadius = 0;
+        let sub1Radius = 0;
+        let sub2Radius = 0;
+        let sub3Radius = 0;
+
+        // Target radii when active (scaled up to match container size)
+        const targetMainRadius = 170;
+        const targetSub1Radius = 100;
+        const targetSub2Radius = 75;
+        const targetSub3Radius = 55;
+
+        function setHoverActive(active) {
+            const overlayActive = imageWipeOverlay?.classList.contains('is-active'); // 👈 check overlay
+            const canReveal = currentSlide === 1 && !isTransitioning && !isScrolling && !overlayActive; // 👈 added !overlayActive
+            isHovered = canReveal && active;
+            if (!canReveal && cursorDot) {
+                cursorDot.style.opacity = '0';
+            }
+        }
+
+        // Track mouse position relative to container
+        function updateCoords(clientX, clientY) {
+            const rect = container.getBoundingClientRect();
+            mouseX = clientX - rect.left;
+            mouseY = clientY - rect.top;
+        }
+
+        if (container) {
+            container.addEventListener('mousemove', (e) => {
+                setHoverActive(true);
+                updateCoords(e.clientX, e.clientY);
+                if (cursorDot) {
+                    cursorDot.style.opacity = isHovered ? '1' : '0';
+                    cursorDot.style.left = `${mouseX}px`;
+                    cursorDot.style.top = `${mouseY}px`;
+                }
+            });
+
+            container.addEventListener('mouseenter', () => {
+                setHoverActive(true);
+                if (cursorDot) cursorDot.style.opacity = isHovered ? '1' : '0';
+            });
+
+            container.addEventListener('mouseleave', () => {
+                setHoverActive(false);
+                if (cursorDot) cursorDot.style.opacity = '0';
+            });
+
+            // Touch support for dragging the blob on mobile/tablets
+            container.addEventListener('touchstart', (e) => {
+                setHoverActive(true);
+                updateCoords(e.touches[0].clientX, e.touches[0].clientY);
+                if (cursorDot) {
+                    cursorDot.style.opacity = isHovered ? '1' : '0';
+                    cursorDot.style.left = `${mouseX}px`;
+                    cursorDot.style.top = `${mouseY}px`;
+                }
+            }, { passive: true });
+
+            container.addEventListener('touchmove', (e) => {
+                setHoverActive(true);
+                updateCoords(e.touches[0].clientX, e.touches[0].clientY);
+                if (cursorDot) {
+                    cursorDot.style.left = `${mouseX}px`;
+                    cursorDot.style.top = `${mouseY}px`;
+                    cursorDot.style.opacity = isHovered ? '1' : '0';
+                }
+            }, { passive: true });
+        }
+
+        // Animation Loop
+        function animateMask() {
+            const canReveal = currentSlide === 1 && !isTransitioning;
+            // Target radii based on hover state
+            const targetMain = canReveal && isHovered ? targetMainRadius : 0;
+            const targetSub1 = canReveal && isHovered ? targetSub1Radius : 0;
+            const targetSub2 = canReveal && isHovered ? targetSub2Radius : 0;
+            const targetSub3 = canReveal && isHovered ? targetSub3Radius : 0;
+
+            if (!canReveal) {
+                isHovered = false;
+            }
+
+            // Interpolate radii (inflation/deflation)
+            mainRadius += (targetMain - mainRadius) * 0.15;
+            sub1Radius += (targetSub1 - sub1Radius) * 0.15;
+            sub2Radius += (targetSub2 - sub2Radius) * 0.15;
+            sub3Radius += (targetSub3 - sub3Radius) * 0.15;
+
+            // Interpolate positions (lerp speed determines lag / gooey stretch)
+            mainX += (mouseX - mainX) * 0.18;
+            mainY += (mouseY - mainY) * 0.18;
+
+            sub1X += (mainX - sub1X) * 0.09;
+            sub1Y += (mainY - sub1Y) * 0.09;
+
+            sub2X += (sub1X - sub2X) * 0.08;
+            sub2Y += (sub1Y - sub2Y) * 0.08;
+
+            sub3X += (sub2X - sub3X) * 0.07;
+            sub3Y += (sub2Y - sub3Y) * 0.07;
+
+            // Update SVG elements
+            if (mainBlob) {
+                mainBlob.setAttribute('cx', mainX);
+                mainBlob.setAttribute('cy', mainY);
+                mainBlob.setAttribute('r', Math.max(0, mainRadius).toFixed(2));
+            }
+            if (subBlob1) {
+                subBlob1.setAttribute('cx', sub1X);
+                subBlob1.setAttribute('cy', sub1Y);
+                subBlob1.setAttribute('r', Math.max(0, sub1Radius).toFixed(2));
+            }
+            if (subBlob2) {
+                subBlob2.setAttribute('cx', sub2X);
+                subBlob2.setAttribute('cy', sub2Y);
+                subBlob2.setAttribute('r', Math.max(0, sub2Radius).toFixed(2));
+            }
+            if (subBlob3) {
+                subBlob3.setAttribute('cx', sub3X);
+                subBlob3.setAttribute('cy', sub3Y);
+                subBlob3.setAttribute('r', Math.max(0, sub3Radius).toFixed(2));
+            }
+
+            requestAnimationFrame(animateMask);
+        }
+
+        // Start animation loop
+        requestAnimationFrame(animateMask);
+
+        // ---- Scroll position memory for project pages ----
+        // Save exactly where we were on this page right before following a
+        // project card link, so that clicking "BACK" (or the "PETER SHR" logo)
+        // on the project page returns to the same spot in the projects grid.
+        document.querySelectorAll('#projects a[href$=".html"]').forEach((link) => {
+            link.addEventListener('click', () => {
+                sessionStorage.setItem('ps_scrollY', String(window.scrollY));
+            });
+        });
+
+        // Restore that position, if one was saved, once everything above is set up.
+        if (__savedProjectsScrollY !== null) {
+            sessionStorage.removeItem('ps_scrollY');
+            const restoreY = parseFloat(__savedProjectsScrollY);
+
+            if (!isNaN(restoreY)) {
+                // Jump straight into the main (slide 1) view — skip the hero
+                // intro and land with the bio text already faded out, exactly
+                // like the state you'd be in after scrolling into the projects grid.
+                currentSlide = 1;
+                textFaded = true;
+                document.body.style.overflow = '';
+
+                slider.style.transition = 'none';
+                slider.style.transform = 'translateX(-100vw)';
+
+                bioParagraph1?.classList.add('is-exiting');
+                bioParagraph2?.classList.add('is-exiting');
+
+                // Force a reflow so the transition:none takes hold before we
+                // hand transitions back to CSS.
+                void slider.offsetHeight;
+                slider.style.transition = '';
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        window.scrollTo({ top: restoreY, behavior: 'instant' });
+                        setNavActive('projects');
+                        nav.classList.add('nav--dark');
+                        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+                    });
+                });
+            }
+        }
+    });
+</script>
+<script>
+(function() {
+    function initTilt() {
+        const wrap = document.getElementById('tilt-perspective');
+        const card = document.getElementById('tilt-card');
+        const glare = document.getElementById('tilt-glare');
+        if (!wrap || !card) return;
+
+        const maxTilt = 18;
+        let targetX = 0, targetY = 0;
+        let currentX = 0, currentY = 0;
+
+        function apply() {
+            currentX += (targetX - currentX) * 0.25;
+            currentY += (targetY - currentY) * 0.25;
+            card.style.transform =
+                `rotateX(${currentY}deg) rotateY(${currentX}deg) translateZ(0)`;
+            requestAnimationFrame(apply);
+        }
+        requestAnimationFrame(apply);
+
+        wrap.addEventListener('mousemove', (e) => {
+            const rect = wrap.getBoundingClientRect();
+            const px = (e.clientX - rect.left) / rect.width;
+            const py = (e.clientY - rect.top) / rect.height;
+            targetX = (px - 0.5) * maxTilt * 2;
+            targetY = -(py - 0.5) * maxTilt * 2;
+            if (glare) {
+                glare.style.opacity = '1';
+                glare.style.background =
+                    `radial-gradient(circle at ${px * 100}% ${py * 100}%, rgba(255,255,255,0.35), transparent 60%)`;
+            }
+            card.style.boxShadow =
+                `${-targetX * 2.5}px ${targetY * 2.5 + 32}px 64px rgba(8,20,35,0.45), 0 8px 24px rgba(8,20,35,0.28)`;
+        });
+
+        wrap.addEventListener('mouseleave', () => {
+            targetX = 0;
+            targetY = 0;
+            if (glare) glare.style.opacity = '0';
+            card.style.boxShadow =
+                '0 24px 64px rgba(8,20,35,0.45), 0 8px 24px rgba(8,20,35,0.28)';
+        });
+    }
+    window.addEventListener('load', initTilt);
+})();
+</script>
+
+</body></html>
