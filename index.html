@@ -375,6 +375,7 @@
                 font-size: 30px !important;
                 letter-spacing: -0.02em !important;
                 white-space: nowrap;
+                transform: none !important;
             }
         }
     </style>
@@ -962,12 +963,14 @@
         if (window.gsap && window.ScrollTrigger) {
             window.gsap.registerPlugin(window.ScrollTrigger);
 
-            window.gsap.set('#selected-works-text', {
-                scale: 0.45,
-                x: 0,
-                transformOrigin: 'left center',
-                force3D: true,
-            });
+            if (!isMobile) {
+                window.gsap.set('#selected-works-text', {
+                    scale: 0.45,
+                    x: 0,
+                    transformOrigin: 'left center',
+                    force3D: true,
+                });
+            }
 
             const transitionSection = document.getElementById('wave-transition');
             const waveLayers = Array.from(document.querySelectorAll('.wave-layer'));
@@ -1044,6 +1047,7 @@
                 );
             }
             // Selected Works — fires once when scrolled past trigger point
+            if (!isMobile) {
             window.ScrollTrigger.create({
                 trigger: '#projects',
                 start: 'top 60%',
@@ -1074,6 +1078,7 @@
                     });
                 }
             });
+            }
 
             window.ScrollTrigger.create({
                 trigger: '#projects',
@@ -1581,6 +1586,27 @@ void main() {
         navHome?.addEventListener('click', (e) => {
             e.preventDefault();
             if (isNavTransitioning || isResumeTransitioning) return;
+
+            if (isMobile) {
+                if (isResumePage) {
+                    isResumeTransitioning = true;
+                    fadeToBlack(() => {
+                        hideResumePage();
+                        document.querySelector('main').style.opacity = '1';
+                        document.querySelector('footer').style.opacity = '1';
+                        resetBioParagraphs();
+                        document.body.style.overflow = '';
+                        window.scrollTo(0, 0);
+                        setNavActive('home');
+                        fadeFromBlack();
+                    });
+                } else {
+                    document.body.style.overflow = '';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    setNavActive('home');
+                }
+                return;
+            }
 
             if (isResumePage) {
                 isResumeTransitioning = true;
