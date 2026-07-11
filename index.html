@@ -362,6 +362,20 @@
             #hero-interactive-container {
                 border-radius: 28px !important;
             }
+
+            #projects {
+                padding-top: 1.25rem !important;
+            }
+
+            #projects h2 {
+                justify-content: center !important;
+            }
+
+            #selected-works-text {
+                font-size: 30px !important;
+                letter-spacing: -0.02em !important;
+                white-space: nowrap;
+            }
         }
     </style>
 </head>
@@ -1416,6 +1430,19 @@ void main() {
             e.preventDefault();
             if (isNavTransitioning || isTransitioning) return;
 
+            const projectsSection = document.getElementById('projects');
+            if (!projectsSection) return;
+
+            if (isMobile) {
+                // Mobile is a plain stacked document — just scroll there.
+                // No slide state, no body-scroll locking, no bio fade.
+                const navHeight = nav.offsetHeight;
+                const targetY = projectsSection.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+                window.scrollTo({ top: targetY, behavior: 'smooth' });
+                setNavActive('projects');
+                return;
+            }
+
             if (isResumePage) {
                 if (isResumeTransitioning) return;
                 isResumeTransitioning = true;
@@ -1455,9 +1482,6 @@ void main() {
                 });
                 return; // ← don't fall through to normal handler
             }
-
-            const projectsSection = document.getElementById('projects');
-            if (!projectsSection) return;
 
             const navHeight = document.querySelector('nav').offsetHeight;
             const extraPadding = 32;
