@@ -334,10 +334,19 @@
                 background: linear-gradient(
                     to bottom,
                     transparent 0%,
-                    rgba(0, 0, 0, 0.35) 30%,
-                    #000000 55%,
+                    transparent 60%,
+                    #ffffff 60%,
                     #ffffff 100%
                 );
+            }
+
+            #nav-links {
+                display: flex !important;
+                gap: 16px;
+            }
+
+            #hero-interactive-container {
+                border-radius: 28px !important;
             }
         }
     </style>
@@ -347,7 +356,7 @@
 <nav class="fixed top-0 w-full z-50 bg-white/[0.06] backdrop-blur-[18px] border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.18)] flat no shadows text-primary text-label-md font-label-md uppercase tracking-widest">
 <div class="flex items-center px-margin-desktop py-4 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
     <a id="nav-home" class="text-headline-md font-headline-md font-bold tracking-tighter text-terminal-white flex-1 cursor-pointer transition-colors duration-300">PETER SHR</a>
-    <div class="hidden md:flex gap-gutter justify-center flex-1">
+    <div id="nav-links" class="hidden md:flex gap-gutter justify-center flex-1">
         <a id="nav-projects" class="text-secondary hover:text-primary transition-colors duration-300 cursor-pointer" href="#">Projects</a>
         <a id="nav-resume" class="text-secondary hover:text-primary transition-colors duration-300 cursor-pointer" href="#">Resume</a>
     </div>
@@ -463,10 +472,10 @@
                 <!-- Right Column: Biography -->
                 <div class="md:col-start-3 md:col-span-2 flex flex-col justify-center pr-margin-desktop md:pr-24 max-w-xl ml-auto">
                     <div class="space-y-6">
-                        <p id="bio-paragraph-1" class="bio-paragraph text-[19px] leading-relaxed mb-4 text-white" style="font-family: 'Google Sans Flex', 'Inter', sans-serif; font-weight: 300;">
+                        <p id="bio-paragraph-1" class="bio-paragraph text-[19px] leading-relaxed mb-4 text-white text-center md:text-left" style="font-family: 'Google Sans Flex', 'Inter', sans-serif; font-weight: 300;">
                             I'm an Electrical Engineering student at UC San Diego with a focus on PCB design, embedded systems, and power electronics. My experience includes designing IMU boards and power management systems for internships and project teams, focusing closely on noise reduction and power routing practices that optimize circuit behavior.
                         </p>
-                        <p id="bio-paragraph-2" class="bio-paragraph text-[19px] leading-relaxed text-white" style="font-family: 'Google Sans Flex', 'Inter', sans-serif; font-weight: 300;">
+                        <p id="bio-paragraph-2" class="bio-paragraph text-[19px] leading-relaxed text-white text-center md:text-left" style="font-family: 'Google Sans Flex', 'Inter', sans-serif; font-weight: 300;">
                             I'm interested in how physics and chemistry connect with electrical engineering. Long term, I'm drawn toward semiconductor devices and am considering graduate school in that direction. Outside of engineering, I'm a badminton player, pianist, and One Piece fan from Fremont, CA.
                         </p>
                     </div>
