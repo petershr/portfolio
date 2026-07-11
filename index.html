@@ -293,6 +293,53 @@
         main, footer {
             transition: opacity 0.5s ease;
         }
+
+        /* ===== Mobile layout (viewport < 768px) =====
+           Desktop keeps the horizontal slide + wave parallax exactly as-is.
+           On mobile we instead let the page scroll straight down: hero title →
+           bio slide → a plain black-to-white transition → the white projects
+           section. No horizontal slide-jacking, no wave graphic, no parallax. */
+        @media (max-width: 767px) {
+            #hero-section {
+                height: auto !important;
+                min-height: 100vh;
+                overflow: visible !important;
+            }
+
+            #hero-slider {
+                display: flex !important;
+                flex-direction: column !important;
+                width: 100% !important;
+                height: auto !important;
+                transform: none !important;
+                transition: none !important;
+            }
+
+            #hero-slider > div {
+                width: 100% !important;
+                height: auto !important;
+                min-height: 100vh;
+            }
+
+            #hero-shader {
+                height: 250vh;
+            }
+
+            .wave-layer {
+                display: none !important;
+            }
+
+            .wave-transition {
+                height: 55vh;
+                background: linear-gradient(
+                    to bottom,
+                    transparent 0%,
+                    rgba(0, 0, 0, 0.35) 30%,
+                    #000000 55%,
+                    #ffffff 100%
+                );
+            }
+        }
     </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col" style="overflow: hidden;">
@@ -873,6 +920,7 @@
 
         const slider = document.getElementById('hero-slider');
         const nav = document.querySelector('nav');
+        const isMobile = window.matchMedia('(max-width: 767px)').matches;
         
         if (window.gsap && window.ScrollTrigger) {
             window.gsap.registerPlugin(window.ScrollTrigger);
@@ -887,7 +935,7 @@
             const transitionSection = document.getElementById('wave-transition');
             const waveLayers = Array.from(document.querySelectorAll('.wave-layer'));
 
-            if (transitionSection && waveLayers.length) {
+            if (transitionSection && waveLayers.length && !isMobile) {
                 window.gsap.set(waveLayers, { transformOrigin: 'bottom center' });
 
                 // Layer 1 (Back / Darkest): #223A63
@@ -1215,6 +1263,7 @@ void main() {
 
         resetBioParagraphs();
 
+        if (!isMobile) {
         window.addEventListener('wheel', (e) => {
             if (isResumePage) return;
             if (isTransitioning) {
@@ -1274,6 +1323,7 @@ void main() {
                 }
             }
         }, { passive: false });
+        } // end !isMobile wheel/touch handlers
 
         function goToSlide(index) {
             if (isTransitioning) return;
@@ -1715,23 +1765,25 @@ void main() {
             const restoreY = parseFloat(__savedProjectsScrollY);
 
             if (!isNaN(restoreY)) {
-                // Jump straight into the main (slide 1) view — skip the hero
-                // intro and land with the bio text already faded out, exactly
-                // like the state you'd be in after scrolling into the projects grid.
-                currentSlide = 1;
-                textFaded = true;
-                document.body.style.overflow = '';
+                if (!isMobile) {
+                    // Jump straight into the main (slide 1) view — skip the hero
+                    // intro and land with the bio text already faded out, exactly
+                    // like the state you'd be in after scrolling into the projects grid.
+                    currentSlide = 1;
+                    textFaded = true;
+                    document.body.style.overflow = '';
 
-                slider.style.transition = 'none';
-                slider.style.transform = 'translateX(-100vw)';
+                    slider.style.transition = 'none';
+                    slider.style.transform = 'translateX(-100vw)';
 
-                bioParagraph1?.classList.add('is-exiting');
-                bioParagraph2?.classList.add('is-exiting');
+                    bioParagraph1?.classList.add('is-exiting');
+                    bioParagraph2?.classList.add('is-exiting');
 
-                // Force a reflow so the transition:none takes hold before we
-                // hand transitions back to CSS.
-                void slider.offsetHeight;
-                slider.style.transition = '';
+                    // Force a reflow so the transition:none takes hold before we
+                    // hand transitions back to CSS.
+                    void slider.offsetHeight;
+                    slider.style.transition = '';
+                }
 
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
