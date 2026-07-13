@@ -945,9 +945,9 @@
 
 <!-- Footer Component -->
 <footer class="bg-black text-primary w-full py-12 border-t border-surface-stroke flat no shadows flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-gutter transition-all duration-300 ease-in-out px-margin-mobile md:px-margin-desktop relative z-20">
-<div class="text-[20px] font-futura text-terminal-white"><b>STUFF BY PETER SHR</b>
+<div class="text-[18px] font-futura text-terminal-white">Stuff by Peter Shr
     </div>
-<div class="flex gap-6 text-[20px] font-futura-light">
+<div class="flex gap-6 text-[18px] font-futura-light">
 <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="https://www.linkedin.com/in/peter-shr/">LinkedIn</a>
 <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="https://github.com/petershr">GitHub</a>
 <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="mailto:pshr@ucsd.edu">pshr@ucsd.edu</a>
@@ -1469,6 +1469,8 @@ void main() {
                         const targetY = projectsSection.getBoundingClientRect().top + window.scrollY - navHeight - 16;
                         window.scrollTo({ top: targetY, behavior: 'instant' });
                         setNavActive('projects');
+                        nav.classList.add('nav--dark');
+                        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
                         fadeFromBlack();
                     });
                     return;
