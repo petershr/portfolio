@@ -412,47 +412,22 @@
             }
         }
 
-        /* Portrait touch layout (real phone portrait, or "Desktop Site" mode
-           held upright): image above the text, both centered — same shape as
-           normal mobile regardless of what width the browser is reporting. */
-        @media ((max-width: 767px), (pointer: coarse)) and (orientation: portrait) {
+        /* Touch/mobile hero layout — image above the text, both centered.
+           Same shape in every orientation (portrait, landscape, and
+           "Desktop Site" mode in either), regardless of reported width. */
+        @media (max-width: 767px), (pointer: coarse) {
             #hero-grid {
                 flex-direction: column;
                 align-items: center;
             }
 
             #hero-interactive-container {
-                width: min(78vw, 340px) !important;
-                height: min(78vw, 340px) !important;
+                width: min(78vw, 55vh, 340px) !important;
+                height: min(78vw, 55vh, 340px) !important;
             }
 
             .bio-paragraph {
                 text-align: center !important;
-            }
-        }
-
-        /* Landscape touch layout (phone rotated, or "Desktop Site" mode in
-           landscape): image to the left, text fills the remaining width to
-           its right instead of stacking or getting squeezed. */
-        @media ((max-width: 767px), (pointer: coarse)) and (orientation: landscape) {
-            #hero-grid {
-                flex-direction: row;
-                align-items: center;
-            }
-
-            #hero-interactive-container {
-                width: min(42vh, 260px) !important;
-                height: min(42vh, 260px) !important;
-            }
-
-            #bio-column {
-                flex: 1 1 auto;
-                min-width: 0;
-                padding-right: 24px !important;
-            }
-
-            .bio-paragraph {
-                text-align: left !important;
             }
         }
     </style>
