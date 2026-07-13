@@ -364,6 +364,21 @@
                 display: none !important;
             }
 
+            /* Neutralize Tailwind's width-based grid/column classes on the
+               hero image + bio text — those are keyed to md:/lg: breakpoints,
+               which "Desktop Site" mode satisfies even on a touch phone. Flex
+               sidesteps grid-column placement entirely so there's no conflict. */
+            #hero-grid {
+                display: flex !important;
+                gap: 32px;
+            }
+
+            #hero-image-col {
+                transform: none !important;
+                margin: 0 !important;
+                flex-shrink: 0;
+            }
+
             #bio-column {
                 padding-left: 16px !important;
                 padding-right: 16px !important;
@@ -377,6 +392,10 @@
                 border-radius: 28px !important;
             }
 
+            .bio-paragraph {
+                font-size: 21px !important;
+            }
+
             #projects {
                 padding-top: 1.25rem !important;
             }
@@ -386,10 +405,54 @@
             }
 
             #selected-works-text {
-                font-size: 30px !important;
+                font-size: 34px !important;
                 letter-spacing: -0.02em !important;
                 white-space: nowrap;
                 transform: none !important;
+            }
+        }
+
+        /* Portrait touch layout (real phone portrait, or "Desktop Site" mode
+           held upright): image above the text, both centered — same shape as
+           normal mobile regardless of what width the browser is reporting. */
+        @media ((max-width: 767px), (pointer: coarse)) and (orientation: portrait) {
+            #hero-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #hero-interactive-container {
+                width: min(78vw, 340px) !important;
+                height: min(78vw, 340px) !important;
+            }
+
+            .bio-paragraph {
+                text-align: center !important;
+            }
+        }
+
+        /* Landscape touch layout (phone rotated, or "Desktop Site" mode in
+           landscape): image to the left, text fills the remaining width to
+           its right instead of stacking or getting squeezed. */
+        @media ((max-width: 767px), (pointer: coarse)) and (orientation: landscape) {
+            #hero-grid {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            #hero-interactive-container {
+                width: min(42vh, 260px) !important;
+                height: min(42vh, 260px) !important;
+            }
+
+            #bio-column {
+                flex: 1 1 auto;
+                min-width: 0;
+                padding-right: 24px !important;
+            }
+
+            .bio-paragraph {
+                text-align: left !important;
             }
         }
     </style>
@@ -479,8 +542,8 @@
 
         <!-- Slide 2: Technical Data Grid -->
         <div class="w-[100vw] h-full flex items-center justify-center px-margin-mobile md:px-margin-desktop shrink-0 relative pointer-events-auto pt-20">
-            <div class="w-full max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="md:col-span-2 flex items-center justify-center md:-translate-x-12 lg:-translate-x-20 select-none">
+            <div id="hero-grid" class="w-full max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div id="hero-image-col" class="md:col-span-2 flex items-center justify-center md:-translate-x-12 lg:-translate-x-20 select-none">
                     <div id="hero-interactive-container" class="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[460px] md:h-[460px] rounded-full overflow-hidden bg-surface-container-lowest cursor-none">
                         <div id="image-wipe-overlay" class="image-wipe-overlay" aria-hidden="true"></div>
                         
