@@ -313,7 +313,7 @@
            On mobile we instead let the page scroll straight down: hero title →
            bio slide → a plain black-to-white transition → the white projects
            section. No horizontal slide-jacking, no wave graphic, no parallax. */
-        @media (max-width: 767px) {
+        @media (max-width: 767px), (pointer: coarse) {
             #hero-section {
                 height: auto !important;
                 min-height: 100vh;
@@ -972,7 +972,14 @@
 
         const slider = document.getElementById('hero-slider');
         const nav = document.querySelector('nav');
-        const isMobile = window.matchMedia('(max-width: 767px)').matches;
+        // A phone in "Desktop Site" mode (or landscape) reports a wide
+        // viewport, so width alone misclassifies it as desktop — and the
+        // desktop experience assumes mouse-wheel input, which a touchscreen
+        // can't provide. Checking the primary pointer type catches that case:
+        // touch-primary devices get the simple mobile layout regardless of
+        // what width they report.
+        const isMobile = window.matchMedia('(max-width: 767px)').matches ||
+                          window.matchMedia('(pointer: coarse)').matches;
         
         if (window.gsap && window.ScrollTrigger) {
             window.gsap.registerPlugin(window.ScrollTrigger);
