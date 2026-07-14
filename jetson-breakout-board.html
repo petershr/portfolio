@@ -2,12 +2,18 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Jetson Breakout Board | Peter Shr</title>
+<meta name="description" content="4-layer PCB connecting the BNO055 IMU and NVIDIA Jetson Orin Nano for Triton Robotics.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jetson Breakout Board | Peter Shr">
+<meta property="og:description" content="4-layer PCB connecting the BNO055 IMU and NVIDIA Jetson Orin Nano for Triton Robotics.">
+<meta property="og:image" content="jetson_pcb_3d.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300..400&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="favicon.png" rel="icon" type="image/png">
 <script>
     tailwind.config = {
@@ -80,14 +86,14 @@
                     "margin-desktop": "64px"
                 },
                 "fontFamily": {
-                    "headline-md": ["Hanken Grotesk"],
-                    "headline-lg-mobile": ["Hanken Grotesk"],
-                    "headline-lg": ["Hanken Grotesk"],
-                    "display": ["Hanken Grotesk"],
-                    "body-md": ["Inter"],
-                    "body-lg": ["Inter"],
-                    "label-md": ["JetBrains Mono"],
-                    "label-sm": ["JetBrains Mono"]
+                    "headline-md": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "headline-lg-mobile": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "headline-lg": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "display": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "body-md": ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "body-lg": ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "label-md": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+                    "label-sm": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"]
                 },
                 "fontSize": {
                     "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
@@ -163,6 +169,14 @@
     }
     .lightbox-trigger {
         cursor: pointer;
+    }
+    /* Visible keyboard focus in the accent color */
+    a:focus-visible,
+    button:focus-visible,
+    .lightbox-trigger:focus-visible {
+        outline: 2px solid #bde5f2;
+        outline-offset: 3px;
+        border-radius: 2px;
     }
 </style>
 </head>
@@ -244,7 +258,7 @@
             <!-- Schematic (full width) -->
             <div class="flex flex-col md:col-span-2">
                 <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[1300/375]">
-                    <img class="w-full h-full object-cover" src="jetson_schematic.png" alt="Schematic">
+                    <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="jetson_schematic.png" alt="Schematic">
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Schematic</p>
             </div>
@@ -252,7 +266,7 @@
             <!-- First layer -->
             <div class="flex flex-col">
                 <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_pcb.png" alt="First layer (signal)">
+                    <img loading="lazy" decoding="async" class="w-full h-full object-contain" src="jetson_pcb.png" alt="First layer (signal)">
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">First layer (signal)</p>
             </div>
@@ -260,7 +274,7 @@
             <!-- Second layer -->
             <div class="flex flex-col">
                 <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_layer2_gnd.png" alt="Second layer (GND)">
+                    <img loading="lazy" decoding="async" class="w-full h-full object-contain" src="jetson_layer2_gnd.png" alt="Second layer (GND)">
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Second layer (GND)</p>
             </div>
@@ -268,7 +282,7 @@
             <!-- Third layer -->
             <div class="flex flex-col">
                 <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_layer3_power.png" alt="Third layer (power + signal)">
+                    <img loading="lazy" decoding="async" class="w-full h-full object-contain" src="jetson_layer3_power.png" alt="Third layer (power + signal)">
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Third layer (power + signal)</p>
             </div>
@@ -276,7 +290,7 @@
             <!-- Fourth layer -->
             <div class="flex flex-col">
                 <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_layer4_gnd.png" alt="Fourth layer (GND)">
+                    <img loading="lazy" decoding="async" class="w-full h-full object-contain" src="jetson_layer4_gnd.png" alt="Fourth layer (GND)">
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Fourth layer (GND)</p>
             </div>
@@ -320,8 +334,8 @@
 </footer>
 
 <!-- Lightbox -->
-<div id="lightbox">
-    <button id="lightbox-close">&times;</button>
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button id="lightbox-close" aria-label="Close image viewer">&times;</button>
     <img id="lightbox-img" src="" alt="">
 </div>
 
