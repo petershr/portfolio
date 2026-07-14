@@ -1,7 +1,7 @@
 <!DOCTYPE html><html class="dark" lang="en"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Jetson Breakout Board | Peter Shr</title>
+<title>PV System Compliance | Peter Shr</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -178,7 +178,7 @@
 <main class="flex-grow relative z-10 pt-32 pb-24">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
 
-    <!-- Back link -->
+        <!-- Back link -->
     <a href="index.html" class="group inline-flex items-center gap-2 text-label-md font-label-md font-bold uppercase tracking-widest text-terminal-white hover:text-primary transition-colors duration-300 mb-8">
         <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-x-1">&larr;</span>
         Back
@@ -186,16 +186,17 @@
 
     <!-- Hero -->
     <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden mb-6">
-        <div class="h-80 md:h-[420px] w-full overflow-hidden bg-[#808080] relative">
-            <img class="w-full h-full object-contain" src="jetson_pcb_3d.png" alt="Jetson Breakout Board 3D render">
+        <div class="h-80 md:h-[420px] w-full overflow-hidden bg-surface-container-highest relative">
+            <img class="w-full h-full object-cover" src="side_heli.png" alt="HelioScope wiring zone editor over a commercial solar array">
         </div>
         <div class="p-6 md:p-8">
-            <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-2">Jetson Breakout Board</h1>
-            <p class="text-body-lg font-body-lg text-secondary mb-4">4-layer PCB connecting the BNO055 IMU and NVIDIA Jetson Orin Nano</p>
+            <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-2">PV System Compliance</h1>
+            <p class="text-body-lg font-body-lg text-secondary mb-4">NEC 120% rule compliance analysis and a 688 kW solar carport design for a Viasat parking structure</p>
             <div class="flex flex-wrap gap-2">
-                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">PCB Design</span>
-                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Hardware</span>
-                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Feb 2026 &ndash; Mar 2026</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Power Systems</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Compliance</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">HelioScope</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Mar 2026 &ndash; Jul 2026</span>
             </div>
         </div>
     </div>
@@ -204,19 +205,19 @@
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
         <div class="glass-panel border border-surface-stroke rounded-lg p-4">
             <p class="text-label-sm font-label-sm text-secondary mb-1">Role</p>
-            <p class="text-body-md font-body-md text-terminal-white">PCB Designer</p>
+            <p class="text-body-md font-body-md text-terminal-white">Electrical Engineer</p>
         </div>
         <div class="glass-panel border border-surface-stroke rounded-lg p-4">
             <p class="text-label-sm font-label-sm text-secondary mb-1">Tools</p>
-            <p class="text-body-md font-body-md text-terminal-white">Altium Designer</p>
+            <p class="text-body-md font-body-md text-terminal-white">HelioScope</p>
         </div>
         <div class="glass-panel border border-surface-stroke rounded-lg p-4">
-            <p class="text-label-sm font-label-sm text-secondary mb-1">Layers</p>
-            <p class="text-body-md font-body-md text-terminal-white">4</p>
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Standard</p>
+            <p class="text-body-md font-body-md text-terminal-white">NEC 120% Rule</p>
         </div>
         <div class="glass-panel border border-surface-stroke rounded-lg p-4">
             <p class="text-label-sm font-label-sm text-secondary mb-1">Status</p>
-            <p class="text-body-md font-body-md text-terminal-white">Deployed &times;3</p>
+            <p class="text-body-md font-body-md text-terminal-white">Presented to Viasat</p>
         </div>
     </div>
 
@@ -224,9 +225,13 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Problem</h2>
         <p class="text-body-md font-body-md text-secondary">
-            Wire connections between the Jetson Orin Nano and BNO055 IMU were unreliable, with poor debug accessibility.
-            The board needed to support sensor testing without removing the breakout board, all while staying within
-            tight size, budget, and temperature constraints.
+            Needed to increase adoption of clean energy by proposing viable PV systems to commercial
+            building owners, with designs qualifying for tax incentives by a July deadline 
+            (5% of budget committed) while adhering to NEC 705.12. This included designing a solar 
+            carport layout for a Viasat parking structure from scratch, working around site constraints 
+            such as walls, lighting, and vehicle clearance heights. The initial single-zone wiring design 
+            had a PCC Home Run voltage drop of 13% (far above safety guidance) and a system efficiency of 
+            only 82%.
         </p>
     </section>
 
@@ -234,65 +239,50 @@
     <section class="mb-10">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Design and approach</h2>
         <p class="text-body-md font-body-md text-secondary max-w-3xl mb-6">
-            Designed a 4-layer PCB with dedicated GND planes for shielding and improved signal integrity on IMU
-            communication lines. Used right-angle XH connectors for UART and I2C to make plugging and unplugging fast
-            during debug. Added a power switch wired to UART for manual on/off control, and included external pull-up
-            resistors as a backup to the Jetson's internal ones for more reliable I2C communication.
+            Used HelioScope to model annual system production and losses across multiple campuses, calculating the 
+            NEC 120% Rule from physical site data (main busbar and breaker ratings) and inverter datasheets to specify 
+            compatible inverters, meters, CTs, and cabling, including a Power Control System for sites that would otherwise 
+            violate the 120% rule. For the Viasat carport specifically, calculated the max inverter current under the 120A 
+            breaker constraint (96A max per the 120% rule) to select a compliant inverter (Sunny Tripower CORE1 62-US, 80A max output), 
+            upgraded the PCC Home Run conductor from 4/0 AWG to 500 MCM copper, implemented 4 wiring zones, relocated combiner boxes, 
+            and optimized mounting height and tilt angle despite the significant distance to the electrical room.
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 my-24">
+            <!-- Aerial view -->
+            <div class="flex flex-col">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[991/965]">
+                    <img class="w-full h-full object-cover" src="solar_carport_aerial.png" alt="688 kW Viasat solar carport aerial view">
+                </div>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">688 kW Viasat carport (aerial)</p>
+            </div>
 
-            <!-- Schematic (full width) -->
+            <!-- One-line diagram -->
+            <div class="flex flex-col">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[991/965]">
+                    <img class="w-full h-full object-contain" src="solar_carport_wiring_diagram.png" alt="Solar carport one-line wiring diagram">
+                </div>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Carport one-line diagram</p>
+            </div>
+
+            <!-- Simulation report (full width) -->
             <div class="flex flex-col md:col-span-2">
-                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[1300/375]">
-                    <img class="w-full h-full object-cover" src="jetson_schematic.png" alt="Schematic">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img class="w-full h-144 object-contain" src="carport_analysis.png" alt="Solar carport simulation and analysis">
                 </div>
-                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Schematic</p>
-            </div>
-
-            <!-- First layer -->
-            <div class="flex flex-col">
-                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_pcb.png" alt="First layer (signal)">
-                </div>
-                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">First layer (signal)</p>
-            </div>
-
-            <!-- Second layer -->
-            <div class="flex flex-col">
-                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_layer2_gnd.png" alt="Second layer (GND)">
-                </div>
-                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Second layer (GND)</p>
-            </div>
-
-            <!-- Third layer -->
-            <div class="flex flex-col">
-                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_layer3_power.png" alt="Third layer (power + signal)">
-                </div>
-                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Third layer (power + signal)</p>
-            </div>
-
-            <!-- Fourth layer -->
-            <div class="flex flex-col">
-                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_layer4_gnd.png" alt="Fourth layer (GND)">
-                </div>
-                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Fourth layer (GND)</p>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Carport simulation report</p>
             </div>
 
         </div>
-    </section>
 
     <!-- Challenges -->
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Challenges</h2>
         <p class="text-body-md font-body-md text-secondary">
-            The first revision relied on the Jetson's internal pull-up resistors for I2C, which looked fine on 
-            the bench but became unreliable once the board was integrated into the full robot, since longer wiring 
-            runs and additional bus traffic pushed signal integrity past what the internal pull-ups could hold up. 
-            Rather than redesign the bus topology, external pull-up resistors were added as a backup, which fixed 
-            the reliability issue without touching the rest of the layout.
+            The initial single-zone wiring design for the Viasat carport looked reasonable on paper, but modeling 
+            the full run back to the electrical room revealed a PCC Home Run voltage drop of 13%, far outside safety 
+            guidance and quietly capping system efficiency at 82%. Fixing it wasn't a single change: it took splitting 
+            the array into 4 wiring zones, relocating combiner boxes, and upsizing the PCC Home Run conductor to 500 MCM 
+            copper before the voltage drop came down to a compliant 1.7%.
         </p>
     </section>
 
@@ -300,11 +290,14 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Results</h2>
         <p class="text-body-md font-body-md text-secondary">
-            Completed DRC and applied proper trace widths for power delivery and signal integrity. Fully manufactured
-            and assembled across all 3 Triton Robotics robots. Additional breakout pins eliminated the need for
-            rewiring during debug.
+            Finalized string configurations and inverter placements, determined where a Power Control System was needed 
+            to work around the 120% Rule, and demonstrated economic viability through HelioScope simulations, completing 
+            a technical proposal ahead of the Safe Harbor deadline. For the Viasat carport, reduced the PCC Home Run voltage 
+            drop from 13% to 1.7% and raised system performance ratio from 82.1% to 85.0%, achieving NEC 120% busbar compliance; 
+            the design was included in CCE's final report presented to Viasat.
         </p>
     </section>
+
 
 </div>
 </main>

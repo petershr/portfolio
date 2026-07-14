@@ -1,7 +1,7 @@
 <!DOCTYPE html><html class="dark" lang="en"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Jetson Breakout Board | Peter Shr</title>
+<title>Custom ISM330DLC IMU PCB | Peter Shr</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -178,7 +178,7 @@
 <main class="flex-grow relative z-10 pt-32 pb-24">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
 
-    <!-- Back link -->
+        <!-- Back link -->
     <a href="index.html" class="group inline-flex items-center gap-2 text-label-md font-label-md font-bold uppercase tracking-widest text-terminal-white hover:text-primary transition-colors duration-300 mb-8">
         <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-x-1">&larr;</span>
         Back
@@ -187,15 +187,16 @@
     <!-- Hero -->
     <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden mb-6">
         <div class="h-80 md:h-[420px] w-full overflow-hidden bg-[#808080] relative">
-            <img class="w-full h-full object-contain" src="jetson_pcb_3d.png" alt="Jetson Breakout Board 3D render">
+            <img class="w-full h-full object-contain" src="ism_3d_render.png" alt="Custom ISM330DLC IMU PCB 3D render">
         </div>
         <div class="p-6 md:p-8">
-            <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-2">Jetson Breakout Board</h1>
-            <p class="text-body-lg font-body-lg text-secondary mb-4">4-layer PCB connecting the BNO055 IMU and NVIDIA Jetson Orin Nano</p>
+            <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-2">Custom ISM330DLC IMU PCB</h1>
+            <p class="text-body-lg font-body-lg text-secondary mb-4">Custom IMU breakout PCB built from scratch in EasyEDA for Triton Robotics' autonomous subteam</p>
             <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">PCB Design</span>
-                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Hardware</span>
-                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Feb 2026 &ndash; Mar 2026</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">EasyEDA</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Embedded Systems</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Apr 2026</span>
             </div>
         </div>
     </div>
@@ -208,15 +209,15 @@
         </div>
         <div class="glass-panel border border-surface-stroke rounded-lg p-4">
             <p class="text-label-sm font-label-sm text-secondary mb-1">Tools</p>
-            <p class="text-body-md font-body-md text-terminal-white">Altium Designer</p>
+            <p class="text-body-md font-body-md text-terminal-white">EasyEDA</p>
         </div>
         <div class="glass-panel border border-surface-stroke rounded-lg p-4">
             <p class="text-label-sm font-label-sm text-secondary mb-1">Layers</p>
-            <p class="text-body-md font-body-md text-terminal-white">4</p>
+            <p class="text-body-md font-body-md text-terminal-white">2</p>
         </div>
         <div class="glass-panel border border-surface-stroke rounded-lg p-4">
             <p class="text-label-sm font-label-sm text-secondary mb-1">Status</p>
-            <p class="text-body-md font-body-md text-terminal-white">Deployed &times;3</p>
+            <p class="text-body-md font-body-md text-terminal-white">Manufactured &amp; Deployed</p>
         </div>
     </div>
 
@@ -224,9 +225,9 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Problem</h2>
         <p class="text-body-md font-body-md text-secondary">
-            Wire connections between the Jetson Orin Nano and BNO055 IMU were unreliable, with poor debug accessibility.
-            The board needed to support sensor testing without removing the breakout board, all while staying within
-            tight size, budget, and temperature constraints.
+            Needed a custom IMU PCB removing SPI support entirely, but the base schematic had ambiguous reference
+            designators inherited from reused parts. The design also called for a larger XH connector to match
+            wiring needs without growing the board's footprint.
         </p>
     </section>
 
@@ -234,53 +235,35 @@
     <section class="mb-10">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Design and approach</h2>
         <p class="text-body-md font-body-md text-secondary max-w-3xl mb-6">
-            Designed a 4-layer PCB with dedicated GND planes for shielding and improved signal integrity on IMU
-            communication lines. Used right-angle XH connectors for UART and I2C to make plugging and unplugging fast
-            during debug. Added a power switch wired to UART for manual on/off control, and included external pull-up
-            resistors as a backup to the Jetson's internal ones for more reliable I2C communication.
+            Removed SPI entirely and replaced the original connectors with XH. Rebuilt the schematic and PCB layout
+            from scratch to resolve duplicate and unclear reference designators before finalizing routing. Placed
+            decoupling capacitors close to noise-sensitive components, researching capacitor behavior to justify
+            each placement rather than defaulting to convention.
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 my-24">
-
             <!-- Schematic (full width) -->
             <div class="flex flex-col md:col-span-2">
-                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[1300/375]">
-                    <img class="w-full h-full object-cover" src="jetson_schematic.png" alt="Schematic">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img class="w-full h-144 object-contain" src="ism_schematic.png" alt="ISM330DLC schematic">
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Schematic</p>
             </div>
 
             <!-- First layer -->
             <div class="flex flex-col">
-                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_pcb.png" alt="First layer (signal)">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img class="w-full h-90 object-contain" src="custom_ism.png" alt="First layer (signal)">
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">First layer (signal)</p>
             </div>
 
             <!-- Second layer -->
             <div class="flex flex-col">
-                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_layer2_gnd.png" alt="Second layer (GND)">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img class="w-full h-90 object-contain" src="custom_ism_back.png" alt="Second layer (GND)">
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Second layer (GND)</p>
             </div>
-
-            <!-- Third layer -->
-            <div class="flex flex-col">
-                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_layer3_power.png" alt="Third layer (power + signal)">
-                </div>
-                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Third layer (power + signal)</p>
-            </div>
-
-            <!-- Fourth layer -->
-            <div class="flex flex-col">
-                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden aspect-[110/49]">
-                    <img class="w-full h-full object-contain" src="jetson_layer4_gnd.png" alt="Fourth layer (GND)">
-                </div>
-                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Fourth layer (GND)</p>
-            </div>
-
         </div>
     </section>
 
@@ -288,11 +271,11 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Challenges</h2>
         <p class="text-body-md font-body-md text-secondary">
-            The first revision relied on the Jetson's internal pull-up resistors for I2C, which looked fine on 
-            the bench but became unreliable once the board was integrated into the full robot, since longer wiring 
-            runs and additional bus traffic pushed signal integrity past what the internal pull-ups could hold up. 
-            Rather than redesign the bus topology, external pull-up resistors were added as a backup, which fixed 
-            the reliability issue without touching the rest of the layout.
+            The base schematic this board was adapted from had duplicate and ambiguous reference designators left 
+            over from reused parts, not obvious until mid-layout, when it became clear which components mapped to 
+            which footprints. Rather than patch around the confusion, the schematic and PCB layout were rebuilt from 
+            scratch with clean designators before finalizing routing, which cost some time upfront but avoided 
+            compounding the ambiguity into the final board.
         </p>
     </section>
 
@@ -300,11 +283,12 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Results</h2>
         <p class="text-body-md font-body-md text-secondary">
-            Completed DRC and applied proper trace widths for power delivery and signal integrity. Fully manufactured
-            and assembled across all 3 Triton Robotics robots. Additional breakout pins eliminated the need for
-            rewiring during debug.
+            Fully manufactured and assembled with all of Triton Robotics' robots before the RoboMasters Robotics
+            Competition. Deepened understanding of decoupling capacitor placement and behavior, as well as design
+            practices around ground plane and via placement to preserve signal integrity.
         </p>
     </section>
+
 
 </div>
 </main>
