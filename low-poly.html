@@ -296,8 +296,8 @@
             if (!e.touches || !e.touches.length) return;
             const touch = e.touches[0];
             const rect = tiltEl.getBoundingClientRect();
-            const px = (touch.clientX - rect.left) / rect.width;
-            const py = (touch.clientY - rect.top) / rect.height;
+            const px = Math.min(1, Math.max(0, (touch.clientX - rect.left) / rect.width));
+            const py = Math.min(1, Math.max(0, (touch.clientY - rect.top) / rect.height));
             targetX = (px - 0.5) * maxTilt * 2;
             targetY = -(py - 0.5) * maxTilt * 2;
             start();
