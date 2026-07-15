@@ -202,7 +202,7 @@
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex items-center justify-center">
 
     <div id="rex-persp" style="perspective: 1400px;">
-        <div id="rex-tilt" class="relative bg-white" style="width: min(90vw, 960px); aspect-ratio: 1961 / 1120; will-change: transform;">
+        <div id="rex-tilt" class="relative bg-white" style="width: min(90vw, 960px); aspect-ratio: 1961 / 1120; will-change: transform, box-shadow; box-shadow: 0px 24px 50px -6px rgba(189, 229, 242, 0.25);">
             <img class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_1.png" alt="" style="z-index: 1;">
             <img id="rex-layer-2" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_2.png" alt="" style="z-index: 2;">
             <img id="rex-layer-3" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_3.png" alt="" style="z-index: 3;">
@@ -260,6 +260,18 @@
             if (layer4) layer4.style.transform = `translate(${(nx * 72).toFixed(2)}px, ${(ny * 72).toFixed(2)}px)`;
             if (layer5) layer5.style.transform = `translate(${(nx * 108).toFixed(2)}px, ${(ny * 108).toFixed(2)}px)`;
 
+            // Dynamic "shadow": on a pure-black page a real dark shadow is
+            // invisible, so this is rendered as a light glow instead — same
+            // idea as Flutter's ShadowProjectorConfig (shifts opposite the
+            // tilt direction, grows in blur/intensity with tilt magnitude).
+            const tiltMagnitude = Math.min(1, Math.sqrt(nx * nx + ny * ny));
+            const shadowX = -nx * 46;
+            const shadowY = 24 - ny * 46;
+            const blur = 50 + tiltMagnitude * 70;
+            const alpha = 0.25 + tiltMagnitude * 0.35;
+            tiltEl.style.boxShadow =
+                `${shadowX.toFixed(1)}px ${shadowY.toFixed(1)}px ${blur.toFixed(1)}px -6px rgba(189, 229, 242, ${alpha.toFixed(2)})`;
+
             const settled =
                 Math.abs(targetX - currentX) < 0.02 &&
                 Math.abs(targetY - currentY) < 0.02;
@@ -279,6 +291,25 @@
             targetY = -(py - 0.5) * maxTilt * 2;
             start();
         });
+
+        function handleTouch(e) {
+            if (!e.touches || !e.touches.length) return;
+            const touch = e.touches[0];
+            const rect = tiltEl.getBoundingClientRect();
+            const px = (touch.clientX - rect.left) / rect.width;
+            const py = (touch.clientY - rect.top) / rect.height;
+            targetX = (px - 0.5) * maxTilt * 2;
+            targetY = -(py - 0.5) * maxTilt * 2;
+            start();
+        }
+
+        persp.addEventListener('touchstart', (e) => {
+            handleTouch(e);
+        }, { passive: true });
+
+        persp.addEventListener('touchmove', (e) => {
+            handleTouch(e);
+        }, { passive: true });
 
         persp.addEventListener('mouseleave', () => {
             targetX = 0;
