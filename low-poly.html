@@ -8,7 +8,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Google Slides Low Poly Art | Peter Shr">
 <meta property="og:description" content="A low poly digital illustration built entirely with Google Slides shape tools.">
-<meta property="og:image" content="rex_4.png">
+<meta property="og:image" content="rex_5.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -206,7 +206,8 @@
             <img class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_1.png" alt="" style="z-index: 1;">
             <img id="rex-layer-2" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_2.png" alt="" style="z-index: 2;">
             <img id="rex-layer-3" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_3.png" alt="" style="z-index: 3;">
-            <img id="rex-layer-4" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_4.png" alt="Google Slides Low Poly Art" style="z-index: 4;">
+            <img id="rex-layer-4" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_4.png" alt="" style="z-index: 4;">
+            <img id="rex-layer-5" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_5.png" alt="Google Slides Low Poly Art" style="z-index: 5;">
         </div>
     </div>
 
@@ -232,6 +233,7 @@
         const layer2 = document.getElementById('rex-layer-2');
         const layer3 = document.getElementById('rex-layer-3');
         const layer4 = document.getElementById('rex-layer-4');
+        const layer5 = document.getElementById('rex-layer-5');
         if (!persp || !tiltEl) return;
 
         const maxTilt = 10;
@@ -256,6 +258,7 @@
             if (layer2) layer2.style.transform = `translate(${(nx * 22).toFixed(2)}px, ${(ny * 22).toFixed(2)}px)`;
             if (layer3) layer3.style.transform = `translate(${(nx * 44).toFixed(2)}px, ${(ny * 44).toFixed(2)}px)`;
             if (layer4) layer4.style.transform = `translate(${(nx * 72).toFixed(2)}px, ${(ny * 72).toFixed(2)}px)`;
+            if (layer5) layer5.style.transform = `translate(${(nx * 108).toFixed(2)}px, ${(ny * 108).toFixed(2)}px)`;
 
             const settled =
                 Math.abs(targetX - currentX) < 0.02 &&
