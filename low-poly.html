@@ -1,0 +1,296 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Google Slides Low Poly Art | Peter Shr</title>
+<meta name="description" content="A low poly digital illustration built entirely with Google Slides shape tools.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google Slides Low Poly Art | Peter Shr">
+<meta property="og:description" content="A low poly digital illustration built entirely with Google Slides shape tools.">
+<meta property="og:image" content="rex_4.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="favicon.png" rel="icon" type="image/png">
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "on-secondary-fixed": "#151c27",
+                    "secondary-container": "#404754",
+                    "primary-fixed": "#c0e9f7",
+                    "surface-container-lowest": "#070d1f",
+                    "secondary": "#c0c7d6",
+                    "on-primary": "#073540",
+                    "tertiary-fixed-dim": "#bcc7de",
+                    "secondary-fixed": "#dce2f3",
+                    "surface-container": "#191f31",
+                    "accent-glow": "rgba(161, 201, 214, 0.15)",
+                    "inverse-primary": "#3d646f",
+                    "on-tertiary": "#263143",
+                    "surface-container-low": "#151b2d",
+                    "tertiary": "#d4dff7",
+                    "outline-variant": "#41484a",
+                    "tertiary-fixed": "#d8e3fb",
+                    "tertiary-container": "#b8c3da",
+                    "background": "#000000",
+                    "on-tertiary-fixed": "#111c2d",
+                    "surface-bright": "#33394c",
+                    "primary-container": "#a1c9d6",
+                    "on-primary-fixed-variant": "#244c57",
+                    "on-secondary": "#2a313d",
+                    "inverse-on-surface": "#2a3043",
+                    "surface-tint": "#a5cdda",
+                    "surface-stroke": "#334155",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#c0c7d6",
+                    "terminal-white": "#F8FAFC",
+                    "surface-container-highest": "#2e3447",
+                    "primary": "#bde5f2",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-container": "#455064",
+                    "surface-variant": "#2e3447",
+                    "surface": "#0c1324",
+                    "on-secondary-fixed-variant": "#404754",
+                    "on-primary-container": "#2e5560",
+                    "on-surface-variant": "#c1c8ca",
+                    "surface-container-high": "#23293c",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "on-background": "#dce1fb",
+                    "surface-dim": "#0c1324",
+                    "primary-fixed-dim": "#a5cdda",
+                    "on-error": "#690005",
+                    "on-surface": "#dce1fb",
+                    "on-secondary-container": "#aeb5c5",
+                    "error": "#ffb4ab",
+                    "outline": "#8b9295",
+                    "on-primary-fixed": "#001f27",
+                    "inverse-surface": "#dce1fb"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "9999px"
+                },
+                "spacing": {
+                    "base": "4px",
+                    "container-max": "1200px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px"
+                },
+                "fontFamily": {
+                    "headline-md": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "headline-lg-mobile": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "headline-lg": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "display": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "body-md": ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "body-lg": ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "label-md": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+                    "label-sm": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"]
+                },
+                "fontSize": {
+                    "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                    "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "label-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                    "label-sm": ["12px", { "lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "400" }]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .card-hover { transition: all 0.3s ease; }
+    .card-hover:hover {
+        border-color: #bde5f2;
+        box-shadow: 0 0 20px rgba(161, 201, 214, 0.15);
+        transform: translateY(-2px);
+    }
+    .glass-panel {
+        background: rgba(25, 31, 49, 0.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    .font-futura {
+        font-family: 'Jost', sans-serif !important;
+    }
+    .font-futura-light {
+        font-family: 'Jost', sans-serif !important;
+        font-weight: 300 !important;
+    }
+    /* Lightbox */
+    #lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        align-items: center;
+        justify-content: center;
+    }
+    #lightbox.active { display: flex; }
+    #lightbox img {
+        max-width: 90vw;
+        max-height: 88vh;
+        object-fit: contain;
+        border-radius: 0.25rem;
+        box-shadow: 0 0 60px rgba(0,0,0,0.6);
+    }
+    #lightbox-close {
+        position: fixed;
+        top: 20px;
+        right: 28px;
+        color: #F8FAFC;
+        font-size: 2rem;
+        font-weight: 300;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+        background: none;
+        border: none;
+        padding: 4px 8px;
+    }
+    #lightbox-close:hover { color: #bde5f2; }
+    .lightbox-trigger { cursor: pointer; }
+
+    /* Keyboard key badge */
+    .key-badge {
+        display: inline-block;
+        background: rgba(25, 31, 49, 0.9);
+        border: 1px solid #334155;
+        border-bottom-width: 2px;
+        border-radius: 4px;
+        padding: 1px 8px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        color: #bde5f2;
+        letter-spacing: 0.05em;
+        vertical-align: middle;
+    }
+    /* Visible keyboard focus in the accent color */
+    a:focus-visible,
+    button:focus-visible,
+    .lightbox-trigger:focus-visible {
+        outline: 2px solid #bde5f2;
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
+</style>
+</head>
+<body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col">
+
+<!-- Navbar -->
+<nav class="fixed top-0 w-full z-50 bg-white/[0.06] backdrop-blur-[18px] border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.18)] text-primary text-label-md font-label-md uppercase tracking-widest">
+  <div class="flex items-center justify-center py-4">
+    <a href="index.html" class="text-headline-md font-headline-md font-bold tracking-tighter text-terminal-white cursor-pointer">PETER SHR</a>
+  </div>
+</nav>
+
+<main class="flex-grow relative z-10 pt-32 pb-24 flex items-center">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex items-center justify-center">
+
+    <div id="rex-persp" style="perspective: 1400px;">
+        <div id="rex-tilt" class="relative bg-white" style="width: min(90vw, 960px); aspect-ratio: 1961 / 1120; will-change: transform;">
+            <img class="absolute inset-0 w-full h-full" src="rex_1.png" alt="" style="z-index: 1;">
+            <img id="rex-layer-2" class="absolute inset-0 w-full h-full" src="rex_2.png" alt="" style="z-index: 2;">
+            <img id="rex-layer-3" class="absolute inset-0 w-full h-full" src="rex_3.png" alt="" style="z-index: 3;">
+            <img id="rex-layer-4" class="absolute inset-0 w-full h-full" src="rex_4.png" alt="Google Slides Low Poly Art" style="z-index: 4;">
+        </div>
+    </div>
+
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-black text-primary w-full py-12 border-t border-surface-stroke flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter relative z-20">
+    <div class="text-[20px] font-futura text-terminal-white"><b>STUFF BY PETER SHR</b></div>
+    <div class="flex gap-6 text-[20px] font-futura-light">
+        <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="https://www.linkedin.com/in/peter-shr/">LinkedIn</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="https://github.com/petershr">GitHub</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="mailto:pshr@ucsd.edu">pshr@ucsd.edu</a>
+    </div>
+</footer>
+
+
+<script>
+(function() {
+    function initRexTilt() {
+        const persp  = document.getElementById('rex-persp');
+        const tiltEl = document.getElementById('rex-tilt');
+        const layer2 = document.getElementById('rex-layer-2');
+        const layer3 = document.getElementById('rex-layer-3');
+        const layer4 = document.getElementById('rex-layer-4');
+        if (!persp || !tiltEl) return;
+
+        const maxTilt = 10;
+        let targetX = 0, targetY = 0;
+        let currentX = 0, currentY = 0;
+        let raf = null;
+
+        function apply() {
+            currentX += (targetX - currentX) * 0.2;
+            currentY += (targetY - currentY) * 0.2;
+
+            tiltEl.style.transform =
+                `rotateX(${currentY.toFixed(2)}deg) rotateY(${currentX.toFixed(2)}deg)`;
+
+            // Normalized -1..1 tilt amount drives per-layer parallax offsets —
+            // deeper layers (higher z-index, closer to the viewer) move more,
+            // same idea as the Flutter TiltParallax reference (offsets of
+            // 10 / 20 / 30 stacked on top of a static base layer).
+            const nx = currentX / (maxTilt * 2);
+            const ny = currentY / (maxTilt * 2);
+
+            if (layer2) layer2.style.transform = `translate(${(nx * 22).toFixed(2)}px, ${(ny * 22).toFixed(2)}px)`;
+            if (layer3) layer3.style.transform = `translate(${(nx * 44).toFixed(2)}px, ${(ny * 44).toFixed(2)}px)`;
+            if (layer4) layer4.style.transform = `translate(${(nx * 72).toFixed(2)}px, ${(ny * 72).toFixed(2)}px)`;
+
+            const settled =
+                Math.abs(targetX - currentX) < 0.02 &&
+                Math.abs(targetY - currentY) < 0.02;
+
+            raf = settled ? null : requestAnimationFrame(apply);
+        }
+
+        function start() {
+            if (!raf) raf = requestAnimationFrame(apply);
+        }
+
+        persp.addEventListener('mousemove', (e) => {
+            const rect = tiltEl.getBoundingClientRect();
+            const px = (e.clientX - rect.left) / rect.width;
+            const py = (e.clientY - rect.top) / rect.height;
+            targetX = (px - 0.5) * maxTilt * 2;
+            targetY = -(py - 0.5) * maxTilt * 2;
+            start();
+        });
+
+        persp.addEventListener('mouseleave', () => {
+            targetX = 0;
+            targetY = 0;
+            start();
+        });
+
+        persp.addEventListener('touchend', () => {
+            targetX = 0;
+            targetY = 0;
+            start();
+        }, { passive: true });
+    }
+    window.addEventListener('load', initRexTilt);
+})();
+</script>
+
+</body></html>
