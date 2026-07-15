@@ -308,8 +308,9 @@
         }, { passive: true });
 
         persp.addEventListener('touchmove', (e) => {
+            e.preventDefault(); 
             handleTouch(e);
-        }, { passive: true });
+        }, { passive: false });
 
         persp.addEventListener('mouseleave', () => {
             targetX = 0;
