@@ -285,10 +285,10 @@
             const nx = currentX / (maxTilt * 2);
             const ny = currentY / (maxTilt * 2);
 
-            if (layer2) layer2.style.transform = `translate(${(nx * 22).toFixed(2)}px, ${(ny * 22).toFixed(2)}px)`;
-            if (layer3) layer3.style.transform = `translate(${(nx * 44).toFixed(2)}px, ${(ny * 44).toFixed(2)}px)`;
-            if (layer4) layer4.style.transform = `translate(${(nx * 72).toFixed(2)}px, ${(ny * 72).toFixed(2)}px)`;
-            if (layer5) layer5.style.transform = `translate(${(nx * 108).toFixed(2)}px, ${(ny * 108).toFixed(2)}px)`;
+            if (layer2) layer2.style.transform = `translate(${(nx * 22).toFixed(2)}px, ${(-ny * 22).toFixed(2)}px)`;
+            if (layer3) layer3.style.transform = `translate(${(nx * 44).toFixed(2)}px, ${(-ny * 44).toFixed(2)}px)`;
+            if (layer4) layer4.style.transform = `translate(${(nx * 72).toFixed(2)}px, ${(-ny * 72).toFixed(2)}px)`;
+            if (layer5) layer5.style.transform = `translate(${(nx * 108).toFixed(2)}px, ${(-ny * 108).toFixed(2)}px)`;
 
             // Dynamic "shadow": on a pure-black page a real dark shadow is
             // invisible, so this is rendered as a light glow instead — same
