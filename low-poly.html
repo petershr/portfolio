@@ -232,8 +232,7 @@
         <img id="laputa-img"
              src="laputa.png"
              alt="Castle in the Sky Low Poly Art"
-             loading="lazy"
-             decoding="async">
+             loading="lazy">
     </div>
 </main>
 
@@ -353,6 +352,11 @@
         let index = 0;
         const img = document.getElementById('laputa-img');
         if (!img) return;
+
+        window.addEventListener('load', () => {
+            frames.slice(1).forEach(src => { new Image().src = src; });
+        });
+
         img.addEventListener('click', () => {
             index = (index + 1) % frames.length;
             img.src = frames[index];
