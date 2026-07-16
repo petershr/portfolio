@@ -187,6 +187,22 @@
         outline-offset: 3px;
         border-radius: 2px;
     }
+
+    #laputa-section {
+        width: 100%;
+        margin-top: 160px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 60px;
+    }
+
+    #laputa-img {
+        width: min(88vw, 880px);
+        cursor: pointer;
+        pointer-events: auto;
+        user-select: none;
+    }
 </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col">
@@ -198,20 +214,27 @@
   </div>
 </nav>
 
-<main class="flex-grow relative z-10 pt-32 pb-24 flex items-center">
-<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex items-center justify-center">
+<main class="flex-grow relative z-10 pt-32 pb-24 flex flex-col items-center">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex items-center justify-center">
 
-    <div id="rex-persp" style="perspective: 1400px;">
-        <div id="rex-tilt" class="relative bg-white" style="width: min(90vw, 960px); aspect-ratio: 1961 / 1120; will-change: transform, box-shadow; box-shadow: 0px 24px 50px -6px rgba(189, 229, 242, 0.25);">
-            <img class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_1.png" alt="" style="z-index: 1;">
-            <img id="rex-layer-2" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_2.png" alt="" style="z-index: 2;">
-            <img id="rex-layer-3" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_3.png" alt="" style="z-index: 3;">
-            <img id="rex-layer-4" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_4.png" alt="" style="z-index: 4;">
-            <img id="rex-layer-5" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_5.png" alt="Google Slides Low Poly Art" style="z-index: 5;">
+        <div id="rex-persp" style="perspective: 1400px;">
+            <div id="rex-tilt" class="relative bg-white" style="width: min(90vw, 960px); aspect-ratio: 1961 / 1120; will-change: transform, box-shadow; box-shadow: 0px 24px 50px -6px rgba(189, 229, 242, 0.25);">
+                <img class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_1.png" alt="" style="z-index: 1;">
+                <img id="rex-layer-2" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_2.png" alt="" style="z-index: 2;">
+                <img id="rex-layer-3" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_3.png" alt="" style="z-index: 3;">
+                <img id="rex-layer-4" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_4.png" alt="" style="z-index: 4;">
+                <img id="rex-layer-5" class="absolute inset-0 w-full h-full" loading="lazy" decoding="async" src="rex_5.png" alt="Google Slides Low Poly Art" style="z-index: 5;">
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
+    <div id="laputa-section">
+        <img id="laputa-img"
+             src="laputa.png"
+             alt="Castle in the Sky Low Poly Art"
+             loading="lazy"
+             decoding="async">
+    </div>
 </main>
 
 <!-- Footer -->
@@ -325,6 +348,16 @@
         }, { passive: true });
     }
     window.addEventListener('load', initRexTilt);
+    (function() {
+        const frames = ['laputa.png', 'laputa_1.png', 'laputa_2.png', 'laputa_3.png'];
+        let index = 0;
+        const img = document.getElementById('laputa-img');
+        if (!img) return;
+        img.addEventListener('click', () => {
+            index = (index + 1) % frames.length;
+            img.src = frames[index];
+        });
+    })();
 })();
 </script>
 
