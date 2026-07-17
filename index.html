@@ -2077,6 +2077,41 @@ void main() {
             }
         }
 
+        // ---- Sync rain shader height to actual content height (mobile only) ----
+        // The shader's "rain slows down" moment happens at a fixed fraction
+        // near the bottom of the canvas itself. On mobile the canvas height
+        // was a guessed vh value, but slide content (bio text especially)
+        // can render taller than that guess on some screens, so the slow-down
+        // moment ended up appearing well before the actual bottom of the
+        // black area. Measuring the real rendered height and setting it
+        // directly fixes that regardless of how tall the content ends up.
+        if (isMobile) {
+            const shaderCanvas = document.getElementById('hero-shader');
+            const heroSectionEl = document.getElementById('hero-section');
+            const waveTransitionEl = document.querySelector('.wave-transition');
+
+            function syncMobileShaderHeight() {
+                if (!shaderCanvas || !heroSectionEl || !waveTransitionEl) return;
+                const totalHeight = heroSectionEl.offsetHeight + waveTransitionEl.offsetHeight;
+                if (totalHeight > 0) {
+                    shaderCanvas.style.height = `${totalHeight}px`;
+                }
+            }
+
+            // Run once layout has settled (fonts/images can still shift height
+            // right after load), then keep it in sync on resize/orientation change.
+            window.addEventListener('load', () => {
+                requestAnimationFrame(() => requestAnimationFrame(syncMobileShaderHeight));
+            });
+
+            let resizeTimeout = null;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(syncMobileShaderHeight, 150);
+            });
+        }
+
+
         // ---- Scroll position memory for project pages ----
         // Save exactly where we were on this page right before following a
         // project card link, so that clicking "BACK" (or the "PETER SHR" logo)
