@@ -2087,14 +2087,20 @@ void main() {
         // directly fixes that regardless of how tall the content ends up.
         if (isMobile) {
             const shaderCanvas = document.getElementById('hero-shader');
-            const heroSectionEl = document.getElementById('hero-section');
             const waveTransitionEl = document.querySelector('.wave-transition');
 
             function syncMobileShaderHeight() {
-                if (!shaderCanvas || !heroSectionEl || !waveTransitionEl) return;
-                const totalHeight = heroSectionEl.offsetHeight + waveTransitionEl.offsetHeight;
-                if (totalHeight > 0) {
-                    shaderCanvas.style.height = `${totalHeight}px`;
+                if (!shaderCanvas || !waveTransitionEl) return;
+                // Measure directly from the canvas's own top edge to the
+                // bottom edge of the wave-transition zone — this sidesteps
+                // any assumptions about ancestor padding or how offsetHeight
+                // sums across elements, and is correct regardless of current
+                // scroll position since both rects come from the same frame.
+                const canvasRect = shaderCanvas.getBoundingClientRect();
+                const waveRect = waveTransitionEl.getBoundingClientRect();
+                const neededHeight = waveRect.bottom - canvasRect.top;
+                if (neededHeight > 0) {
+                    shaderCanvas.style.height = `${neededHeight}px`;
                 }
             }
 
@@ -2102,6 +2108,9 @@ void main() {
             // right after load), then keep it in sync on resize/orientation change.
             window.addEventListener('load', () => {
                 requestAnimationFrame(() => requestAnimationFrame(syncMobileShaderHeight));
+                // Late web-font swaps can still reflow text after 'load' fires —
+                // catch that with one more pass a beat later.
+                setTimeout(syncMobileShaderHeight, 600);
             });
 
             let resizeTimeout = null;
