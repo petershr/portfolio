@@ -1303,7 +1303,8 @@ void main() {
 varying vec2 v_texCoord;
 uniform float u_time;
 uniform vec2 u_resolution;
-uniform vec2 u_mouse; 
+uniform vec2 u_mouse;
+uniform float u_slowdown_y;
 
 float hash(float n) {
     return fract(sin(n) * 43758.5453123);
@@ -1339,7 +1340,7 @@ void main() {
     } else if (timeCycle < tSlowTop + tFast) {
         yPos = 0.9 - ((timeCycle - tSlowTop) * 8.0);
     } else {
-        yPos = 0.32 - ((timeCycle - tSlowTop - tFast) * 0.2); // was 0.1
+        yPos = u_slowdown_y - ((timeCycle - tSlowTop - tFast) * 0.2);
     }
     
     float thickness = 0.12;
@@ -1394,6 +1395,11 @@ void main() {
                 const uTime = gl.getUniformLocation(prog, 'u_time');
                 const uRes = gl.getUniformLocation(prog, 'u_resolution');
                 const uMouseLoc = gl.getUniformLocation(prog, 'u_mouse');
+                const uSlowdownY = gl.getUniformLocation(prog, 'u_slowdown_y');
+                // Default: the original hardcoded value used on desktop
+                gl.uniform1f(uSlowdownY, 0.32);
+                // Expose the setter so syncMobileShaderHeight can update it
+                canvas._setSlowdownY = (v) => gl.uniform1f(uSlowdownY, v);
 
                 let mouse = { x: 0.5, y: 0.5 };
                 window.addEventListener('mousemove', (event) => {
@@ -1419,6 +1425,7 @@ void main() {
                     gl.uniform1f(uTime, performance.now() * 0.001);
                     gl.uniform2f(uRes, canvas.width, canvas.height);
                     gl.uniform2f(uMouseLoc, mouse.x, mouse.y);
+                    // u_slowdown_y is written by _setSlowdownY; no per-frame set needed
                     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
                 }
 
@@ -2101,6 +2108,29 @@ void main() {
                 const neededHeight = waveRect.bottom - canvasRect.top;
                 if (neededHeight > 0) {
                     shaderCanvas.style.height = `${neededHeight}px`;
+                }
+
+                // ---- Push the rain "slow-down zone" to the bottom of the
+                // black section (i.e. the top of the wave-transition element).
+                //
+                // In the GLSL, uv.y == 1.0 is the TOP of the canvas and
+                // 0.0 is the BOTTOM. u_slowdown_y is the y-position (in that
+                // same 0-1 space) below which the drops decelerate and pool.
+                //
+                // We want that pooling point to sit right at the boundary
+                // where the black hero area ends and the wave-transition begins,
+                // so: fraction = (wave top - canvas top) / total canvas height.
+                // Then we invert for GL's flipped Y: slowdownUV = 1 - fraction.
+                //
+                // A small offset (–0.04) nudges the deceleration point a hair
+                // above the hard edge so the animation looks like the drops are
+                // "just reaching" the bottom of the black area.
+                if (neededHeight > 0 && shaderCanvas._setSlowdownY) {
+                    const blackSectionHeight = waveRect.top - canvasRect.top;
+                    const fraction = blackSectionHeight / neededHeight;
+                    // UV y=1 is canvas top, y=0 is canvas bottom → invert
+                    const slowdownUV = 1.0 - fraction - 0.04;
+                    shaderCanvas._setSlowdownY(Math.max(0.0, Math.min(1.0, slowdownUV)));
                 }
             }
 
