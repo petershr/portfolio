@@ -503,6 +503,14 @@
                 transform: translateX(0);
             }
         }
+        /* Orbiting logo dot */
+        @keyframes orbit {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .orbit-dot { animation: none !important; }
+        }
     </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col" style="overflow: hidden;">
@@ -995,6 +1003,40 @@
             <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 bg-surface-container/80 text-secondary text-label-sm font-futura rounded border border-surface-stroke/50">Digital Art</span>
                 <span class="px-2 py-1 bg-surface-container/80 text-secondary text-label-sm font-futura rounded border border-surface-stroke/50">Google Slides</span>
+            </div>
+        </div>
+    </div>
+</article>
+</a>
+
+<!-- Project 7: Darwin Hackathon -->
+<a href="darwin.html" class="tilt-project-persp reveal-card" style="perspective: 1200px; --reveal-delay: 0ms;">
+<article class="tilt-project-card group relative overflow-hidden bg-surface h-96">
+    <div class="absolute inset-0 w-full h-full flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-105" style="background:#000;">
+        <div class="flex items-center gap-4 select-none">
+            <svg width="56" height="56" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="44" cy="44" r="36" stroke="#6b7280" stroke-width="3"/>
+                <g class="orbit-dot" style="transform-origin: 44px 44px; animation: orbit 8s linear infinite;">
+                    <circle cx="75" cy="26" r="4" fill="#f1f5f9"/>
+                </g>
+                <circle cx="44" cy="44" r="17" fill="#2563EB"/>
+            </svg>
+            <span style="font-family: 'Hanken Grotesk', 'Inter', sans-serif; font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; color: #f8fafc; line-height: 1;">Darwin</span>
+        </div>
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
+    <div class="absolute top-4 right-4 bg-surface-container/90 backdrop-blur-sm text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Jul 2026</div>
+    <div class="absolute inset-x-0 bottom-0 p-6">
+        <h3 class="text-headline-md font-futura text-terminal-white">Darwin (Daytona HackSprint)</h3>
+        <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
+            <p class="text-body-md font-futura-light text-secondary mb-3">
+                Built the evolutionary loop and evaluation pipeline for a system that breeds and tests agents automatically, then tells you which model is best at each task. Verified a deterministic offline fallback reaching perfect fitness and live Fireworks-powered model mutation, plus Legal and Support datasets producing 100 real evaluation cases.
+            </p>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 bg-surface-container/80 text-secondary text-label-sm font-futura rounded border border-surface-stroke/50">Python</span>
+                <span class="px-2 py-1 bg-surface-container/80 text-secondary text-label-sm font-futura rounded border border-surface-stroke/50">LLM Evaluation</span>
+                <span class="px-2 py-1 bg-surface-container/80 text-secondary text-label-sm font-futura rounded border border-surface-stroke/50">Evolutionary AI</span>
             </div>
         </div>
     </div>

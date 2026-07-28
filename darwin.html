@@ -1,0 +1,590 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Darwin Hackathon | Peter Shr</title>
+<meta name="description" content="Evolutionary-agent framework that evolves and evaluates LLM agents across real task datasets to determine which model is best for each task.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Darwin Hackathon | Peter Shr">
+<meta property="og:description" content="Evolutionary-agent framework that evolves and evaluates LLM agents across real task datasets to determine which model is best for each task.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="favicon.png" rel="icon" type="image/png">
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "on-secondary-fixed": "#151c27",
+                    "secondary-container": "#404754",
+                    "primary-fixed": "#c0e9f7",
+                    "surface-container-lowest": "#070d1f",
+                    "secondary": "#c0c7d6",
+                    "on-primary": "#073540",
+                    "tertiary-fixed-dim": "#bcc7de",
+                    "secondary-fixed": "#dce2f3",
+                    "surface-container": "#191f31",
+                    "accent-glow": "rgba(161, 201, 214, 0.15)",
+                    "inverse-primary": "#3d646f",
+                    "on-tertiary": "#263143",
+                    "surface-container-low": "#151b2d",
+                    "tertiary": "#d4dff7",
+                    "outline-variant": "#41484a",
+                    "tertiary-fixed": "#d8e3fb",
+                    "tertiary-container": "#b8c3da",
+                    "background": "#000000",
+                    "on-tertiary-fixed": "#111c2d",
+                    "surface-bright": "#33394c",
+                    "primary-container": "#a1c9d6",
+                    "on-primary-fixed-variant": "#244c57",
+                    "on-secondary": "#2a313d",
+                    "inverse-on-surface": "#2a3043",
+                    "surface-tint": "#a5cdda",
+                    "surface-stroke": "#334155",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#c0c7d6",
+                    "terminal-white": "#F8FAFC",
+                    "surface-container-highest": "#2e3447",
+                    "primary": "#bde5f2",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-container": "#455064",
+                    "surface-variant": "#2e3447",
+                    "surface": "#0c1324",
+                    "on-secondary-fixed-variant": "#404754",
+                    "on-primary-container": "#2e5560",
+                    "on-surface-variant": "#c1c8ca",
+                    "surface-container-high": "#23293c",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "on-background": "#dce1fb",
+                    "surface-dim": "#0c1324",
+                    "primary-fixed-dim": "#a5cdda",
+                    "on-error": "#690005",
+                    "on-surface": "#dce1fb",
+                    "on-secondary-container": "#aeb5c5",
+                    "error": "#ffb4ab",
+                    "outline": "#8b9295",
+                    "on-primary-fixed": "#001f27",
+                    "inverse-surface": "#dce1fb"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "9999px"
+                },
+                "spacing": {
+                    "base": "4px",
+                    "container-max": "1200px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px"
+                },
+                "fontFamily": {
+                    "headline-md": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "headline-lg-mobile": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "headline-lg": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "display": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "body-md": ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "body-lg": ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "label-md": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+                    "label-sm": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"]
+                },
+                "fontSize": {
+                    "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                    "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "label-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                    "label-sm": ["12px", { "lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "400" }]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .card-hover { transition: all 0.3s ease; }
+    .card-hover:hover {
+        border-color: #bde5f2;
+        box-shadow: 0 0 20px rgba(161, 201, 214, 0.15);
+        transform: translateY(-2px);
+    }
+    .glass-panel {
+        background: rgba(25, 31, 49, 0.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    .font-futura {
+        font-family: 'Jost', sans-serif !important;
+    }
+    .font-futura-light {
+        font-family: 'Jost', sans-serif !important;
+        font-weight: 300 !important;
+    }
+    /* Lightbox */
+    #lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        align-items: center;
+        justify-content: center;
+    }
+    #lightbox.active {
+        display: flex;
+    }
+    #lightbox img {
+        max-width: 90vw;
+        max-height: 88vh;
+        object-fit: contain;
+        border-radius: 0.25rem;
+        box-shadow: 0 0 60px rgba(0,0,0,0.6);
+    }
+    #lightbox-close {
+        position: fixed;
+        top: 20px;
+        right: 28px;
+        color: #F8FAFC;
+        font-size: 2rem;
+        font-weight: 300;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+        background: none;
+        border: none;
+        padding: 4px 8px;
+    }
+    #lightbox-close:hover {
+        color: #bde5f2;
+    }
+    .lightbox-trigger {
+        cursor: pointer;
+    }
+    /* Visible keyboard focus in the accent color */
+    a:focus-visible,
+    button:focus-visible,
+    .lightbox-trigger:focus-visible {
+        outline: 2px solid #bde5f2;
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
+
+    /* ===== Image carousel slider ===== */
+    .carousel {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .carousel-track {
+        flex: 1 1 auto;
+        display: flex;
+        overflow: hidden;
+    }
+    .carousel-slide {
+        flex: 0 0 100%;
+        min-width: 100%;
+        display: flex;
+        align-items: center;
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .carousel-btn {
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        border-radius: 9999px;
+        background: transparent;
+        border: 1px solid rgba(193, 200, 202, 0.2);
+        color: #8b9295;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+    .carousel-btn:hover {
+        background: rgba(193, 200, 202, 0.08);
+        border-color: rgba(193, 200, 202, 0.45);
+        color: #c0c7d6;
+    }
+    .carousel-btn:active {
+        transform: scale(0.94);
+    }
+    .carousel-btn svg {
+        width: 22px;
+        height: 22px;
+    }
+    .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 12px;
+    }
+    .carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 9999px;
+        background: rgba(193, 200, 202, 0.3);
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .carousel-dot.is-active {
+        background: #bde5f2;
+        transform: scale(1.25);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .carousel-slide {
+            transition: none;
+        }
+    }
+    /* Orbiting logo dot */
+    @keyframes orbit {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+    }
+    .orbit-dot {
+        animation: orbit 8s linear infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .orbit-dot { animation: none; }
+    }
+</style>
+</head>
+<body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col">
+
+<!-- TopNavBar Component (static version, links back to main page) -->
+<nav class="fixed top-0 w-full z-50 bg-white/[0.06] backdrop-blur-[18px] border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.18)] text-primary text-label-md font-label-md uppercase tracking-widest">
+  <div class="flex items-center justify-center py-4">
+    <a href="index.html" class="text-headline-md font-headline-md font-bold tracking-tighter text-terminal-white cursor-pointer">PETER SHR</a>
+  </div>
+</nav>
+
+<main class="flex-grow relative z-10 pt-32 pb-24">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+
+    <!-- Back link -->
+    <a href="index.html" class="group inline-flex items-center gap-2 text-label-md font-label-md font-bold uppercase tracking-widest text-terminal-white hover:text-primary transition-colors duration-300 mb-8">
+        <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-x-1">&larr;</span>
+        Back
+    </a>
+
+    <!-- Hero -->
+    <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden mb-6">
+        <div class="h-80 md:h-[420px] w-full overflow-hidden relative flex items-center justify-center" style="background:#000;">
+            <!-- logo + wordmark -->
+            <div class="relative flex items-center gap-7 select-none">
+                <svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- outer ring, full circle no gap -->
+                    <circle cx="44" cy="44" r="36" stroke="#6b7280" stroke-width="3"/>
+                    <!-- white dot orbiting around the ring -->
+                    <g class="orbit-dot" style="transform-origin: 44px 44px; animation: orbit 8s linear infinite;">
+                        <circle cx="75" cy="26" r="4" fill="#f1f5f9"/>
+                    </g>
+                    <!-- inner solid blue circle, flat -->
+                    <circle cx="44" cy="44" r="17" fill="#2563EB"/>
+                </svg>
+                <!-- wordmark -->
+                <span style="font-family: 'Hanken Grotesk', 'Inter', sans-serif; font-size: 4.5rem; font-weight: 700; letter-spacing: -0.02em; color: #f8fafc; line-height: 1;">Darwin</span>
+            </div>
+        </div>
+        <div class="p-6 md:p-8">
+            <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-2"><a href="https://trydarwin.pages.dev/" target="_blank" rel="noopener" class="text-primary hover:opacity-80 transition-opacity duration-300">Darwin</a> (Daytona HackSprint)</h1>
+            <p class="text-body-lg font-body-lg text-secondary mb-4">Instead of asking which LLM is &ldquo;the best,&rdquo; Darwin breeds and tests agents automatically, then tells you which model is best at each specific task, backed by real cost and latency data.</p>
+            <a href="https://trydarwin.pages.dev/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-[1.15rem] font-semibold transition-all duration-300 mb-4 hover:opacity-80" style="color:#f59e0b;">
+                trydarwin.pages.dev
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+            </a>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Python</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">LLM Evaluation</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Evolutionary Algorithms</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Fireworks API</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Jul 2026</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick facts -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Role</p>
+            <p class="text-body-md font-body-md text-terminal-white">Lane A: Evolution &amp; Pipeline</p>
+        </div>
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Tools</p>
+            <p class="text-body-md font-body-md text-terminal-white">Python, Fireworks API</p>
+        </div>
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Models</p>
+            <p class="text-body-md font-body-md text-terminal-white">kimi-k2p6, glm-5p1, gpt-oss-120b</p>
+        </div>
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Status</p>
+            <p class="text-body-md font-body-md text-terminal-white">Complete</p>
+        </div>
+    </div>
+
+    <!-- Team -->
+    <section class="my-16 max-w-3xl">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-6">Team</h2>
+        <div class="space-y-6">
+            <div class="border-l-2 border-surface-stroke pl-5">
+                <a href="https://www.linkedin.com/in/peter-shr/" target="_blank" rel="noopener" class="text-body-lg font-body-lg text-primary hover:opacity-75 transition-opacity duration-300">Peter Shr</a>
+                <p class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mt-1 mb-2">Lane A</p>
+                <p class="text-body-md font-body-md text-secondary">Built the evolutionary loop and task-data path: monotonic elitism, model-gene mutation support, industry decomposition, synthetic evaluation generation, reviewed Legal/Support datasets, and routing-card outputs.</p>
+            </div>
+            <div class="border-l-2 border-surface-stroke pl-5">
+                <a href="https://www.linkedin.com/in/karthik-subramanian-07/" target="_blank" rel="noopener" class="text-body-lg font-body-lg text-primary hover:opacity-75 transition-opacity duration-300">Karthik Subramanian</a>
+                <p class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mt-1 mb-2">Lane B</p>
+                <p class="text-body-md font-body-md text-secondary">Built the secure execution layer: Daytona/local sandbox pool, snapshot and rollback behavior, parallel evaluation support, and safety guards that screen suspicious genome mutations before they run.</p>
+            </div>
+            <div class="border-l-2 border-surface-stroke pl-5">
+                <a href="https://www.linkedin.com/in/dean-orenstein/" target="_blank" rel="noopener" class="text-body-lg font-body-lg text-primary hover:opacity-75 transition-opacity duration-300">Dean Orenstein</a>
+                <p class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mt-1 mb-2">Lane C</p>
+                <p class="text-body-md font-body-md text-secondary">Built the evaluation and model-inference side: immutable fitness scoring, Braintrust experiment/logging integration, Fireworks client infrastructure with retries/concurrency/cost/latency tracking, and the live model-race mutation flow.</p>
+            </div>
+            <div class="border-l-2 border-surface-stroke pl-5">
+                <a href="https://www.linkedin.com/in/enzo-e-b515a1251/" target="_blank" rel="noopener" class="text-body-lg font-body-lg text-primary hover:opacity-75 transition-opacity duration-300">Enzo Emami</a>
+                <p class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mt-1 mb-2">Lane D</p>
+                <p class="text-body-md font-body-md text-secondary">Built the product experience: dashboard, landing page, live run views, WebSocket event wiring, fitness/lineage/model-race visualizations, docs/demo flow, and the overall presentation layer.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hackathon context -->
+    <section class="mb-10 max-w-3xl">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">The Hackathon</h2>
+        <p class="text-body-md font-body-md text-outline mb-4">
+            Darwin was built over a single day at <span class="text-primary font-semibold">Daytona HackSprint #5</span>, a one-day AI building sprint in San Francisco. Teams of up to four had from morning until 3:30 PM to ship something original, technically strong, and genuinely useful, then three minutes to prove it live on stage. The objective was open-ended: build an AI agent that could reason, decide, and use real tools on its own. <a href="https://daytona.io" target="_blank" rel="noopener" class="font-semibold transition-opacity duration-300 hover:opacity-75" style="color:#f59e0b;">Daytona</a> sponsored the event and provided the sandboxed execution environment we used to run each agent in isolation, <a href="https://fireworks.ai" target="_blank" rel="noopener" class="font-semibold transition-opacity duration-300 hover:opacity-75" style="color:#f59e0b;">Fireworks</a> sponsored the LLM API that powered the live mutations, and <a href="https://braintrust.dev" target="_blank" rel="noopener" class="font-semibold transition-opacity duration-300 hover:opacity-75" style="color:#f59e0b;">Braintrust</a> provided experiment tracking and logging.
+        </p>
+        <a href="https://luma.com/hacksprint-sf" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-body-md font-body-md text-primary hover:opacity-75 transition-opacity duration-300">
+            See the event page
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+        </a>
+    </section>
+
+    <!-- Problem -->
+    <section class="mb-10 max-w-3xl">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Problem</h2>
+        <p class="text-body-md font-body-md text-secondary">
+            There's no single "best" LLM. Models behave differently depending on the task at hand. One is great at
+            summarizing, another at extracting clauses, a third at writing code. Cost and latency matter too, and so
+            do the prompt and the tools an agent has access to. So the real question isn't "which model is best?"
+            but "which one is best at <em>this</em> task, at this cost and speed?" Darwin was built to answer that
+            automatically, and the hard part was making the evolutionary loop that explores it reliable and
+            repeatable, plus turning a broad industry into evaluation data the loop can actually run on.
+        </p>
+    </section>
+
+    <!-- Design & approach -->
+    <section class="mb-10">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Design and approach</h2>
+        <p class="text-body-md font-body-md text-secondary max-w-3xl mb-6">
+            My part was the evolutionary loop itself and the pipeline that turns a broad industry into real evaluation
+            data. Think of each agent as a genome: its model, system prompt, tool implementations, and parameters
+            are all part of its DNA. Every generation, each agent runs inside an isolated sandbox against hidden test
+            cases and gets a fitness score. The best ones survive unchanged; the rest get mutated by an LLM that looks
+            at what went wrong and rewrites the weakest piece. If a mutation helps, it sticks; if it hurts, the system
+            rolls back. This repeats until the task is solved or the generation budget runs out. It works two ways:
+            a fully offline mode that reaches a solved state with no network at all, and a live mode where Fireworks
+            models propose the mutations.
+        </p>
+        <p class="text-body-md font-body-md text-secondary max-w-3xl mb-10">
+            The pipeline side takes an entire industry and breaks it down into concrete, measurable tasks:
+            clause extraction, contract classification, summarization, each paired with its own hidden
+            evaluation set. I built and verified two complete industry datasets (Legal and Support), each with five
+            tasks and ten cases per task, for 100 real evaluation cases generated live through Fireworks. To make the
+            output actually useful instead of just &ldquo;Model X won,&rdquo; I added a routing card for each task showing
+            the winning model, the best alternative from a different model, the score, the estimated cost, and the
+            median latency, so you walk away with actionable evidence, not a leaderboard.
+        </p>
+
+        <!-- ===== Image Section 1: The Evolutionary Loop ===== -->
+        <div class="mb-16">
+            <p class="text-label-md font-label-md text-secondary mb-4 uppercase tracking-widest">The Evolutionary Loop</p>
+            <div class="carousel" data-carousel>
+                <button class="carousel-btn carousel-btn--prev" aria-label="Previous image" data-carousel-prev>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="carousel-track">
+                    <div class="carousel-slide">
+                        <img loading="lazy" decoding="async" class="w-full object-contain lightbox-trigger" src="darwin_home.png" alt="Darwin homepage" style="max-height: 520px;">
+                    </div>
+                    <div class="carousel-slide">
+                        <img loading="lazy" decoding="async" class="w-full object-contain lightbox-trigger" src="darwin_fitness.png" alt="Fitness curve and population log" style="max-height: 520px;">
+                    </div>
+                    <div class="carousel-slide">
+                        <img loading="lazy" decoding="async" class="w-full object-contain lightbox-trigger" src="darwin_race.png" alt="Model race across tasks and routing card with self-rewrite diff" style="max-height: 520px;">
+                    </div>
+                </div>
+                <button class="carousel-btn carousel-btn--next" aria-label="Next image" data-carousel-next>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+            <p class="carousel-caption text-sm font-body-md text-outline text-center mt-3" data-carousel-caption>
+                Darwin homepage
+            </p>
+            <div class="carousel-dots" data-carousel-dots></div>
+        </div>
+
+        <!-- ===== Image Section 2: Evaluation & 3D Landscape ===== -->
+        <div class="mb-16">
+            <p class="text-label-md font-label-md text-secondary mb-4 uppercase tracking-widest">Evaluation Lab &amp; 3D Landscape</p>
+            <div class="carousel" data-carousel>
+                <button class="carousel-btn carousel-btn--prev" aria-label="Previous image" data-carousel-prev>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div class="carousel-track">
+                    <div class="carousel-slide">
+                        <img loading="lazy" decoding="async" class="w-full object-contain lightbox-trigger" src="darwin_lab.png" alt="Legal services evaluation grid" style="max-height: 520px;">
+                    </div>
+                    <div class="carousel-slide">
+                        <img loading="lazy" decoding="async" class="w-full object-contain lightbox-trigger" src="darwin_3d.png" alt="3D score landscape across tasks and models" style="max-height: 520px;">
+                    </div>
+                </div>
+                <button class="carousel-btn carousel-btn--next" aria-label="Next image" data-carousel-next>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+            <p class="carousel-caption text-sm font-body-md text-outline text-center mt-3" data-carousel-caption>
+                Legal services evaluation grid
+            </p>
+            <div class="carousel-dots" data-carousel-dots></div>
+        </div>
+    </section>
+
+    <!-- Challenges -->
+    <section class="mb-10 max-w-3xl">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Challenges</h2>
+        <p class="text-body-md font-body-md text-secondary">
+            During live generation, Fireworks rejected the JSON schema I was producing with Pydantic because part of
+            it wasn't supported by the API. I read the error, figured out which constructs were the problem, and
+            redesigned the flow so the model returns a plain string that Darwin parses locally back into the right
+            Python value, keeping structured answers (strings, booleans, lists, labels) working without hitting
+            the unsupported schema. The other tricky part was merging my work back into a main branch that had moved
+            significantly while I was heads-down on my lane. Rather than blindly merge, I compared across separate
+            worktrees, kept the newer shared Fireworks client and telemetry, and ported back the offline demo,
+            routing cards, and reviewed evaluation data.
+        </p>
+    </section>
+
+    <!-- ===== Image Section 3: Results ===== -->
+    <section class="mb-24">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Results</h2>
+        <p class="text-body-md font-body-md text-secondary max-w-3xl mb-6">
+            The offline loop climbs steadily from 0.375 to a perfect 1.0 fitness across five generations, with no
+            external services, fully repeatable, so there's always a reliable fallback if the live API is down. Live
+            Fireworks mutation was verified from a real terminal run showing the model actually switching (kimi-k2p6,
+            glm-5p1) with fitness climbing 0.375 &rarr; 0.625 &rarr; 0.875 &rarr; 1.0. The Legal and Support pipelines
+            produced 100 evaluation cases, all reviewed and promoted into the task corpus. Crucially, the evaluator
+            is kept separate from the genome, so a mutation can't rewrite the grading function to cheat, and
+            the routing cards give you per-task, auditable evidence with real cost and latency behind every
+            recommendation.
+        </p>
+        <div style="padding-top: 6rem;">
+            <img loading="lazy" decoding="async" class="w-full object-contain lightbox-trigger" src="darwin_result.png" alt="Optimized Legal services model stack routing card" style="max-height: 600px;">
+        </div>
+        <p class="text-sm font-body-md text-outline text-center mt-3 mb-8">Optimized Legal services model stack routing card</p>
+    </section>
+
+</div>
+</main>
+
+<!-- Footer Component (identical to main page) -->
+<footer class="bg-black text-primary w-full py-12 border-t border-surface-stroke flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter relative z-20">
+<div class="text-[20px] font-futura text-terminal-white"><b>STUFF BY PETER SHR</b></div>
+<div class="flex gap-6 text-[20px] font-futura-light">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="https://www.linkedin.com/in/peter-shr/">LinkedIn</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="https://github.com/petershr">GitHub</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="mailto:pshr@ucsd.edu">pshr@ucsd.edu</a>
+</div>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button id="lightbox-close" aria-label="Close image viewer">&times;</button>
+    <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+    /* ===== Lightbox ===== */
+    const lightbox      = document.getElementById('lightbox');
+    const lightboxImg   = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    document.querySelectorAll('.lightbox-trigger').forEach(img => {
+        img.addEventListener('click', () => {
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => {
+        if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    /* ===== Carousel sliders ===== */
+    document.querySelectorAll('[data-carousel]').forEach(root => {
+        const track    = root.querySelector('.carousel-track');
+        const slides   = Array.from(track.querySelectorAll('.carousel-slide'));
+        const prevBtn  = root.querySelector('[data-carousel-prev]');
+        const nextBtn  = root.querySelector('[data-carousel-next]');
+        const dotsWrap = root.parentElement.querySelector('[data-carousel-dots]');
+        const caption  = root.parentElement.querySelector('[data-carousel-caption]');
+        const captions = slides.map(s => s.querySelector('img').dataset.caption || s.querySelector('img').alt);
+
+        let index = 0;
+
+        // Build dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'carousel-dot' + (i === 0 ? ' is-active' : '');
+            dot.setAttribute('aria-label', 'Go to image ' + (i + 1));
+            dot.addEventListener('click', () => go(i));
+            dotsWrap.appendChild(dot);
+        });
+        const dots = Array.from(dotsWrap.children);
+
+        function go(i) {
+            index = (i + slides.length) % slides.length;
+            track.querySelectorAll('.carousel-slide').forEach(slide => {
+                slide.style.transform = `translateX(-${index * 100}%)`;
+            });
+            dots.forEach((d, di) => d.classList.toggle('is-active', di === index));
+            if (caption) caption.textContent = captions[index];
+        }
+
+        prevBtn.addEventListener('click', () => go(index - 1));
+        nextBtn.addEventListener('click', () => go(index + 1));
+
+        // Keyboard support when carousel is focused/hovered
+        root.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft')  { e.preventDefault(); go(index - 1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1); }
+        });
+    });
+</script>
+
+</body></html>
