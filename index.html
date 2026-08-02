@@ -402,6 +402,10 @@
                 display: block !important;
             }
 
+            .hero-image-cover {
+                display: block !important;
+            }
+
             .wave-layer {
                 display: none !important;
             }
@@ -587,6 +591,18 @@
             .scroll-down-arrow { animation: none !important; }
         }
 
+        .hero-image-cover {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: #000;
+            z-index: 30;
+            pointer-events: none;
+            transform: translateX(0);
+            will-change: transform;
+        }
+        .hero-image-cover[hidden] { display: none; }
+
         /* Orbiting logo dot */
         @keyframes orbit {
             from { transform: rotate(0deg); }
@@ -689,6 +705,7 @@
             <div id="hero-grid" class="w-full max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div id="hero-image-col" class="md:col-span-2 flex items-center justify-center md:-translate-x-12 lg:-translate-x-20 select-none">
                     <div id="hero-interactive-container" class="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[460px] md:h-[460px] rounded-full overflow-hidden bg-surface-container-lowest cursor-none">
+                        <div class="hero-image-cover" id="hero-image-cover" aria-hidden="true"></div>
                         <div id="image-wipe-overlay" class="image-wipe-overlay" aria-hidden="true"></div>
                         
                         <svg class="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
@@ -2233,11 +2250,13 @@ void main() {
                     }
                 }
 
-                // --- Slide 2: bio + image slide in once slide 2 is on screen.
-                //     A 0→0.2 dead zone means you must scroll into slide 2 a
-                //     little before anything animates. ---
+                // --- Slide 2: bio slides in, image is revealed by a black
+                //     cover sliding left. A 0→0.2 dead zone means you must
+                //     scroll into slide 2 a little before anything animates. ---
                 if (slide2 && mobImageCol && mobBioP1 && mobBioP2) {
-                    gsap.set(mobImageCol, { x: '120%' });
+                    const mobCover = document.getElementById('hero-image-cover');
+                    // Image stays put; only the cover moves.
+                    if (mobCover) gsap.set(mobCover, { x: '0%' });
                     gsap.set(mobBioP1, { x: -80, opacity: 0 });
                     gsap.set(mobBioP2, { x: -80, opacity: 0 });
 
@@ -2250,9 +2269,11 @@ void main() {
                         }
                     });
 
-                    // Image: dead zone, enter 0.2→0.5, exit 0.7→1.0
-                    mobTl.to(mobImageCol, { x: '0%', duration: 0.3, ease: 'none' }, 0.2);
-                    mobTl.to(mobImageCol, { x: '80%', duration: 0.3, ease: 'none' }, 0.7);
+                    // Cover: dead zone, slide off left 0.2→0.55, then back 0.7→1.0
+                    if (mobCover) {
+                        mobTl.to(mobCover, { x: '-100%', duration: 0.35, ease: 'none' }, 0.2);
+                        mobTl.to(mobCover, { x: '0%', duration: 0.3, ease: 'none' }, 0.7);
+                    }
 
                     // Paragraph 1: enter 0.2→0.5, exit 0.65→0.95
                     mobTl.to(mobBioP1, { x: 0, opacity: 1, duration: 0.3, ease: 'none' }, 0.2);
