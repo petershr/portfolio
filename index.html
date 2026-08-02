@@ -398,6 +398,10 @@
                 margin-left: -10px !important;
             }
 
+            .scroll-down-arrow {
+                display: block !important;
+            }
+
             .wave-layer {
                 display: none !important;
             }
@@ -561,6 +565,28 @@
                 margin-right: auto !important;
             }
         }
+
+        .scroll-down-arrow {
+            display: none;
+            position: absolute;
+            bottom: 7vh;
+            left: 50%;
+            transform: translate(-50%, 0);
+            color: rgba(255, 255, 255, 0.72);
+            opacity: 0.7;
+            z-index: 5;
+            pointer-events: none;
+            animation: scrollBounce 1.9s ease-in-out infinite;
+            will-change: transform;
+        }
+        @keyframes scrollBounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50%      { transform: translate(-50%, 14px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .scroll-down-arrow { animation: none !important; }
+        }
+
         /* Orbiting logo dot */
         @keyframes orbit {
             from { transform: rotate(0deg); }
@@ -652,6 +678,9 @@
                     ">Electrical Engineering @ UCSD</p>
 
                 </div>
+            </div>
+            <div class="scroll-down-arrow" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
         </div>
 
@@ -2172,12 +2201,41 @@ void main() {
             const mobReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
             if (window.gsap && window.ScrollTrigger && !mobReducedMotion) {
+                const slide1 = document.querySelector('#hero-slider > div:nth-child(1)');
                 const slide2 = document.querySelector('#hero-slider > div:nth-child(2)');
                 const mobImageCol = document.getElementById('hero-image-col');
+                const mobH1 = slide1 ? slide1.querySelector('h1') : null;
+                const mobSubtitle = document.getElementById('hero-subtitle');
+                const mobArrow = document.querySelector('.scroll-down-arrow');
 
                 const mobBioP1 = document.getElementById('bio-paragraph-1');
                 const mobBioP2 = document.getElementById('bio-paragraph-2');
 
+                // --- Slide 1: hold, then fade the title + arrow out as you
+                //     scroll. The first ~30% is a deliberate dead zone so the
+                //     title stays put until you've scrolled a bit. ---
+                if (slide1 && mobH1 && mobSubtitle) {
+                    gsap.set([mobH1, mobSubtitle], { opacity: 1, y: 0 });
+                    if (mobArrow) gsap.set(mobArrow, { opacity: 1 });
+
+                    const titleTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: slide1,
+                            start: 'top top',
+                            end: 'bottom top',
+                            scrub: 1
+                        }
+                    });
+                    titleTl.to(mobH1, { opacity: 0, y: -54, duration: 0.6, ease: 'none' }, 0.3);
+                    titleTl.to(mobSubtitle, { opacity: 0, y: -54, duration: 0.6, ease: 'none' }, 0.35);
+                    if (mobArrow) {
+                        titleTl.to(mobArrow, { opacity: 0, duration: 0.25, ease: 'none' }, 0.2);
+                    }
+                }
+
+                // --- Slide 2: bio + image slide in once slide 2 is on screen.
+                //     A 0→0.2 dead zone means you must scroll into slide 2 a
+                //     little before anything animates. ---
                 if (slide2 && mobImageCol && mobBioP1 && mobBioP2) {
                     gsap.set(mobImageCol, { x: '120%' });
                     gsap.set(mobBioP1, { x: -80, opacity: 0 });
@@ -2186,22 +2244,22 @@ void main() {
                     const mobTl = gsap.timeline({
                         scrollTrigger: {
                             trigger: slide2,
-                            start: 'top bottom',
+                            start: 'top top',
                             end: 'bottom top',
                             scrub: 1
                         }
                     });
 
-                    // Image: enter 0→0.3, exit 0.65→1.0
-                    mobTl.to(mobImageCol, { x: '0%', duration: 0.3, ease: 'none' }, 0);
-                    mobTl.to(mobImageCol, { x: '80%', duration: 0.35, ease: 'none' }, 0.65);
+                    // Image: dead zone, enter 0.2→0.5, exit 0.7→1.0
+                    mobTl.to(mobImageCol, { x: '0%', duration: 0.3, ease: 'none' }, 0.2);
+                    mobTl.to(mobImageCol, { x: '80%', duration: 0.3, ease: 'none' }, 0.7);
 
-                    // Paragraph 1: enter 0→0.3, exit 0.6→0.95
-                    mobTl.to(mobBioP1, { x: 0, opacity: 1, duration: 0.3, ease: 'none' }, 0);
-                    mobTl.to(mobBioP1, { x: -60, opacity: 0, duration: 0.35, ease: 'none' }, 0.6);
+                    // Paragraph 1: enter 0.2→0.5, exit 0.65→0.95
+                    mobTl.to(mobBioP1, { x: 0, opacity: 1, duration: 0.3, ease: 'none' }, 0.2);
+                    mobTl.to(mobBioP1, { x: -60, opacity: 0, duration: 0.3, ease: 'none' }, 0.65);
 
-                    // Paragraph 2: enters later (0.12→0.42), exits later (0.77→1.0)
-                    mobTl.to(mobBioP2, { x: 0, opacity: 1, duration: 0.3, ease: 'none' }, 0.12);
+                    // Paragraph 2: enters 0.32→0.62, exits 0.77→1.0
+                    mobTl.to(mobBioP2, { x: 0, opacity: 1, duration: 0.3, ease: 'none' }, 0.32);
                     mobTl.to(mobBioP2, { x: -60, opacity: 0, duration: 0.23, ease: 'none' }, 0.77);
                 }
             }
