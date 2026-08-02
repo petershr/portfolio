@@ -509,11 +509,12 @@
                 width: 38% !important;
                 height: 100% !important;
                 margin: 0 !important;
+                padding-top: 22vh !important;
                 --tw-translate-x: 0 !important;
                 --tw-translate-y: 0 !important;
                 flex-shrink: 0;
                 display: flex !important;
-                align-items: center !important;
+                align-items: flex-start !important;
                 justify-content: flex-end !important;
             }
 
@@ -531,11 +532,12 @@
                 width: 62% !important;
                 max-width: 62% !important;
                 height: 100% !important;
+                padding-top: 22vh !important;
                 padding-left: 20px !important;
-                padding-right: 12px !important;
+                padding-right: 28px !important;
                 margin: 0 !important;
                 display: flex !important;
-                align-items: center !important;
+                align-items: flex-start !important;
                 justify-content: flex-start !important;
             }
 
@@ -546,8 +548,6 @@
             }
 
             .bio-line-reveal {
-                opacity: 1 !important;
-                transform: none !important;
                 transition: none !important;
             }
         }
@@ -2164,11 +2164,14 @@ void main() {
             if (window.gsap && window.ScrollTrigger && !mobReducedMotion) {
                 const slide2 = document.querySelector('#hero-slider > div:nth-child(2)');
                 const mobImageCol = document.getElementById('hero-image-col');
-                const mobBioCol = document.getElementById('bio-column');
 
-                if (slide2 && mobImageCol && mobBioCol) {
+                const mobBioP1 = document.getElementById('bio-paragraph-1');
+                const mobBioP2 = document.getElementById('bio-paragraph-2');
+
+                if (slide2 && mobImageCol && mobBioP1 && mobBioP2) {
                     gsap.set(mobImageCol, { x: '120%' });
-                    gsap.set(mobBioCol, { x: -80, opacity: 0 });
+                    gsap.set(mobBioP1, { x: -80, opacity: 0 });
+                    gsap.set(mobBioP2, { x: -80, opacity: 0 });
 
                     const mobTl = gsap.timeline({
                         scrollTrigger: {
@@ -2179,15 +2182,17 @@ void main() {
                         }
                     });
 
-                    // Enter (0 to 0.3): image slides in from right, text fades in from left
+                    // Image: enter 0→0.3, exit 0.65→1.0
                     mobTl.to(mobImageCol, { x: '0%', duration: 0.3, ease: 'none' }, 0);
-                    mobTl.to(mobBioCol, { x: 0, opacity: 1, duration: 0.3, ease: 'none' }, 0);
-                    // Hold (0.3 to 0.65): fully visible while slide is centered in viewport
-                    mobTl.to(mobImageCol, { x: '0%', duration: 0.35, ease: 'none' }, 0.3);
-                    mobTl.to(mobBioCol, { x: 0, opacity: 1, duration: 0.35, ease: 'none' }, 0.3);
-                    // Exit (0.65 to 1.0): image slides back right, text fades out left
                     mobTl.to(mobImageCol, { x: '80%', duration: 0.35, ease: 'none' }, 0.65);
-                    mobTl.to(mobBioCol, { x: -60, opacity: 0, duration: 0.35, ease: 'none' }, 0.65);
+
+                    // Paragraph 1: enter 0→0.3, exit 0.6→0.95
+                    mobTl.to(mobBioP1, { x: 0, opacity: 1, duration: 0.3, ease: 'none' }, 0);
+                    mobTl.to(mobBioP1, { x: -60, opacity: 0, duration: 0.35, ease: 'none' }, 0.6);
+
+                    // Paragraph 2: enters later (0.12→0.42), exits later (0.77→1.0)
+                    mobTl.to(mobBioP2, { x: 0, opacity: 1, duration: 0.3, ease: 'none' }, 0.12);
+                    mobTl.to(mobBioP2, { x: -60, opacity: 0, duration: 0.23, ease: 'none' }, 0.77);
                 }
             }
         }
