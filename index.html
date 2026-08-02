@@ -472,27 +472,32 @@
         }
 
         /* Mobile hero slide 2: image pinned flush right (no rounded corners,
-           trimmed width), bio text on the left. GSAP ScrollTrigger drives a
-           scroll-based slide-in / slide-out — see the JS block. Without JS
-           (or reduced motion) everything is visible in place. */
+           trimmed width), bio text on the left. The slide-2 wrapper is sized
+           to exactly the viewport height; the inner grid is also locked to
+           that same height so the image column never overflows the text. */
         @media (max-width: 767px), (pointer: coarse) {
             #hero-slider > div:nth-child(2) {
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-                padding-top: 0 !important;
+                padding: 0 !important;
+                height: 100vh !important;
+                min-height: 100vh !important;
+                max-height: 100vh !important;
+                overflow: hidden !important;
+                display: flex !important;
+                align-items: stretch !important;
             }
 
             #hero-grid {
                 flex-direction: row !important;
                 align-items: stretch !important;
                 gap: 0 !important;
-                position: relative;
-                height: 100vh;
+                position: relative !important;
+                height: 100% !important;
+                min-height: unset !important;
                 padding: 0 !important;
                 margin: 0 !important;
                 max-width: 100% !important;
                 width: 100% !important;
-                overflow: hidden;
+                overflow: hidden !important;
             }
 
             #hero-image-col {
@@ -501,6 +506,7 @@
                 top: 0 !important;
                 bottom: 0 !important;
                 width: 38% !important;
+                height: 100% !important;
                 margin: 0 !important;
                 transform: none !important;
                 flex-shrink: 0;
@@ -522,8 +528,9 @@
                 z-index: 2 !important;
                 width: 62% !important;
                 max-width: 62% !important;
+                height: 100% !important;
                 padding-left: 20px !important;
-                padding-right: 20px !important;
+                padding-right: 12px !important;
                 margin: 0 !important;
                 display: flex !important;
                 align-items: center !important;
@@ -531,8 +538,8 @@
             }
 
             .bio-paragraph {
-                font-size: 15px !important;
-                line-height: 1.55 !important;
+                font-size: 14px !important;
+                line-height: 1.5 !important;
                 text-align: left !important;
             }
 
@@ -1187,13 +1194,12 @@
 
 
 <!-- Footer Component -->
-<footer class="bg-black text-primary w-full py-12 border-t border-surface-stroke flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter transition-all duration-300 ease-in-out relative z-20">
-<div class="text-[20px] font-futura text-terminal-white"><b>STUFF BY PETER SHR</b>
-    </div>
-<div class="flex gap-6 text-[20px] font-futura-light">
-<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="https://www.linkedin.com/in/peter-shr/">LinkedIn</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="https://github.com/petershr">GitHub</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="mailto:pshr@ucsd.edu">pshr@ucsd.edu</a>
+<footer class="bg-black text-primary w-full py-8 border-t border-surface-stroke flex flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter transition-all duration-300 ease-in-out relative z-20">
+<div class="text-[13px] font-futura text-terminal-white whitespace-nowrap"><b>STUFF BY PETER SHR</b></div>
+<div class="flex gap-4 text-[13px] font-futura-light">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out whitespace-nowrap" href="https://www.linkedin.com/in/peter-shr/">LinkedIn</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out whitespace-nowrap" href="https://github.com/petershr">GitHub</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out whitespace-nowrap" href="mailto:pshr@ucsd.edu">pshr@ucsd.edu</a>
 </div>
 </footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -2159,22 +2165,27 @@ void main() {
                 const mobBioCol = document.getElementById('bio-column');
 
                 if (slide2 && mobImageCol && mobBioCol) {
-                    gsap.set(mobImageCol, { x: '100%' });
-                    gsap.set(mobBioCol, { x: -40, opacity: 0 });
+                    gsap.set(mobImageCol, { x: '120%' });
+                    gsap.set(mobBioCol, { x: -80, opacity: 0 });
 
                     const mobTl = gsap.timeline({
                         scrollTrigger: {
                             trigger: slide2,
                             start: 'top bottom',
                             end: 'bottom top',
-                            scrub: 1
+                            scrub: 0.6
                         }
                     });
 
-                    mobTl.to(mobImageCol, { x: '0%', duration: 0.5, ease: 'none' }, 0);
-                    mobTl.to(mobBioCol, { x: 0, opacity: 1, duration: 0.5, ease: 'none' }, 0);
-                    mobTl.to(mobImageCol, { x: '30%', duration: 0.5, ease: 'none' }, 0.5);
-                    mobTl.to(mobBioCol, { x: -20, opacity: 0, duration: 0.5, ease: 'none' }, 0.5);
+                    // Enter: image slides in from right, text fades in from left
+                    mobTl.to(mobImageCol, { x: '0%', duration: 0.45, ease: 'none' }, 0);
+                    mobTl.to(mobBioCol, { x: 0, opacity: 1, duration: 0.45, ease: 'none' }, 0);
+                    // Hold fully visible in the middle
+                    mobTl.to(mobImageCol, { x: '0%', duration: 0.1, ease: 'none' }, 0.45);
+                    mobTl.to(mobBioCol, { x: 0, opacity: 1, duration: 0.1, ease: 'none' }, 0.45);
+                    // Exit: image partially slides back right, text fades out left
+                    mobTl.to(mobImageCol, { x: '60%', duration: 0.45, ease: 'none' }, 0.55);
+                    mobTl.to(mobBioCol, { x: -60, opacity: 0, duration: 0.45, ease: 'none' }, 0.55);
                 }
             }
         }
