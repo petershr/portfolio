@@ -141,13 +141,23 @@
         }
 
         /* ===== Project cards =====
-           Cards are always visible. No JS-dependent opacity gating —
-           the previous scroll-reveal mechanism was leaving cards
-           permanently invisible when the IntersectionObserver failed
-           to fire (pin spacer, body overflow lock, script errors). */
+           Fade + rise into place the first time each card scrolls into
+           view, staggered via --reveal-delay set per card. This relies on
+           the JS reveal system further down, which has four independent
+           fallback layers (IntersectionObserver, a 2.5s timeout, a mobile-
+           specific force-reveal right after the hero pin releases, and a
+           fully separate last-resort script tag) — so even if one of them
+           fails, the cards still can't end up permanently invisible. */
         .reveal-card {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            transition-delay: var(--reveal-delay, 0ms);
+        }
+
+        .reveal-card.is-revealed {
             opacity: 1;
-            transform: none;
+            transform: translateY(0);
         }
 
         .tilt-project-card {
