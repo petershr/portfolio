@@ -2239,6 +2239,14 @@ void main() {
         // Cards fade + rise into place the first time they enter the viewport.
         // CSS handles the actual motion (and prefers-reduced-motion disables it),
         // so this observer only toggles a class and then unobserves.
+        //
+        // Observation is deliberately delayed by two animation frames before
+        // starting: GSAP's mobile pin setup (further down this same script)
+        // inserts a pin-spacer that reserves extra scroll height, and if we
+        // start observing before that's applied to layout, the observer's
+        // first geometry check can run against a temporarily-too-short page
+        // and report a false "already visible" — which is what was
+        // confusing it in the first place.
         const revealCards = document.querySelectorAll('.reveal-card');
         if (revealCards.length) {
             const revealObserver = new IntersectionObserver((entries, obs) => {
@@ -2249,18 +2257,26 @@ void main() {
                     }
                 });
             }, { threshold: 0.15 });
-            revealCards.forEach((card) => revealObserver.observe(card));
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    revealCards.forEach((card) => revealObserver.observe(card));
+                });
+            });
         }
 
         // Universal fallback: if the IntersectionObserver hasn't fired for
-        // any card within 2.5s (e.g. pin spacer confuses viewport math, GSAP
+        // any card within 8s (e.g. pin spacer confuses viewport math, GSAP
         // fails to load, body overflow locks scroll), force-reveal them so
-        // content is never permanently invisible.
+        // content is never permanently invisible. This needs to be generous
+        // enough to not fire while someone's still reading through the
+        // hero's hold phase (mobile deliberately holds for a while before
+        // releasing the pin) — a short timeout here would just reintroduce
+        // "cards already revealed with no animation" for slower scrollers.
         setTimeout(() => {
             document.querySelectorAll('.reveal-card:not(.is-revealed)').forEach((card) => {
                 card.classList.add('is-revealed');
             });
-        }, 2500);
+        }, 8000);
 
         // ---- Scroll reveal for bio paragraphs (mobile only) ----
         // Each paragraph slides in from the left and fades in the first time
@@ -2336,13 +2352,17 @@ void main() {
                     // naturally into the wave transition and projects.
                 }
 
-                // Force-reveal project cards on mobile — the pin spacer can
-                // confuse the IntersectionObserver's position calculations,
-                // leaving cards stuck at opacity 0.
-                document.querySelectorAll('.reveal-card').forEach((card) => {
-                    card.classList.add('is-revealed');
-                });
-
+                // NOTE: this used to force-reveal every project card right
+                // here — but this code runs once at page-load setup time,
+                // not when the user actually scrolls to the pin's end, so it
+                // was marking every card "revealed" immediately on mobile,
+                // before the projects section was anywhere near the
+                // viewport. That's what was defeating the scroll-in
+                // animation. The IntersectionObserver (plus its 2.5s
+                // timeout and independent last-resort fallback, both further
+                // down) already handle revealing cards correctly as the
+                // user actually scrolls to them — this just needs to get
+                // out of the way and let that happen.
                 if (window.ScrollTrigger) {
                     requestAnimationFrame(() => window.ScrollTrigger.refresh());
                 }
@@ -2561,17 +2581,17 @@ void main() {
         });
     }
     if (document.readyState === 'complete') {
-        setTimeout(revealAll, 1500);
+        setTimeout(revealAll, 8000);
     } else {
-        window.addEventListener('load', function() { setTimeout(revealAll, 1500); });
+        window.addEventListener('load', function() { setTimeout(revealAll, 8000); });
     }
-    // Also check periodically during the first 5 seconds in case content
+    // Also check periodically for a while after that in case content
     // is added dynamically or the observer is slow to fire.
     var checks = 0;
     var interval = setInterval(function() {
         revealAll();
         if (++checks >= 4) clearInterval(interval);
-    }, 1500);
+    }, 4000);
 })();
 </script>
 
