@@ -140,16 +140,14 @@
             transform: scaleX(1);
         }
 
-        /* ===== Scroll reveal for project cards ===== */
+        /* ===== Project cards =====
+           Cards are always visible. No JS-dependent opacity gating —
+           the previous scroll-reveal mechanism was leaving cards
+           permanently invisible when the IntersectionObserver failed
+           to fire (pin spacer, body overflow lock, script errors). */
         .reveal-card {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-            transition-delay: var(--reveal-delay, 0ms);
-        }
-        .reveal-card.is-revealed {
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
 
         .tilt-project-card {
@@ -1678,7 +1676,7 @@ void main() {
                 setTimeout(() => {
                     textFaded = false;
                     textAnimationActive = false;
-                    document.body.style.overflow = 'hidden';
+                    document.body.style.overflow = '';
                 }, paragraphExitDuration);
             }, paragraphExitDelay);
         }
@@ -2237,6 +2235,16 @@ void main() {
             revealCards.forEach((card) => revealObserver.observe(card));
         }
 
+        // Universal fallback: if the IntersectionObserver hasn't fired for
+        // any card within 2.5s (e.g. pin spacer confuses viewport math, GSAP
+        // fails to load, body overflow locks scroll), force-reveal them so
+        // content is never permanently invisible.
+        setTimeout(() => {
+            document.querySelectorAll('.reveal-card:not(.is-revealed)').forEach((card) => {
+                card.classList.add('is-revealed');
+            });
+        }, 2500);
+
         // ---- Scroll reveal for bio paragraphs (mobile only) ----
         // Each paragraph slides in from the left and fades in the first time
         // it's scrolled into view, then stays put — no exit animation, and
@@ -2521,6 +2529,32 @@ void main() {
         });
     }
     window.addEventListener('load', initProjectTilt);
+})();
+</script>
+<script>
+// Independent reveal fallback — runs outside the main DOMContentLoaded
+// handler so it can't be blocked by errors there. If the IntersectionObserver
+// in the main script never fires (GSAP pin spacer confusing viewport math,
+// body overflow locked, script error), this ensures cards are never
+// permanently stuck at opacity 0.
+(function() {
+    function revealAll() {
+        document.querySelectorAll('.reveal-card:not(.is-revealed)').forEach(function(c) {
+            c.classList.add('is-revealed');
+        });
+    }
+    if (document.readyState === 'complete') {
+        setTimeout(revealAll, 1500);
+    } else {
+        window.addEventListener('load', function() { setTimeout(revealAll, 1500); });
+    }
+    // Also check periodically during the first 5 seconds in case content
+    // is added dynamically or the observer is slow to fire.
+    var checks = 0;
+    var interval = setInterval(function() {
+        revealAll();
+        if (++checks >= 4) clearInterval(interval);
+    }, 1500);
 })();
 </script>
 
