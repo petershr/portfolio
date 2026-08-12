@@ -250,6 +250,14 @@
         #vader-section { height: 220vh; }
         .vader-art { width: 100vw; }
     }
+
+    /* Landscape phones have a short viewport: fit the full 4:3 artwork vertically. */
+    @media (max-height: 600px) and (orientation: landscape) {
+        .vader-art {
+            width: auto;
+            height: min(84svh, 720px);
+        }
+    }
 </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col">
