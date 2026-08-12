@@ -205,6 +205,51 @@
         pointer-events: auto;
         user-select: none;
     }
+
+    /* Vader scroll reveal: the scene stays pinned while the two halves join. */
+    #vader-section {
+        width: 100%;
+        height: 250vh;
+        margin-top: 100px;
+        position: relative;
+        background: linear-gradient(
+            to bottom,
+            #000 0%,
+            #000 32%,
+            rgba(234, 153, 153, var(--vader-pink-opacity, 0)) 62%,
+            rgba(234, 153, 153, var(--vader-pink-opacity, 0)) 100%
+        );
+    }
+
+    #vader-scene {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+    }
+
+    .vader-art {
+        position: absolute;
+        width: min(88vw, 960px);
+        height: auto;
+        user-select: none;
+        pointer-events: none;
+    }
+
+    #vader-outside { z-index: 1; }
+    #vader-inside {
+        z-index: 2;
+        transform: translateY(var(--vader-inside-y, 105vh));
+        will-change: transform;
+    }
+
+    @media (max-width: 640px) {
+        #vader-section { height: 220vh; }
+        .vader-art { width: 100vw; }
+    }
 </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col">
@@ -242,6 +287,18 @@
             <b>Laputa</b> &nbsp;·&nbsp; Click to cycle
         </p>
     </div>
+    <section id="vader-section" aria-label="Darth Vader low poly art reveal">
+        <div id="vader-scene">
+            <img id="vader-outside" class="vader-art"
+                src="vader outside.png"
+                alt="Darth Vader exterior low poly art"
+                loading="lazy">
+            <img id="vader-inside" class="vader-art"
+                src="vader inside.png"
+                alt="Darth Vader interior low poly art"
+                loading="lazy">
+        </div>
+    </section>
 </main>
 
 <!-- Footer -->
@@ -369,6 +426,35 @@
             index = (index + 1) % frames.length;
             img.src = frames[index];
         });
+    })();
+
+    (function() {
+        const section = document.getElementById('vader-section');
+        if (!section) return;
+
+        let framePending = false;
+        function updateVaderReveal() {
+            framePending = false;
+            const rect = section.getBoundingClientRect();
+            const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
+            const progress = Math.max(0, Math.min(1, -rect.top / scrollDistance));
+            // The interior reaches the exterior before the sticky scene releases.
+            const joinProgress = Math.min(1, progress / 0.8);
+            section.style.setProperty('--vader-inside-y', `${(1 - joinProgress) * 105}vh`);
+            section.style.setProperty('--vader-pink-opacity', (progress * 0.96).toFixed(3));
+        }
+
+        function requestVaderUpdate() {
+            if (!framePending) {
+                framePending = true;
+                requestAnimationFrame(updateVaderReveal);
+            }
+        }
+
+        window.addEventListener('scroll', requestVaderUpdate, { passive: true });
+        window.addEventListener('resize', requestVaderUpdate);
+        window.addEventListener('load', requestVaderUpdate);
+        requestVaderUpdate();
     })();
 })();
 </script>
