@@ -2213,6 +2213,11 @@ void main() {
         // so this observer only toggles a class and then unobserves.
         const revealCards = document.querySelectorAll('.reveal-card');
         if (revealCards.length) {
+            // On mobile, GSAP's pin spacer (≈900vh) shifts the cards far down
+            // in document-space even though they're visually right there once
+            // the pin releases. A generous rootMargin bottom value ensures the
+            // observer fires correctly regardless of pin spacer height.
+            const revealRootMargin = isMobile ? '0px 0px 600px 0px' : '0px';
             const revealObserver = new IntersectionObserver((entries, obs) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
@@ -2220,7 +2225,7 @@ void main() {
                         obs.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.15 });
+            }, { threshold: 0.05, rootMargin: revealRootMargin });
             revealCards.forEach((card) => revealObserver.observe(card));
         }
 
@@ -2308,17 +2313,17 @@ void main() {
                     // naturally into the wave transition and projects.
                 }
 
-                // Force-reveal project cards on mobile — the pin spacer can
-                // confuse the IntersectionObserver's position calculations,
-                // leaving cards stuck at opacity 0.
-                document.querySelectorAll('.reveal-card').forEach((card) => {
-                    card.classList.add('is-revealed');
-                });
-
                 if (window.ScrollTrigger) {
                     requestAnimationFrame(() => window.ScrollTrigger.refresh());
                 }
             }
+
+            // Force-reveal project cards on mobile unconditionally — the GSAP
+            // pin spacer (≈900vh) confuses IntersectionObserver position math,
+            // leaving cards stuck. This runs whether or not GSAP loaded.
+            document.querySelectorAll('.reveal-card').forEach((card) => {
+                card.classList.add('is-revealed');
+            });
         }
 
         // ---- Sync rain slowdown point to the wave-transition top (mobile) ----
