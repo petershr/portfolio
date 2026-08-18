@@ -141,23 +141,14 @@
         }
 
         /* ===== Project cards =====
-           Fade + rise into place the first time each card scrolls into
-           view, staggered via --reveal-delay set per card. This relies on
-           the JS reveal system further down, which has four independent
-           fallback layers (IntersectionObserver, a 2.5s timeout, a mobile-
-           specific force-reveal right after the hero pin releases, and a
-           fully separate last-resort script tag) — so even if one of them
-           fails, the cards still can't end up permanently invisible. */
+           Cards are always visible. No JS-dependent opacity gating —
+           the previous scroll-reveal mechanism was leaving cards
+           permanently invisible when the IntersectionObserver failed
+           to fire (pin spacer, body overflow lock, script errors). */
         .reveal-card {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            transition-delay: var(--reveal-delay, 0ms);
-        }
-
-        .reveal-card.is-revealed {
+            display: block;
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
 
         .tilt-project-card {
@@ -600,16 +591,9 @@
             }
 
             .tilt-project-persp {
-                /* NOTE: do not use max-width + auto margins here — auto
-                   margins on a CSS Grid item suppress the default stretch
-                   sizing, and since every child of .tilt-project-card is
-                   position:absolute (no in-flow content to size from), the
-                   item collapsed to 0 width instead of stretching. This is
-                   what was actually making the project cards disappear on
-                   mobile. An explicit width (not max-width) sidesteps that,
-                   since it doesn't depend on stretch or content sizing. */
-                width: 92% !important;
-                justify-self: center !important;
+                max-width: 92% !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
             }
         }
 
@@ -656,7 +640,7 @@
         }
     </style>
 </head>
-<body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col" style="overflow: hidden;">
+<body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col">
 <!-- TopNavBar Component -->
 <nav class="fixed top-0 w-full z-50 bg-white/[0.06] backdrop-blur-[18px] border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.18)] text-primary text-label-md font-label-md uppercase tracking-widest">
 <div class="flex items-center py-4 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
@@ -818,7 +802,7 @@
 </section>
 
 <!-- Projects Section -->
-<section class="w-full relative z-20 bg-white border-0 shadow-none" id="projects" style="margin-top: 0px; padding-top: 3rem; padding-bottom: 6rem; overflow: hidden; position: relative;">
+<section class="w-full relative z-20 bg-white border-0 shadow-none" id="projects" style="margin-top: 0px; padding-top: 3rem; padding-bottom: 6rem; position: relative;">
 
      <!-- ShaderGradient Background -->
   <canvas id="projects-gradient" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
@@ -1145,7 +1129,7 @@
         <h3 class="text-headline-md font-futura text-terminal-white">Google Slides Low Poly Art</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
-                Low poly art built entirely with Google Slides shape tools, layered into a tilt-driven parallax piece.
+                Low poly art built entirely with Google Slides shape tools.
             </p>
             <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 bg-surface-container/80 text-secondary text-label-sm font-futura rounded border border-surface-stroke/50">Digital Art</span>
@@ -1383,24 +1367,12 @@
                 );
 
                 // Dynamic Padding and Margin Counter-Balance Animation
-                window.gsap.fromTo(
-                    '#projects',
-                    { 
-                        paddingTop: "0rem",
-                        marginTop: "-8rem"
-                    },
-                    {
-                        paddingTop: "10rem",   // Grows padding downward seamlessly
-                        marginTop: "-18rem",   // Pulls margin up simultaneously (-11rem completely counterbalances the 11rem padding growth)
-                        ease: 'none',
-                        scrollTrigger: {
-                            trigger: '#projects', 
-                            start: 'top bottom',  // Starts the moment the top of the projects section hits the bottom of the screen
-                            end: 'top top',       // Finishes when the section reaches the top of the screen
-                            scrub: true           // Links directly to scroll velocity
-                        }
-                    }
-                );
+                // — disabled: the fromTo immediately sets marginTop: -8rem,
+                // pulling the projects section up under the wave transition.
+                // If the scrollTrigger never fires (user clicks nav link, GSAP
+                // timing issue), the section stays mispositioned and cards
+                // appear missing. The section's own inline padding/margin
+                // handles spacing correctly without this.
             }
             // Selected Works — fires once when scrolled past trigger point
             if (!isMobile) {
@@ -2239,14 +2211,6 @@ void main() {
         // Cards fade + rise into place the first time they enter the viewport.
         // CSS handles the actual motion (and prefers-reduced-motion disables it),
         // so this observer only toggles a class and then unobserves.
-        //
-        // Observation is deliberately delayed by two animation frames before
-        // starting: GSAP's mobile pin setup (further down this same script)
-        // inserts a pin-spacer that reserves extra scroll height, and if we
-        // start observing before that's applied to layout, the observer's
-        // first geometry check can run against a temporarily-too-short page
-        // and report a false "already visible" — which is what was
-        // confusing it in the first place.
         const revealCards = document.querySelectorAll('.reveal-card');
         if (revealCards.length) {
             const revealObserver = new IntersectionObserver((entries, obs) => {
@@ -2257,26 +2221,18 @@ void main() {
                     }
                 });
             }, { threshold: 0.15 });
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    revealCards.forEach((card) => revealObserver.observe(card));
-                });
-            });
+            revealCards.forEach((card) => revealObserver.observe(card));
         }
 
         // Universal fallback: if the IntersectionObserver hasn't fired for
-        // any card within 8s (e.g. pin spacer confuses viewport math, GSAP
+        // any card within 2.5s (e.g. pin spacer confuses viewport math, GSAP
         // fails to load, body overflow locks scroll), force-reveal them so
-        // content is never permanently invisible. This needs to be generous
-        // enough to not fire while someone's still reading through the
-        // hero's hold phase (mobile deliberately holds for a while before
-        // releasing the pin) — a short timeout here would just reintroduce
-        // "cards already revealed with no animation" for slower scrollers.
+        // content is never permanently invisible.
         setTimeout(() => {
             document.querySelectorAll('.reveal-card:not(.is-revealed)').forEach((card) => {
                 card.classList.add('is-revealed');
             });
-        }, 8000);
+        }, 2500);
 
         // ---- Scroll reveal for bio paragraphs (mobile only) ----
         // Each paragraph slides in from the left and fades in the first time
@@ -2352,17 +2308,13 @@ void main() {
                     // naturally into the wave transition and projects.
                 }
 
-                // NOTE: this used to force-reveal every project card right
-                // here — but this code runs once at page-load setup time,
-                // not when the user actually scrolls to the pin's end, so it
-                // was marking every card "revealed" immediately on mobile,
-                // before the projects section was anywhere near the
-                // viewport. That's what was defeating the scroll-in
-                // animation. The IntersectionObserver (plus its 2.5s
-                // timeout and independent last-resort fallback, both further
-                // down) already handle revealing cards correctly as the
-                // user actually scrolls to them — this just needs to get
-                // out of the way and let that happen.
+                // Force-reveal project cards on mobile — the pin spacer can
+                // confuse the IntersectionObserver's position calculations,
+                // leaving cards stuck at opacity 0.
+                document.querySelectorAll('.reveal-card').forEach((card) => {
+                    card.classList.add('is-revealed');
+                });
+
                 if (window.ScrollTrigger) {
                     requestAnimationFrame(() => window.ScrollTrigger.refresh());
                 }
@@ -2581,17 +2533,17 @@ void main() {
         });
     }
     if (document.readyState === 'complete') {
-        setTimeout(revealAll, 8000);
+        setTimeout(revealAll, 1500);
     } else {
-        window.addEventListener('load', function() { setTimeout(revealAll, 8000); });
+        window.addEventListener('load', function() { setTimeout(revealAll, 1500); });
     }
-    // Also check periodically for a while after that in case content
+    // Also check periodically during the first 5 seconds in case content
     // is added dynamically or the observer is slow to fire.
     var checks = 0;
     var interval = setInterval(function() {
         revealAll();
         if (++checks >= 4) clearInterval(interval);
-    }, 4000);
+    }, 1500);
 })();
 </script>
 
