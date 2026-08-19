@@ -141,14 +141,32 @@
         }
 
         /* ===== Project cards =====
-           Cards are always visible. No JS-dependent opacity gating —
-           the previous scroll-reveal mechanism was leaving cards
-           permanently invisible when the IntersectionObserver failed
-           to fire (pin spacer, body overflow lock, script errors). */
+           Cards start invisible and slide up. .is-revealed triggers the
+           entrance — added by IntersectionObserver (desktop + mobile) and
+           by several unconditional fallbacks so it always fires.
+           pointer:coarse catches "Desktop Site" mode on touch phones. */
         .reveal-card {
             display: block;
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.55s ease-out,
+                        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            transition-delay: var(--reveal-delay, 0ms);
+        }
+
+        .reveal-card.is-revealed {
             opacity: 1;
-            transform: none;
+            transform: translateY(0);
+        }
+
+        /* Reduced-motion: skip animation, always show */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-card,
+            .reveal-card.is-revealed {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
         }
 
         .tilt-project-card {
@@ -296,7 +314,6 @@
             #hero-section p {
                 animation: none !important;
             }
-            .reveal-card,
             .bio-line-reveal {
                 opacity: 1;
                 transform: none;
@@ -2235,7 +2252,10 @@ void main() {
                         obs.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.15 });
+            }, {
+                threshold: 0,
+                rootMargin: '0px 0px 200px 0px'
+            });
             revealCards.forEach((card) => revealObserver.observe(card));
         }
 
