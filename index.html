@@ -609,9 +609,19 @@
             }
 
             .tilt-project-persp {
-                max-width: 92% !important;
-                margin-left: auto !important;
-                margin-right: auto !important;
+                /* Do not use max-width + auto margins here — auto margins
+                   on a CSS Grid item disable the grid's default stretch
+                   sizing, and since every child of .tilt-project-card is
+                   position:absolute (no in-flow content to size from), the
+                   item collapses to 0 width instead of stretching. This is
+                   what was actually making every project card invisible on
+                   mobile — confirmed by measuring live: opacity:1 and
+                   is-revealed both true on every card, but width:0. The
+                   reveal/animation system was never the problem. An
+                   explicit width (not max-width) sidesteps stretch/content
+                   sizing entirely, since it's just always 92% regardless. */
+                width: 92% !important;
+                justify-self: center !important;
             }
         }
 
@@ -2243,6 +2253,14 @@ void main() {
         // Cards fade + rise into place the first time they enter the viewport.
         // CSS handles the actual motion (and prefers-reduced-motion disables it),
         // so this observer only toggles a class and then unobserves.
+        //
+        // Observation starts after two animation frames rather than
+        // immediately: GSAP's mobile pin setup (further down this same
+        // script) inserts a pin-spacer that reserves extra scroll height,
+        // and starting the observer before that's applied to layout risks
+        // its first geometry check running against a temporarily-too-short
+        // page — which is the "pin spacer confuses viewport math" issue
+        // this file's fallback comments kept referencing.
         const revealCards = document.querySelectorAll('.reveal-card');
         if (revealCards.length) {
             const revealObserver = new IntersectionObserver((entries, obs) => {
@@ -2256,7 +2274,11 @@ void main() {
                 threshold: 0,
                 rootMargin: '0px 0px 200px 0px'
             });
-            revealCards.forEach((card) => revealObserver.observe(card));
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    revealCards.forEach((card) => revealObserver.observe(card));
+                });
+            });
         }
 
         // Universal fallback: if the IntersectionObserver hasn't fired for
@@ -2339,12 +2361,16 @@ void main() {
                 }
             }
 
-            // Force-reveal runs unconditionally — outside the GSAP guard so
-            // it fires even if GSAP CDN fails on a slow mobile connection.
-            // Images are eager-loaded so they're ready regardless of pin spacer.
-            document.querySelectorAll('.reveal-card').forEach((card) => {
-                card.classList.add('is-revealed');
-            });
+            // NOTE: this block used to also force-reveal every project card
+            // right here, unconditionally, immediately at setup time — not
+            // when the user actually scrolled near them. That was an
+            // attempted fix for cards not appearing on mobile, but the real
+            // cause was a CSS width bug (see .tilt-project-persp above), not
+            // the reveal system. With that fixed, forcing every card
+            // revealed at page-load was actually working against the
+            // intended one-by-one scroll-in animation, so it's removed —
+            // the IntersectionObserver (plus its timeout fallback) already
+            // handles this correctly.
         }
 
         // ---- Sync rain slowdown point to the wave-transition top (mobile) ----
@@ -2544,32 +2570,6 @@ void main() {
         });
     }
     window.addEventListener('load', initProjectTilt);
-})();
-</script>
-<script>
-// Independent reveal fallback — runs outside the main DOMContentLoaded
-// handler so it can't be blocked by errors there. If the IntersectionObserver
-// in the main script never fires (GSAP pin spacer confusing viewport math,
-// body overflow locked, script error), this ensures cards are never
-// permanently stuck at opacity 0.
-(function() {
-    function revealAll() {
-        document.querySelectorAll('.reveal-card:not(.is-revealed)').forEach(function(c) {
-            c.classList.add('is-revealed');
-        });
-    }
-    if (document.readyState === 'complete') {
-        setTimeout(revealAll, 1500);
-    } else {
-        window.addEventListener('load', function() { setTimeout(revealAll, 1500); });
-    }
-    // Also check periodically during the first 5 seconds in case content
-    // is added dynamically or the observer is slow to fire.
-    var checks = 0;
-    var interval = setInterval(function() {
-        revealAll();
-        if (++checks >= 4) clearInterval(interval);
-    }, 1500);
 })();
 </script>
 
