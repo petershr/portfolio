@@ -608,6 +608,22 @@
                 height: 17rem !important;
             }
 
+            /* Long captions were growing upward past the top of the card
+               (since the wrapper is bottom-anchored and un-capped), which
+               the card's own overflow-hidden then clipped from the top —
+               so you'd see the tail end of the description with the
+               opening cut off. Capping the wrapper to the card's own
+               height means it can never grow past the card's top edge;
+               once content exceeds that, the wrapper's own overflow now
+               clips from the bottom of ITS content instead, so the top of
+               the caption (title, start of the description) stays visible.
+               Short captions that already fit are unaffected — this only
+               matters once content would've exceeded the card height. */
+            .card-caption {
+                max-height: 100%;
+                overflow: hidden;
+            }
+
             .tilt-project-persp {
                 /* Do not use max-width + auto margins here — auto margins
                    on a CSS Grid item disable the grid's default stretch
@@ -1042,7 +1058,7 @@
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent pointer-events-none"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
     <div class="absolute top-4 right-4 bg-surface-container/90 backdrop-blur-sm text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Apr 2026</div>
-    <div class="absolute inset-x-0 bottom-0 p-6">
+    <div class="card-caption absolute inset-x-0 bottom-0 p-6">
         <h3 class="text-headline-md font-futura text-terminal-white">Custom ISM330DLC IMU PCB</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
@@ -1065,7 +1081,7 @@
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent pointer-events-none"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
     <div class="absolute top-4 right-4 bg-surface-container/90 backdrop-blur-sm text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Feb 2026 - Mar 2026</div>
-    <div class="absolute inset-x-0 bottom-0 p-6">
+    <div class="card-caption absolute inset-x-0 bottom-0 p-6">
         <h3 class="text-headline-md font-futura text-terminal-white">Jetson Breakout Board</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
@@ -1087,7 +1103,7 @@
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent pointer-events-none"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
     <div class="absolute top-4 right-4 bg-surface-container/90 backdrop-blur-sm text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Mar 2026 - Jul 2026</div>
-    <div class="absolute inset-x-0 bottom-0 p-6">
+    <div class="card-caption absolute inset-x-0 bottom-0 p-6">
         <h3 class="text-headline-md font-futura text-terminal-white">PV System Compliance</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
@@ -1109,7 +1125,7 @@
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent pointer-events-none"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
     <div class="absolute top-4 right-4 bg-surface-container/90 backdrop-blur-sm text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Oct 2025 - Jun 2026</div>
-    <div class="absolute inset-x-0 bottom-0 p-6">
+    <div class="card-caption absolute inset-x-0 bottom-0 p-6">
         <h3 class="text-headline-md font-futura text-terminal-white">Hall Effect Sensor Joystick</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
@@ -1131,7 +1147,7 @@
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent pointer-events-none"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
     <div class="absolute top-4 right-4 bg-surface-container/90 backdrop-blur-sm text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Apr 2026</div>
-    <div class="absolute inset-x-0 bottom-0 p-6">
+    <div class="card-caption absolute inset-x-0 bottom-0 p-6">
         <h3 class="text-headline-md font-futura text-terminal-white">Egyptian Wars</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
@@ -1153,7 +1169,7 @@
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent pointer-events-none"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
     <div class="absolute top-4 right-4 bg-surface-container/90 backdrop-blur-sm text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">2019 - 2026</div>
-    <div class="absolute inset-x-0 bottom-0 p-6">
+    <div class="card-caption absolute inset-x-0 bottom-0 p-6">
         <h3 class="text-headline-md font-futura text-terminal-white">Google Slides Low Poly Art</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
@@ -1186,7 +1202,7 @@
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"></div>
     <div class="absolute top-4 right-4 bg-surface-container/90 backdrop-blur-sm text-secondary text-label-sm font-label-sm px-2 py-1 rounded border border-surface-stroke">Jul 2026</div>
-    <div class="absolute inset-x-0 bottom-0 p-6">
+    <div class="card-caption absolute inset-x-0 bottom-0 p-6">
         <h3 class="text-headline-md font-futura text-terminal-white">Darwin (Daytona HackSprint)</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
