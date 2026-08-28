@@ -612,15 +612,21 @@
                (since the wrapper is bottom-anchored and un-capped), which
                the card's own overflow-hidden then clipped from the top —
                so you'd see the tail end of the description with the
-               opening cut off. Capping the wrapper to the card's own
-               height means it can never grow past the card's top edge;
-               once content exceeds that, the wrapper's own overflow now
-               clips from the bottom of ITS content instead, so the top of
-               the caption (title, start of the description) stays visible.
+               opening cut off. Capping the wrapper's height means it can
+               never grow past a fixed point near the card's top; once
+               content exceeds that, the wrapper's own overflow now clips
+               from the bottom of ITS content instead, so the top of the
+               caption (title, start of the description) stays visible.
                Short captions that already fit are unaffected — this only
-               matters once content would've exceeded the card height. */
+               matters once content would've exceeded the available height.
+
+               The cap leaves 56px reserved at the top (rather than 100%)
+               specifically so the caption can't rise high enough to
+               overlap the date badge (top-4 right-4, roughly 44px tall
+               including its own offset) — titles like "Darwin (Daytona
+               HackSprint)" were colliding with it before. */
             .card-caption {
-                max-height: 100%;
+                max-height: calc(100% - 56px);
                 overflow: hidden;
             }
 
