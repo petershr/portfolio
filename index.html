@@ -1068,7 +1068,7 @@
         <h3 class="text-headline-md font-futura text-terminal-white">Custom ISM330DLC IMU PCB</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
-                Designed a custom ISM330DLC IMU PCB from scratch in EasyEDA, integrating XH connectors for I2C and implementing noise reduction techniques including strategic decoupling capacitor placement, controlled trace widths, and a ground plane with minimal penetration. Developed for Triton Robotics' autonomous subteam.
+                Designed a custom ISM330DLC IMU PCB from scratch in EasyEDA for Triton Robotics, removing SPI support and integrating XH connectors for I2C. Rebuilt the schematic from the ground up to resolve inherited reference designator issues, then worked through decoupling capacitor placement and ground plane routing from first principles.
             </p>
             <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 bg-surface-container/80 text-secondary text-label-sm font-futura rounded border border-surface-stroke/50">PCB Design</span>
@@ -1091,7 +1091,7 @@
         <h3 class="text-headline-md font-futura text-terminal-white">Jetson Breakout Board</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
-                Designed a 4-layer PCB connecting the BNO055 IMU and NVIDIA Jetson Orin Nano, with additional connectors for debugging and testing. Manufactured and implemented for the entire Triton Robotics fleet.
+                Designed a 4-layer PCB connecting the BNO055 IMU and NVIDIA Jetson Orin Nano, with right-angle connectors for fast debug access and external pull-up resistors for reliable I2C. Manufactured and deployed across the entire Triton Robotics fleet.
             </p>
             <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 bg-surface-container/80 text-secondary text-label-sm font-futura rounded border border-surface-stroke/50">PCB Design</span>
@@ -1135,7 +1135,7 @@
         <h3 class="text-headline-md font-futura text-terminal-white">Hall Effect Sensor Joystick</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
-                Designing a Hall effect sensor joystick for the Human Powered Submarine club. This provides the pilot an analog input to control the overall movement direction.
+                Designed and built an analog Hall effect joystick for the Human Powered Submarine pilot control, with the housing designed in SolidWorks, fabricated in the makerspace, and paired with Arduino firmware to read magnet position across two axes.
             </p>
             <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 bg-surface-container/80 text-secondary text-label-sm font-futura rounded border border-surface-stroke/50">Sensors</span>
@@ -1212,7 +1212,7 @@
         <h3 class="text-headline-md font-futura text-terminal-white">Darwin (Daytona HackSprint)</h3>
         <div class="tilt-project-reveal max-h-0 opacity-0 overflow-hidden group-hover:max-h-96 group-hover:opacity-100 group-hover:mt-3 transition-all duration-700 ease-out">
             <p class="text-body-md font-futura-light text-secondary mb-3">
-                Built the evolutionary loop and evaluation pipeline for a system that breeds and tests agents automatically, then tells you which model is best at each task. Verified a deterministic offline fallback reaching perfect fitness and live Fireworks-powered model mutation, plus Legal and Support datasets producing 100 real evaluation cases.
+                Built the core loop for Darwin: a system that automatically generates variations of AI agents, tests them on real tasks, and keeps the best ones. Tested both an offline version and a live version using the Fireworks API, with 100 real evaluation cases across Legal and Support domains. Built over a weekend at Daytona HackSprint SF.
             </p>
             <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 bg-surface-container/80 text-secondary text-label-sm font-futura rounded border border-surface-stroke/50">Python</span>

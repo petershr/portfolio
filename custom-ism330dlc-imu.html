@@ -239,9 +239,7 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Problem</h2>
         <p class="text-body-md font-body-md text-secondary">
-            Needed a custom IMU PCB removing SPI support entirely, but the base schematic had ambiguous reference
-            designators inherited from reused parts. The design also called for a larger XH connector to match
-            wiring needs without growing the board's footprint.
+            The electronics subteam needed a dedicated IMU board for the autonomous robots, smaller than an off-the-shelf breakout, with SPI removed (the firmware did not use it), and XH connectors to match the team's existing wiring harness. The starting point was a schematic that had been adapted from previous designs and reused parts, which meant some of the reference designators were ambiguous or duplicated in ways that were not immediately obvious.
         </p>
     </section>
 
@@ -249,10 +247,13 @@
     <section class="mb-10">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Design and approach</h2>
         <p class="text-body-md font-body-md text-secondary max-w-3xl mb-6">
-            Removed SPI entirely and replaced the original connectors with XH. Rebuilt the schematic and PCB layout
-            from scratch to resolve duplicate and unclear reference designators before finalizing routing. Placed
-            decoupling capacitors close to noise-sensitive components, researching capacitor behavior to justify
-            each placement rather than defaulting to convention.
+            Removed SPI entirely and replaced the original connectors with XH to match the wiring harness. The schematic was rebuilt from scratch to resolve the reference designator issues before starting layout, which added some time upfront but made the rest of the process much cleaner.
+
+            For decoupling, the ISM330DLC datasheet specifies 100 nF on each supply pin. I had placed decoupling capacitors before, but this was the first time I worked through why placement matters beyond just being close to the component. A capacitor on a long trace has extra parasitic inductance between it and the pin it is protecting, which limits how quickly it can respond to a transient. Keeping the path from the capacitor to both the supply pin and the ground plane as short as possible minimizes that inductance and makes the decoupling actually effective. I tried to apply that reasoning to each capacitor rather than just following a general rule.
+
+            The ground plane also required more thought than I expected. The instinct going in was to pour as much ground as possible, but I learned that poorly placed vias can create isolated sections of the pour that force return current to take a longer path than it should. Getting the via placement right meant thinking about where current actually flows, not just whether a ground pour is present.
+
+            The board is 2 layers: signal on top, ground plane on the bottom. I compared the layer conventions the team had used on previous boards with the more standard Altium convention and chose the latter for this design.
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 my-24">
             <!-- Schematic (full width) -->
@@ -285,11 +286,9 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Challenges</h2>
         <p class="text-body-md font-body-md text-secondary">
-            The base schematic this board was adapted from had duplicate and ambiguous reference designators left 
-            over from reused parts, not obvious until mid-layout, when it became clear which components mapped to 
-            which footprints. Rather than patch around the confusion, the schematic and PCB layout were rebuilt from 
-            scratch with clean designators before finalizing routing, which cost some time upfront but avoided 
-            compounding the ambiguity into the final board.
+            The reference designator issue was not obvious from the schematic view alone. It only became clear during layout when I started assigning footprints and some components did not map cleanly. At that point I had to decide whether to work around it or go back and fix it properly. I went back and rebuilt the schematic with clean designators, which cost some time but avoided a situation where the ambiguity could cause assembly errors after the boards came back from fabrication.
+
+            The decoupling and ground plane work described above was also more of a learning process than I expected going in. A lot of PCB layout guidance is written as rules to follow, and I found it more useful to understand the physical reasoning behind each rule so I could apply judgment when the rules pointed in different directions.
         </p>
     </section>
 
@@ -297,9 +296,7 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Results</h2>
         <p class="text-body-md font-body-md text-secondary">
-            Fully manufactured and assembled with all of Triton Robotics' robots before the RoboMasters Robotics
-            Competition. Deepened understanding of decoupling capacitor placement and behavior, as well as design
-            practices around ground plane and via placement to preserve signal integrity.
+            Manufactured and assembled across all Triton Robotics robots before the RoboMasters competition. The board worked in integration without needing rework, which was a good sign given that it was my first time working through the decoupling and grounding decisions at this level of detail. The main thing I took away was a better foundation for thinking about signal integrity: understanding the why behind placement decisions, not just the what.
         </p>
     </section>
 

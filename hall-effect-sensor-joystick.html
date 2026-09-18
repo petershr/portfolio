@@ -238,9 +238,7 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Problem</h2>
         <p class="text-body-md font-body-md text-secondary">
-            Needed reliable analog steering input for a water-filled environment without mechanical wear. The
-            joystick also had to be robust enough for the pilot's tight grip, and easily controllable with one
-            hand.
+            The Human Powered Submarine needed a pilot control input that could fit inside a waterproofed enclosure with no mechanical linkage passing through the hull. An off-the-shelf joystick was not going to work given the geometry and waterproofing requirements, so the sensor and mechanical housing were designed together from scratch. The input also had to be robust enough for the pilot's tight grip and controllable with one hand.
         </p>
     </section>
 
@@ -295,11 +293,9 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Challenges</h2>
         <p class="text-body-md font-body-md text-secondary">
-            Keeping the mechanism waterproof while still moving freely turned out to be harder than sealing any single part. 
-            Encapsulating the Hall effect sensors in epoxy resin solved the sensing side, but the first-pass PLA enclosure 
-            itself isn't watertight, which only became clear once the fully assembled unit needed to hold up in a water-filled 
-            environment. That's driving the move to a resin printer for the next revision rather than trying to seal the PLA 
-            parts after the fact.
+            Hall effect sensors pick up the magnet's position in all three axes, not just the intended one. In practice this meant that moving the joystick in one direction produced a small signal on the other axis as well, especially when the magnet path was not perfectly constrained by the housing. Tightening the housing geometry helped reduce this, and some software compensation handled what remained.
+
+            Keeping the mechanism waterproof while still moving freely turned out to be harder than sealing any single part. Encapsulating the Hall effect sensors in epoxy resin solved the sensing side, but the first-pass PLA enclosure itself is not watertight, which only became clear once the fully assembled unit needed to hold up in a water-filled environment. That drove the move to a resin printer for the next revision rather than trying to seal the PLA parts after the fact.
         </p>
     </section>
 
@@ -307,10 +303,7 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Results &amp; next steps</h2>
         <p class="text-body-md font-body-md text-secondary">
-            Achieved successful contactless sensing of joystick input with nonlinear mapping, and completed
-            assembly of the PLA parts. Passed on to HPS teammates, who have reprinted components 
-            with a resin printer to waterproof it and fine-tuned the Arduino code with underwater testing to provide
-            linear direction outputs from the joystick's position.
+            Achieved successful contactless sensing of joystick input and completed assembly of the PLA parts. The analog output gives the pilot proportional control rather than a simple on/off signal, which makes low-speed maneuvering more controllable. Passed on to HPS teammates, who reprinted components with a resin printer to waterproof the enclosure and fine-tuned the Arduino code with underwater testing to provide linear direction outputs from the joystick's position.
         </p>
     </section>
 
