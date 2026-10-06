@@ -1,13 +1,13 @@
 <!DOCTYPE html><html class="dark" lang="en"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Custom ISM330DLC IMU PCB | Peter Shr</title>
+<title>Custom ISM330DHCX IMU PCB | Peter Shr</title>
 <meta name="description" content="Custom IMU breakout PCB built from scratch in EasyEDA for Triton Robotics' autonomous subteam.">
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Custom ISM330DLC IMU PCB | Peter Shr">
-<meta property="og:description" content="Custom IMU breakout PCB built from scratch in EasyEDA for Triton Robotics' autonomous subteam.">
+<meta property="og:title" content="Custom ISM330DHCX IMU PCB | Peter Shr">
+<meta property="og:description" content="Custom IMU breakout PCB built from scratch in EasyEDA for Triton Robotics' electronics subteam.">
 <meta property="og:image" content="ism_3d_render.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -201,11 +201,11 @@
     <!-- Hero -->
     <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden mb-6">
         <div class="h-80 md:h-[420px] w-full overflow-hidden bg-[#808080] relative">
-            <img class="w-full h-full object-contain" src="ism_3d_render.png" alt="Custom ISM330DLC IMU PCB 3D render">
+            <img class="w-full h-full object-contain" src="ism_3d_render.png" alt="Custom ISM330DHCX IMU PCB 3D render">
         </div>
         <div class="p-6 md:p-8">
-            <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-2">Custom ISM330DLC IMU PCB</h1>
-            <p class="text-body-lg font-body-lg text-secondary mb-4">Custom IMU breakout PCB built from scratch in EasyEDA for Triton Robotics' autonomous subteam</p>
+            <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-2">Custom ISM330DHCX IMU PCB</h1>
+            <p class="text-body-lg font-body-lg text-secondary mb-4">Custom IMU breakout PCB built from scratch in EasyEDA for Triton Robotics' electronics subteam</p>
             <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">PCB Design</span>
                 <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">EasyEDA</span>
@@ -249,17 +249,17 @@
         <p class="text-body-md font-body-md text-secondary max-w-3xl mb-6">
             Removed SPI entirely and replaced the original connectors with XH to match the wiring harness. The schematic was rebuilt from scratch to resolve the reference designator issues before starting layout, which added some time upfront but made the rest of the process much cleaner.
 
-            For decoupling, the ISM330DLC datasheet specifies 100 nF on each supply pin. I had placed decoupling capacitors before, but this was the first time I worked through why placement matters beyond just being close to the component. A capacitor on a long trace has extra parasitic inductance between it and the pin it is protecting, which limits how quickly it can respond to a transient. Keeping the path from the capacitor to both the supply pin and the ground plane as short as possible minimizes that inductance and makes the decoupling actually effective. I tried to apply that reasoning to each capacitor rather than just following a general rule.
+            For decoupling, the ISM330DHCX datasheet specifies 100 nF on each supply pin. I had placed decoupling capacitors before, but this was the first time I worked through why placement matters beyond just being close to the component. A capacitor on a long trace has extra parasitic inductance between it and the pin it is protecting, which limits how quickly it can respond to a transient. Keeping the path from the capacitor to both the supply pin and the ground plane as short as possible minimizes that inductance and makes the decoupling actually effective. I tried to apply that reasoning to each capacitor rather than just following a general rule.
 
             The ground plane also required more thought than I expected. The instinct going in was to pour as much ground as possible, but I learned that poorly placed vias can create isolated sections of the pour that force return current to take a longer path than it should. Getting the via placement right meant thinking about where current actually flows, not just whether a ground pour is present.
 
-            The board is 2 layers: signal on top, ground plane on the bottom. I compared the layer conventions the team had used on previous boards with the more standard Altium convention and chose the latter for this design.
+            The board is 2 layers: signal on top, ground plane on the bottom. I based the layer convention on the team's existing 2-layer boards.
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 my-24">
             <!-- Schematic (full width) -->
             <div class="flex flex-col md:col-span-2">
                 <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
-                    <img loading="lazy" decoding="async" class="w-full h-144 object-contain" src="ism_schematic.png" alt="ISM330DLC schematic">
+                    <img loading="lazy" decoding="async" class="w-full h-144 object-contain" src="ism_schematic.png" alt="ISM330DHCX schematic">
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Schematic</p>
             </div>
