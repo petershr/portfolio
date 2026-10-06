@@ -1,0 +1,358 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Custom ISM330DHCX IMU PCB | Peter Shr</title>
+<meta name="description" content="Custom IMU breakout PCB built from scratch in EasyEDA for Triton Robotics' autonomous subteam.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Custom ISM330DHCX IMU PCB | Peter Shr">
+<meta property="og:description" content="Custom IMU breakout PCB built from scratch in EasyEDA for Triton Robotics' electronics subteam.">
+<meta property="og:image" content="ism_3d_render.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="favicon.png" rel="icon" type="image/png">
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "on-secondary-fixed": "#151c27",
+                    "secondary-container": "#404754",
+                    "primary-fixed": "#c0e9f7",
+                    "surface-container-lowest": "#070d1f",
+                    "secondary": "#c0c7d6",
+                    "on-primary": "#073540",
+                    "tertiary-fixed-dim": "#bcc7de",
+                    "secondary-fixed": "#dce2f3",
+                    "surface-container": "#191f31",
+                    "accent-glow": "rgba(161, 201, 214, 0.15)",
+                    "inverse-primary": "#3d646f",
+                    "on-tertiary": "#263143",
+                    "surface-container-low": "#151b2d",
+                    "tertiary": "#d4dff7",
+                    "outline-variant": "#41484a",
+                    "tertiary-fixed": "#d8e3fb",
+                    "tertiary-container": "#b8c3da",
+                    "background": "#000000",
+                    "on-tertiary-fixed": "#111c2d",
+                    "surface-bright": "#33394c",
+                    "primary-container": "#a1c9d6",
+                    "on-primary-fixed-variant": "#244c57",
+                    "on-secondary": "#2a313d",
+                    "inverse-on-surface": "#2a3043",
+                    "surface-tint": "#a5cdda",
+                    "surface-stroke": "#334155",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#c0c7d6",
+                    "terminal-white": "#F8FAFC",
+                    "surface-container-highest": "#2e3447",
+                    "primary": "#bde5f2",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-container": "#455064",
+                    "surface-variant": "#2e3447",
+                    "surface": "#0c1324",
+                    "on-secondary-fixed-variant": "#404754",
+                    "on-primary-container": "#2e5560",
+                    "on-surface-variant": "#c1c8ca",
+                    "surface-container-high": "#23293c",
+                    "on-tertiary-fixed-variant": "#3c475a",
+                    "on-background": "#dce1fb",
+                    "surface-dim": "#0c1324",
+                    "primary-fixed-dim": "#a5cdda",
+                    "on-error": "#690005",
+                    "on-surface": "#dce1fb",
+                    "on-secondary-container": "#aeb5c5",
+                    "error": "#ffb4ab",
+                    "outline": "#8b9295",
+                    "on-primary-fixed": "#001f27",
+                    "inverse-surface": "#dce1fb"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "9999px"
+                },
+                "spacing": {
+                    "base": "4px",
+                    "container-max": "1200px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px"
+                },
+                "fontFamily": {
+                    "headline-md": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "headline-lg-mobile": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "headline-lg": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "display": ["Hanken Grotesk", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "body-md": ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "body-lg": ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+                    "label-md": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+                    "label-sm": ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"]
+                },
+                "fontSize": {
+                    "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                    "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "label-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                    "label-sm": ["12px", { "lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "400" }]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .card-hover { transition: all 0.3s ease; }
+    .card-hover:hover {
+        border-color: #bde5f2;
+        box-shadow: 0 0 20px rgba(161, 201, 214, 0.15);
+        transform: translateY(-2px);
+    }
+    .glass-panel {
+        background: rgba(25, 31, 49, 0.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    .font-futura {
+        font-family: 'Jost', sans-serif !important;
+    }
+    .font-futura-light {
+        font-family: 'Jost', sans-serif !important;
+        font-weight: 300 !important;
+    }
+    /* Lightbox */
+    #lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        align-items: center;
+        justify-content: center;
+    }
+    #lightbox.active {
+        display: flex;
+    }
+    #lightbox img {
+        max-width: 90vw;
+        max-height: 88vh;
+        object-fit: contain;
+        border-radius: 0.25rem;
+        box-shadow: 0 0 60px rgba(0,0,0,0.6);
+    }
+    #lightbox-close {
+        position: fixed;
+        top: 20px;
+        right: 28px;
+        color: #F8FAFC;
+        font-size: 2rem;
+        font-weight: 300;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
+        background: none;
+        border: none;
+        padding: 4px 8px;
+    }
+    #lightbox-close:hover {
+        color: #bde5f2;
+    }
+    .lightbox-trigger {
+        cursor: pointer;
+    }
+    /* Visible keyboard focus in the accent color */
+    a:focus-visible,
+    button:focus-visible,
+    .lightbox-trigger:focus-visible {
+        outline: 2px solid #bde5f2;
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
+</style>
+</head>
+<body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col">
+
+<!-- TopNavBar Component (static version — links back to main page) -->
+<nav class="fixed top-0 w-full z-50 bg-white/[0.06] backdrop-blur-[18px] border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.18)] text-primary text-label-md font-label-md uppercase tracking-widest">
+  <div class="flex items-center justify-center py-4">
+    <a href="index.html" class="text-headline-md font-headline-md font-bold tracking-tighter text-terminal-white cursor-pointer">PETER SHR</a>
+  </div>
+</nav>
+
+<main class="flex-grow relative z-10 pt-32 pb-24">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+
+        <!-- Back link -->
+    <a href="index.html" class="group inline-flex items-center gap-2 text-label-md font-label-md font-bold uppercase tracking-widest text-terminal-white hover:text-primary transition-colors duration-300 mb-8">
+        <span class="inline-block transition-transform duration-300 ease-out group-hover:-translate-x-1">&larr;</span>
+        Back
+    </a>
+
+    <!-- Hero -->
+    <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden mb-6">
+        <div class="h-80 md:h-[420px] w-full overflow-hidden bg-[#808080] relative">
+            <img class="w-full h-full object-contain" src="ism_3d_render.png" alt="Custom ISM330DHCX IMU PCB 3D render">
+        </div>
+        <div class="p-6 md:p-8">
+            <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-2">Custom ISM330DHCX IMU PCB</h1>
+            <p class="text-body-lg font-body-lg text-secondary mb-4">Custom IMU breakout PCB built from scratch in EasyEDA for Triton Robotics' electronics subteam</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">PCB Design</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">EasyEDA</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Embedded Systems</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Apr 2026</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick facts -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Role</p>
+            <p class="text-body-md font-body-md text-terminal-white">PCB Designer</p>
+        </div>
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Tools</p>
+            <p class="text-body-md font-body-md text-terminal-white">EasyEDA</p>
+        </div>
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Layers</p>
+            <p class="text-body-md font-body-md text-terminal-white">2</p>
+        </div>
+        <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+            <p class="text-label-sm font-label-sm text-secondary mb-1">Status</p>
+            <p class="text-body-md font-body-md text-terminal-white">Manufactured &amp; Deployed</p>
+        </div>
+    </div>
+
+    <!-- Problem -->
+    <section class="mb-10 max-w-3xl">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Problem</h2>
+        <p class="text-body-md font-body-md text-secondary">
+            The electronics subteam needed a dedicated IMU board for the autonomous robots, smaller than an off-the-shelf breakout, with SPI removed (the firmware did not use it), and XH connectors to match the team's existing wiring harness. The starting point was a schematic that had been adapted from previous designs and reused parts, which meant some of the reference designators were ambiguous or duplicated in ways that were not immediately obvious.
+        </p>
+    </section>
+
+    <!-- Design & approach -->
+    <section class="mb-10">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Design and approach</h2>
+        <p class="text-body-md font-body-md text-secondary max-w-3xl mb-6">
+            Removed SPI entirely and replaced the original connectors with XH to match the wiring harness. The schematic was rebuilt from scratch to resolve the reference designator issues before starting layout, which added some time upfront but made the rest of the process much cleaner.
+
+            For decoupling, the ISM330DHCX datasheet specifies 100 nF on each supply pin. I had placed decoupling capacitors before, but this was the first time I worked through why placement matters beyond just being close to the component. A capacitor on a long trace has extra parasitic inductance between it and the pin it is protecting, which limits how quickly it can respond to a transient. Keeping the path from the capacitor to both the supply pin and the ground plane as short as possible minimizes that inductance and makes the decoupling actually effective. I tried to apply that reasoning to each capacitor rather than just following a general rule.
+
+            The ground plane also required more thought than I expected. The instinct going in was to pour as much ground as possible, but I learned that poorly placed vias can create isolated sections of the pour that force return current to take a longer path than it should. Getting the via placement right meant thinking about where current actually flows, not just whether a ground pour is present.
+
+            The board is 2 layers: signal on top, ground plane on the bottom. I based the layer convention on the team's existing 2-layer boards.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 my-24">
+            <!-- Schematic (full width) -->
+            <div class="flex flex-col md:col-span-2">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img loading="lazy" decoding="async" class="w-full h-144 object-contain" src="ism_schematic.png" alt="ISM330DHCX schematic">
+                </div>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Schematic</p>
+            </div>
+
+            <!-- First layer -->
+            <div class="flex flex-col">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img loading="lazy" decoding="async" class="w-full max-h-[360px] object-contain" src="custom_ism.png" alt="First layer (signal)">
+                </div>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">First layer (signal)</p>
+            </div>
+
+            <!-- Second layer -->
+            <div class="flex flex-col">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img loading="lazy" decoding="async" class="w-full max-h-[360px] object-contain" src="custom_ism_back.png" alt="Second layer (GND)">
+                </div>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Second layer (GND)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenges -->
+    <section class="mb-10 max-w-3xl">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Challenges</h2>
+        <p class="text-body-md font-body-md text-secondary">
+            The reference designator issue was not obvious from the schematic view alone. It only became clear during layout when I started assigning footprints and some components did not map cleanly. At that point I had to decide whether to work around it or go back and fix it properly. I went back and rebuilt the schematic with clean designators, which cost some time but avoided a situation where the ambiguity could cause assembly errors after the boards came back from fabrication.
+
+            The decoupling and ground plane work described above was also more of a learning process than I expected going in. A lot of PCB layout guidance is written as rules to follow, and I found it more useful to understand the physical reasoning behind each rule so I could apply judgment when the rules pointed in different directions.
+        </p>
+    </section>
+
+    <!-- Results -->
+    <section class="mb-10 max-w-3xl">
+        <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Results</h2>
+        <p class="text-body-md font-body-md text-secondary">
+            Manufactured and assembled across all Triton Robotics robots before the RoboMasters competition. The board worked in integration without needing rework, which was a good sign given that it was my first time working through the decoupling and grounding decisions at this level of detail. The main thing I took away was a better foundation for thinking about signal integrity: understanding the why behind placement decisions, not just the what.
+        </p>
+    </section>
+
+
+</div>
+</main>
+
+<!-- Footer Component (identical to main page) -->
+<footer class="bg-black text-primary w-full py-12 border-t border-surface-stroke flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-gutter relative z-20">
+<div class="text-[20px] font-futura text-terminal-white"><b>STUFF BY PETER SHR</b></div>
+<div class="flex gap-6 text-[20px] font-futura-light">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="https://www.linkedin.com/in/peter-shr/">LinkedIn</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="https://github.com/petershr">GitHub</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 ease-in-out" href="mailto:pshr@ucsd.edu">pshr@ucsd.edu</a>
+</div>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button id="lightbox-close" aria-label="Close image viewer">&times;</button>
+    <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+    const lightbox      = document.getElementById('lightbox');
+    const lightboxImg   = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    // Add trigger class to all images inside glass-panels
+    document.querySelectorAll('.glass-panel img').forEach(img => {
+        img.classList.add('lightbox-trigger');
+        img.addEventListener('click', () => {
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Close on X button
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    // Close on backdrop click
+    lightbox.addEventListener('click', e => {
+        if (e.target === lightbox) closeLightbox();
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+</script>
+
+</body></html>
