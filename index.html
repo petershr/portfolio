@@ -689,6 +689,22 @@
             .orbit-dot { animation: none !important; }
         }
     </style>
+<style id="no-horizontal-scroll-css">
+    /* Disable horizontal page scrolling.
+       The wave layers are 155vw wide and spill past the right edge, which is
+       what made the page scrollable sideways. "clip" (unlike "hidden") does not
+       create a scroll container, so it cannot be scrolled programmatically and
+       does not affect sticky positioning or the slide transform. */
+    .wave-transition { overflow-x: clip; }
+    #projects { overflow-x: clip; }
+    #hero-section { overflow: hidden; }
+    @supports (overflow: clip) {
+        #hero-section { overflow: clip; }
+    }
+    /* Backstop for the page itself. Set on body only (not html) so the existing
+       body.style.overflow scroll locking keeps working. */
+    body { overflow-x: clip; max-width: 100%; }
+</style>
 <style id="page-loader-css">
     /* Page loader: solid black cover that fades out once everything is ready */
     html { background: #000; }
