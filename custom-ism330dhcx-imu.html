@@ -301,6 +301,192 @@
     </section>
 
 
+    <!-- ===================== SPI REVISION (v2.0) ===================== -->
+    <section id="spi-revision" class="mt-16 pt-12 border-t border-surface-stroke">
+        <p class="text-label-sm font-label-sm text-primary uppercase tracking-widest mb-2">Revision 2.0 &middot; Jun 2026</p>
+        <h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-3">SPI-Only ISM330DHCX IMU</h2>
+        <p class="text-body-lg font-body-lg text-secondary max-w-3xl mb-6">
+            A follow-up board that swaps the I2C interface for SPI, drops the level shifter, pull-ups and onboard regulator, and keeps the exact outline and mounting holes of the board it replaces.
+        </p>
+
+        <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden mb-6">
+            <div class="h-72 md:h-[380px] w-full overflow-hidden bg-[#808080]">
+                <img loading="lazy" decoding="async" class="w-full h-full object-contain" src="ism_spi_3d.png" alt="SPI-only ISM330DHCX IMU PCB 3D render">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+            <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+                <p class="text-label-sm font-label-sm text-secondary mb-1">IMU</p>
+                <p class="text-body-md font-body-md text-terminal-white">ISM330DHCXTR</p>
+            </div>
+            <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+                <p class="text-label-sm font-label-sm text-secondary mb-1">Interface</p>
+                <p class="text-body-md font-body-md text-terminal-white">SPI only</p>
+            </div>
+            <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+                <p class="text-label-sm font-label-sm text-secondary mb-1">Board size</p>
+                <p class="text-body-md font-body-md text-terminal-white">25.4 &times; 17.78 mm</p>
+            </div>
+            <div class="glass-panel border border-surface-stroke rounded-lg p-4">
+                <p class="text-label-sm font-label-sm text-secondary mb-1">Connector</p>
+                <p class="text-body-md font-body-md text-terminal-white">6-pin JST XH</p>
+            </div>
+        </div>
+
+        <!-- Key changes -->
+        <div class="mb-10">
+            <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Key changes from the I2C board</h3>
+            <p class="text-body-md font-body-md text-secondary max-w-3xl mb-6">
+                SPI needs four signal traces instead of two, so it usually means more routing work. In this case the parts that went away more than made up for it, and the SPI board ended up noticeably simpler than the I2C one.
+            </p>
+            <div class="glass-panel border border-surface-stroke rounded-lg overflow-x-auto">
+                <table class="w-full text-left text-body-md font-body-md">
+                    <thead>
+                        <tr class="border-b border-surface-stroke text-label-sm font-label-sm text-secondary uppercase tracking-widest">
+                            <th class="p-4 font-medium">Item</th>
+                            <th class="p-4 font-medium">I2C board</th>
+                            <th class="p-4 font-medium">SPI board (Rev 2.0)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-secondary">
+                        <tr class="border-b border-surface-stroke/50">
+                            <td class="p-4 text-terminal-white">Bus</td>
+                            <td class="p-4">I2C (SDA, SCL)</td>
+                            <td class="p-4">SPI (CS, SCK, MOSI, MISO)</td>
+                        </tr>
+                        <tr class="border-b border-surface-stroke/50">
+                            <td class="p-4 text-terminal-white">Level shifter</td>
+                            <td class="p-4">BSS138 N-channel MOSFET, bidirectional I2C shifter</td>
+                            <td class="p-4">Removed</td>
+                        </tr>
+                        <tr class="border-b border-surface-stroke/50">
+                            <td class="p-4 text-terminal-white">I2C pull-ups</td>
+                            <td class="p-4">Present</td>
+                            <td class="p-4">Removed (not needed for SPI)</td>
+                        </tr>
+                        <tr class="border-b border-surface-stroke/50">
+                            <td class="p-4 text-terminal-white">Regulator</td>
+                            <td class="p-4">Onboard LDO</td>
+                            <td class="p-4">Removed, 3V3 from the Nucleo feeds the IMU directly</td>
+                        </tr>
+                        <tr class="border-b border-surface-stroke/50">
+                            <td class="p-4 text-terminal-white">INT1 / INT2</td>
+                            <td class="p-4">Not applicable</td>
+                            <td class="p-4">Left unconnected (marked no-connect)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 text-terminal-white">Mounting holes</td>
+                            <td class="p-4">Centers at x 2.4 / 24.0 mm, y 15.20 mm</td>
+                            <td class="p-4">Centers at x 2.54 / 22.86 mm, y 15.24 mm</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Removing the LDO -->
+        <div class="mb-10 max-w-3xl">
+            <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Why the regulator came out</h3>
+            <p class="text-body-md font-body-md text-secondary mb-4">
+                The onboard regulator is there to turn a higher, uneven input voltage into a stable rail. The part on the old board was a DIODES AP2112K-3.3TRG1, and the 3.3 in the name is its fixed output target. It tolerates up to 6 V in, but needs roughly 3.7 V or more at the input to hold 3.3 V. Feeding it the Nucleo's 3V3 would drop about 0.4 V across it and leave the IMU at around 2.9 V, so it was not doing its job in this setup.
+            </p>
+            <p class="text-body-md font-body-md text-secondary mb-4">
+                There were three ways to deal with that. One was to feed the regulator 5 V instead. Another was to keep 3V3 in and swap to a 2.8 V part such as the AP2210K-2.8TRG1, since the IMU runs fine at 2.8 V. The third was to drop the regulator and tie the IMU straight to the Nucleo's 3V3. For a RoboMasters robot, supply precision at that level is not needed, so I went with the third. The one real risk is someone physically wiring 5 V into a pin meant for 3V3, which is a harness issue, not a board issue. The same regulator removal could have been done on the I2C version as well.
+            </p>
+        </div>
+
+        <!-- Design process -->
+        <div class="mb-10 max-w-3xl">
+            <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Design process</h3>
+            <p class="text-body-md font-body-md text-secondary mb-4">
+                <span class="text-terminal-white">Starting point.</span> The reference was the Adafruit LSM6DSOX and ISM330DHC breakout, and the original schematic had been built in Eagle around the LSM6DSOX. When that was noticed, the IC was swapped for the ISM IC without revisiting the supporting components. I went back through it for this revision and checked that the existing support circuitry still made sense for the new part. One thing to watch for is the exact part number: it is the ISM330DHCXTR, not the ISM330BXTR, so the datasheet and footprint have to match that.
+            </p>
+            <p class="text-body-md font-body-md text-secondary mb-4">
+                <span class="text-terminal-white">Pin assignment.</span> Pin functions came from Table 1 on page 9 of the datasheet. In SPI mode, SDA becomes MOSI (pin 14), SCL becomes SCK (pin 13), CS stays on pin 12, and SDO/SA0 becomes MISO (pin 1). SDX and SCX are tied to GND, and the unused INT and auxiliary pins are marked no-connect. VDD and VDD_IO both sit on 3V3.
+            </p>
+            <p class="text-body-md font-body-md text-secondary mb-4">
+                <span class="text-terminal-white">Board outline.</span> There was plenty of free space, but I kept the original dimensions of 25.4 mm by 17.78 mm (converted from inches) so the new board is a drop-in swap. The M2 holes were originally about 0.81 in apart, which would have been awkward to screw down, so I moved them to a clean 0.8 in (20.32 mm) spacing on the 2.54 mm grid.
+            </p>
+            <p class="text-body-md font-body-md text-secondary">
+                <span class="text-terminal-white">Schematic.</span> The sheet is split into four blocks: the IMU itself, a power indicator LED (YLED0603G with a 10 k&Omega; resistor), decoupling (100 nF and 10 &micro;F on 3V3), and the SPI port.
+            </p>
+        </div>
+
+        <!-- Connector table -->
+        <div class="mb-10 max-w-3xl">
+            <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Connector pinout</h3>
+            <p class="text-body-md font-body-md text-secondary mb-4">
+                A B6B-XH-A (LF)(SN) JST XH header carries everything the controller needs, with GND on pin 1 and the signals ordered so the traces fan out cleanly from the IMU.
+            </p>
+            <div class="glass-panel border border-surface-stroke rounded-lg overflow-x-auto">
+                <table class="w-full text-left text-body-md font-body-md">
+                    <thead>
+                        <tr class="border-b border-surface-stroke text-label-sm font-label-sm text-secondary uppercase tracking-widest">
+                            <th class="p-4 font-medium">Pin</th>
+                            <th class="p-4 font-medium">Signal</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-secondary font-label-sm">
+                        <tr class="border-b border-surface-stroke/50"><td class="p-3 px-4">1</td><td class="p-3 px-4 text-terminal-white">GND</td></tr>
+                        <tr class="border-b border-surface-stroke/50"><td class="p-3 px-4">2</td><td class="p-3 px-4 text-terminal-white">3V3</td></tr>
+                        <tr class="border-b border-surface-stroke/50"><td class="p-3 px-4">3</td><td class="p-3 px-4 text-terminal-white">SPI_CS</td></tr>
+                        <tr class="border-b border-surface-stroke/50"><td class="p-3 px-4">4</td><td class="p-3 px-4 text-terminal-white">SPI_SCK</td></tr>
+                        <tr class="border-b border-surface-stroke/50"><td class="p-3 px-4">5</td><td class="p-3 px-4 text-terminal-white">SPI_MOSI</td></tr>
+                        <tr><td class="p-3 px-4">6</td><td class="p-3 px-4 text-terminal-white">SPI_MISO</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-body-md font-body-md text-secondary mt-4">
+                I first considered a seventh pin for INT1. It is unused in this design, so it was left off and the other six pins stay the same either way.
+            </p>
+        </div>
+
+        <!-- Figures -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8 mb-12">
+            <div class="flex flex-col md:col-span-2">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img loading="lazy" decoding="async" class="w-full h-144 object-contain" src="ism_spi_schem.png" alt="SPI-only ISM330DHCX schematic, Rev 2.0">
+                </div>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Schematic (Rev 2.0)</p>
+            </div>
+            <div class="flex flex-col">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img loading="lazy" decoding="async" class="w-full max-h-[360px] object-contain" src="ism_spi_front.png" alt="SPI board first layer (signal)">
+                </div>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">First layer (signal)</p>
+            </div>
+            <div class="flex flex-col">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img loading="lazy" decoding="async" class="w-full max-h-[360px] object-contain" src="ism_spi_back.png" alt="SPI board second layer (GND)">
+                </div>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Second layer (GND)</p>
+            </div>
+        </div>
+
+        <!-- Layout principles -->
+        <div class="mb-10 max-w-3xl">
+            <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Layout principles carried over</h3>
+            <ul class="list-disc pl-6 space-y-3 text-body-md font-body-md text-secondary">
+                <li><span class="text-terminal-white">Clean signal routing.</span> SPI traces run in parallel on the same plane, kept short, with right-angle turns minimized.</li>
+                <li><span class="text-terminal-white">Decoupling.</span> The 100 nF capacitor sits as close to the IC as possible, with its GND via placed right next to the capacitor's ground terminal to keep the return path short.</li>
+                <li><span class="text-terminal-white">Indicator LED placement.</span> The LED and its resistor do not affect the signal, so they sit farther out, away from the SPI lines.</li>
+                <li><span class="text-terminal-white">Same footprint.</span> Board dimensions and hole positions match the board being replaced, so swapping it in is straightforward.</li>
+                <li><span class="text-terminal-white">Avoid copper islands.</span> Traces are tightened together, and large open areas get GND stitching vias.</li>
+                <li><span class="text-terminal-white">Vias and silkscreen.</span> GND vias do not overlap silkscreen, especially under the connector, because molten solder can wick into a via and cause physical problems.</li>
+            </ul>
+        </div>
+
+        <!-- Summary -->
+        <div class="mb-10 max-w-3xl">
+            <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Summary</h3>
+            <p class="text-body-md font-body-md text-secondary">
+                Rev 2.0 keeps the same design discipline as the first board but with a much shorter parts list: one IMU, a 100 nF and 10 &micro;F pair for decoupling, a status LED, and a single 6-pin connector. Dropping the level shifter, pull-ups and regulator removed several failure points and a good chunk of layout complexity, and the matching outline and hole pattern make it a direct replacement for the existing board.
+            </p>
+        </div>
+    </section>
+
+
 </div>
 </main>
 
