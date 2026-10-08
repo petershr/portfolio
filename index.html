@@ -689,8 +689,29 @@
             .orbit-dot { animation: none !important; }
         }
     </style>
+<style id="page-loader-css">
+    /* Page loader: solid black cover that fades out once everything is ready */
+    html { background: #000; }
+    #page-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: #000;
+        opacity: 1;
+        transition: opacity 0.7s ease;
+        /* Fallback: if JS never runs, fade out on its own after 6s */
+        animation: pageLoaderFallback 0.7s ease 6s forwards;
+    }
+    #page-loader.is-hidden { opacity: 0; pointer-events: none; }
+    @keyframes pageLoaderFallback { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+    @media (prefers-reduced-motion: reduce) {
+        #page-loader { transition-duration: 0.01s; }
+    }
+</style>
 </head>
 <body class="bg-background text-on-surface min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col">
+<div id="page-loader" aria-hidden="true"></div>
+
 <!-- TopNavBar Component -->
 <nav class="fixed top-0 w-full z-50 bg-white/[0.06] backdrop-blur-[18px] border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.18)] text-primary text-label-md font-label-md uppercase tracking-widest">
 <div class="flex items-center py-4 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
@@ -2595,4 +2616,48 @@ void main() {
 })();
 </script>
 
+
+<script>
+    // Page loader: stay black until everything has loaded and painted, then fade out
+    (function () {
+        var loader = document.getElementById('page-loader');
+        if (!loader) return;
+        var done = false;
+        var startedAt = performance.now();
+        var MIN_VISIBLE_MS = 450;   // avoids a flash if the page loads instantly
+        var MAX_WAIT_MS = 4000;     // never trap the user behind the loader
+
+        function hide() {
+            if (done) return;
+            done = true;
+            loader.classList.add('is-hidden');
+            loader.addEventListener('transitionend', function () {
+                loader.remove();
+            }, { once: true });
+            // Safety in case transitionend never fires
+            setTimeout(function () { if (loader.parentNode) loader.remove(); }, 1200);
+        }
+
+        function ready() {
+            // Two frames so the shader and wave layers have drawn their first frame
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    var wait = Math.max(0, MIN_VISIBLE_MS - (performance.now() - startedAt));
+                    setTimeout(hide, wait);
+                });
+            });
+        }
+
+        var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+        var loaded = document.readyState === 'complete'
+            ? Promise.resolve()
+            : new Promise(function (res) { window.addEventListener('load', res, { once: true }); });
+
+        Promise.all([loaded, fontsReady]).then(ready);
+        setTimeout(hide, MAX_WAIT_MS);
+
+        // Back/forward cache restore: never show a stuck loader
+        window.addEventListener('pageshow', function (e) { if (e.persisted) hide(); });
+    })();
+</script>
 </body></html>
