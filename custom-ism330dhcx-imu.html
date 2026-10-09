@@ -306,7 +306,7 @@
         <p class="text-label-sm font-label-sm text-primary uppercase tracking-widest mb-2">Revision 2.0 &middot; Jun 2026</p>
         <h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-3">SPI-Only ISM330DHCX IMU</h2>
         <p class="text-body-lg font-body-lg text-secondary max-w-3xl mb-6">
-            A follow-up board that swaps the I2C interface for SPI, drops the level shifter, pull-ups and onboard regulator, and keeps the exact outline and mounting holes of the board it replaces.
+            A follow-up board that swaps the I2C interface for SPI, drops the level shifter, pull-ups and onboard regulator, and keeps the same outline and mounting holes of the previous board for replaceability.
         </p>
 
         <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden mb-6">
@@ -375,11 +375,6 @@
                             <td class="p-4">Not applicable</td>
                             <td class="p-4">Left unconnected (marked no-connect)</td>
                         </tr>
-                        <tr>
-                            <td class="p-4 text-terminal-white">Mounting holes</td>
-                            <td class="p-4">Centers at x 2.4 / 24.0 mm, y 15.20 mm</td>
-                            <td class="p-4">Centers at x 2.54 / 22.86 mm, y 15.24 mm</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -406,7 +401,7 @@
                 <span class="text-terminal-white">Pin assignment.</span> Pin functions came from Table 1 on page 9 of the datasheet. In SPI mode, SDA becomes MOSI (pin 14), SCL becomes SCK (pin 13), CS stays on pin 12, and SDO/SA0 becomes MISO (pin 1). SDX and SCX are tied to GND, and the unused INT and auxiliary pins are marked no-connect. VDD and VDD_IO both sit on 3V3.
             </p>
             <p class="text-body-md font-body-md text-secondary mb-4">
-                <span class="text-terminal-white">Board outline.</span> There was plenty of free space, but I kept the original dimensions of 25.4 mm by 17.78 mm (converted from inches) so the new board is a drop-in swap. The M2 holes were originally about 0.81 in apart, which would have been awkward to screw down, so I moved them to a clean 0.8 in (20.32 mm) spacing on the 2.54 mm grid.
+                <span class="text-terminal-white">Board outline.</span> There was plenty of free space, but I kept the original dimensions of 25.4 mm by 17.78 mm (converted from inches) so the new board is a drop-in swap.
             </p>
             <p class="text-body-md font-body-md text-secondary">
                 <span class="text-terminal-white">Schematic.</span> The sheet is split into four blocks: the IMU itself, a power indicator LED (YLED0603G with a 10 k&Omega; resistor), decoupling (100 nF and 10 &micro;F on 3V3), and the SPI port.
