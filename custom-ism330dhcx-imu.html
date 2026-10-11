@@ -8,7 +8,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Custom ISM330DHCX IMU PCB | Peter Shr">
 <meta property="og:description" content="Custom IMU breakout PCB built from scratch in EasyEDA for Triton Robotics' electronics subteam.">
-<meta property="og:image" content="ism_3d_render.png">
+<meta property="og:image" content="ism_spi_3d.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -201,7 +201,7 @@
     <!-- Hero -->
     <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden mb-6">
         <div class="h-80 md:h-[420px] w-full overflow-hidden bg-[#808080] relative">
-            <img class="w-full h-full object-contain" src="ism_3d_render.png" alt="Custom ISM330DHCX IMU PCB 3D render">
+            <img class="w-full h-full object-contain" src="ism_spi_3d.png" alt="Custom ISM330DHCX IMU PCB 3D render (SPI revision)">
         </div>
         <div class="p-6 md:p-8">
             <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-2">Custom ISM330DHCX IMU PCB</h1>
@@ -210,7 +210,7 @@
                 <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">PCB Design</span>
                 <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">EasyEDA</span>
                 <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Embedded Systems</span>
-                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Apr 2026</span>
+                <span class="px-2 py-1 bg-surface-container text-secondary text-label-sm font-label-sm rounded border border-surface-stroke/50">Apr &ndash; Jun 2026</span>
             </div>
         </div>
     </div>
@@ -279,6 +279,14 @@
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Second layer (GND)</p>
             </div>
+
+            <!-- 3D render (full width) -->
+            <div class="flex flex-col md:col-span-2">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img loading="lazy" decoding="async" class="w-full max-h-[420px] object-contain bg-[#808080]" src="ism_3d_render.png" alt="Original I2C ISM330DHCX IMU PCB 3D render">
+                </div>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">3D render</p>
+            </div>
         </div>
     </section>
 
@@ -308,12 +316,6 @@
         <p class="text-body-lg font-body-lg text-secondary max-w-3xl mb-6">
             A follow-up board that swaps the I2C interface for SPI, drops the level shifter, pull-ups and onboard regulator, and keeps the same outline and mounting holes of the previous board for replaceability.
         </p>
-
-        <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden mb-6">
-            <div class="h-72 md:h-[380px] w-full overflow-hidden bg-[#808080]">
-                <img loading="lazy" decoding="async" class="w-full h-full object-contain" src="ism_spi_3d.png" alt="SPI-only ISM330DHCX IMU PCB 3D render">
-            </div>
-        </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
             <div class="glass-panel border border-surface-stroke rounded-lg p-4">
@@ -398,13 +400,13 @@
                 <span class="text-terminal-white">Starting point.</span> The reference was the Adafruit LSM6DSOX and ISM330DHC breakout, and the original schematic had been built in Eagle around the LSM6DSOX. When that was noticed, the IC was swapped for the ISM IC without revisiting the supporting components. I went back through it for this revision and checked that the existing support circuitry still made sense for the new part. One thing to watch for is the exact part number: it is the ISM330DHCXTR, not the ISM330BXTR, so the datasheet and footprint have to match that.
             </p>
             <p class="text-body-md font-body-md text-secondary mb-4">
-                <span class="text-terminal-white">Pin assignment.</span> Pin functions came from Table 1 on page 9 of the datasheet. In SPI mode, SDA becomes MOSI (pin 14), SCL becomes SCK (pin 13), CS stays on pin 12, and SDO/SA0 becomes MISO (pin 1). SDX and SCX are tied to GND, and the unused INT and auxiliary pins are marked no-connect. VDD and VDD_IO both sit on 3V3.
+                <span class="text-terminal-white">Pin assignment.</span> Pin functions came from Table 1 on page 9 of the datasheet. In SPI mode, SDA becomes MOSI (pin 14), SCL becomes SCK (pin 13), CS stays on pin 12, and SDO/SA0 becomes MISO (pin 1). SDX and SCX are tied to GND, and the unused INT and auxiliary pins are marked no-connect. VDD (pin 8) and VDD_IO (pin 5) both sit on 3V3, following ST's Mode 1 hardware reference integration.
             </p>
             <p class="text-body-md font-body-md text-secondary mb-4">
                 <span class="text-terminal-white">Board outline.</span> There was plenty of free space, but I kept the original dimensions of 25.4 mm by 17.78 mm (converted from inches) so the new board is a drop-in swap.
             </p>
             <p class="text-body-md font-body-md text-secondary">
-                <span class="text-terminal-white">Schematic.</span> The sheet is split into four blocks: the IMU itself, a power indicator LED (YLED0603G with a 10 k&Omega; resistor), decoupling (100 nF and 10 &micro;F on 3V3), and the SPI port.
+                <span class="text-terminal-white">Schematic.</span> The sheet is split into four blocks: the IMU itself, a power indicator LED (YLED0603G with a 10 k&Omega; resistor), decoupling (a 100 nF capacitor on each of V<sub>DD</sub> and V<sub>DD_IO</sub>), and the SPI port.
             </p>
         </div>
 
@@ -457,18 +459,24 @@
                 </div>
                 <p class="text-label-sm font-label-sm text-secondary text-center mt-2">Second layer (GND)</p>
             </div>
+            <div class="flex flex-col md:col-span-2">
+                <div class="glass-panel border border-surface-stroke rounded-lg overflow-hidden">
+                    <img loading="lazy" decoding="async" class="w-full max-h-[420px] object-contain bg-[#808080]" src="ism_spi_3d.png" alt="SPI-only ISM330DHCX IMU PCB 3D render, Rev 2.0">
+                </div>
+                <p class="text-label-sm font-label-sm text-secondary text-center mt-2">3D render</p>
+            </div>
         </div>
 
         <!-- Layout principles -->
         <div class="mb-10 max-w-3xl">
-            <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Layout principles carried over</h3>
+            <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Layout principles and refinements</h3>
             <ul class="list-disc pl-6 space-y-3 text-body-md font-body-md text-secondary">
-                <li><span class="text-terminal-white">Clean signal routing.</span> SPI traces run in parallel on the same plane, kept short, with right-angle turns minimized.</li>
-                <li><span class="text-terminal-white">Decoupling.</span> The 100 nF capacitor sits as close to the IC as possible, with its GND via placed right next to the capacitor's ground terminal to keep the return path short.</li>
+                <li><span class="text-terminal-white">Clean signal routing.</span> SPI traces run in parallel on the same plane, kept short, with right-angle turns minimized. After a design review with Vela, U2 was positioned for symmetry relative to the 6-pin connector, so the bus (CS, SCK, MOSI, MISO) reaches the header with balanced trace lengths and minimal skew, all over the continuous Layer 2 ground plane. CS and SCK are intentionally kept tightly bundled rather than split apart, relying on vertical coupling to the unbroken bottom GND shield for their high-frequency return paths.</li>
+                <li><span class="text-terminal-white">Decoupling.</span> The 100 nF capacitor sits as close to the IC as possible, with its GND via placed right next to the capacitor's ground terminal to keep the return path short. The power architecture uses dedicated local decoupling on both supply pins, 100 nF ceramic on V<sub>DD</sub> (pin 8, analog and MEMS core) and on V<sub>DD_IO</sub> (pin 5, digital interface), a low-inductance configuration tailored to the sensor's ultra-low 1.5 mA draw and ST's datasheet recommendations.</li>
                 <li><span class="text-terminal-white">Indicator LED placement.</span> The LED and its resistor do not affect the signal, so they sit farther out, away from the SPI lines.</li>
                 <li><span class="text-terminal-white">Same footprint.</span> Board dimensions and hole positions match the board being replaced, so swapping it in is straightforward.</li>
-                <li><span class="text-terminal-white">Avoid copper islands.</span> Traces are tightened together, and large open areas get GND stitching vias.</li>
-                <li><span class="text-terminal-white">Vias and silkscreen.</span> GND vias do not overlap silkscreen, especially under the connector, because molten solder can wick into a via and cause physical problems.</li>
+                <li><span class="text-terminal-white">Avoid copper islands.</span> Traces are tightened together, and large open areas get GND stitching vias. The top-layer GND via near the bus is a deliberate return-path stitching via: it keeps the copper pour bounded by the 3.3 V trunk and the SPI lines from forming a high-impedance stub, and it sits clear of the connector footprint and silkscreen text.</li>
+                <li><span class="text-terminal-white">Vias and silkscreen.</span> GND vias do not overlap silkscreen, especially under the connector, because molten solder can wick into a via and cause physical problems. The top silkscreen carries clear board metadata (ISM330DHCXTR IMU, SPI 3.3V), net label clearances around the through-hole pads were cleaned up for DFM compliance, and the area beneath the fine-pitch LGA-14 package was tuned as a standard DFM and reflow process optimization.</li>
             </ul>
         </div>
 
@@ -476,7 +484,7 @@
         <div class="mb-10 max-w-3xl">
             <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Summary</h3>
             <p class="text-body-md font-body-md text-secondary">
-                Rev 2.0 keeps the same design discipline as the first board but with a much shorter parts list: one IMU, a 100 nF and 10 &micro;F pair for decoupling, a status LED, and a single 6-pin connector. Dropping the level shifter, pull-ups and regulator removed several failure points and a good chunk of layout complexity, and the matching outline and hole pattern make it a direct replacement for the existing board.
+                Rev 2.0 keeps the same design discipline as the first board but with a much shorter parts list: one IMU, a 100 nF decoupling capacitor on each supply pin, a status LED, and a single 6-pin connector. Dropping the level shifter, pull-ups and regulator removed several failure points and a good chunk of layout complexity, and the matching outline and hole pattern make it a direct replacement for the existing board.
             </p>
         </div>
     </section>
