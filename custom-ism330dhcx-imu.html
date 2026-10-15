@@ -239,7 +239,7 @@
     <section class="mb-10 max-w-3xl">
         <h2 class="text-headline-md font-headline-md text-terminal-white mb-3">Problem</h2>
         <p class="text-body-md font-body-md text-secondary">
-            The electronics subteam needed a dedicated IMU board for the autonomous robots, replacing the original LSM6DSOX board, with SPI removed (the firmware did not use it at this point), and XH connectors to match the team's existing wiring harness. The starting point was a schematic of the LSM6DSOX board on EAGLE, which carried over some reference designators that were ambiguous or duplicated in ways that were not immediately obvious.
+            The electronics subteam needed a dedicated IMU board for the autonomous robots, replacing the original LSM6DSOX board, with SPI removed (the firmware did not use it at this point), and XH connectors to match the team's existing wiring harness. The starting point was a schematic of the LSM6DSOX board on EAGLE.
         </p>
     </section>
 
@@ -314,7 +314,7 @@
         <p class="text-label-sm font-label-sm text-primary uppercase tracking-widest mb-2">Revision 2.0 &middot; Jun 2026</p>
         <h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-terminal-white mb-3">SPI-Only ISM330DHCX IMU</h2>
         <p class="text-body-lg font-body-lg text-secondary max-w-3xl mb-6">
-            A follow-up board that swaps the I2C interface for SPI, drops the level shifter, pull-ups and onboard regulator, and keeps the same outline and mounting holes of the previous board for replaceability.
+            A follow-up board that swaps the I2C interface for SPI, drops the level shifter, pull-ups and onboard regulator, and keeps the exact M2 mounting hole positions of the existing boards for replaceability.
         </p>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
@@ -327,8 +327,8 @@
                 <p class="text-body-md font-body-md text-terminal-white">SPI only</p>
             </div>
             <div class="glass-panel border border-surface-stroke rounded-lg p-4">
-                <p class="text-label-sm font-label-sm text-secondary mb-1">Board size</p>
-                <p class="text-body-md font-body-md text-terminal-white">25.4 &times; 17.78 mm</p>
+                <p class="text-label-sm font-label-sm text-secondary mb-1">Mounting holes</p>
+                <p class="text-body-md font-body-md text-terminal-white">M2, matches existing boards</p>
             </div>
             <div class="glass-panel border border-surface-stroke rounded-lg p-4">
                 <p class="text-label-sm font-label-sm text-secondary mb-1">Connector</p>
@@ -397,16 +397,16 @@
         <div class="mb-10 max-w-3xl">
             <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Design process</h3>
             <p class="text-body-md font-body-md text-secondary mb-4">
-                <span class="text-terminal-white">Starting point.</span> The reference was the Adafruit LSM6DSOX and ISM330DHC breakout, and the original schematic had been built in Eagle around the LSM6DSOX. When that was noticed, the IC was swapped for the ISM IC without revisiting the supporting components. I went back through it for this revision and checked that the existing support circuitry still made sense for the new part. One thing to watch for is the exact part number: it is the ISM330DHCXTR, not the ISM330BXTR, so the datasheet and footprint have to match that.
+                <span class="text-terminal-white">Starting point.</span> The reference was the Adafruit LSM6DSOX and ISM330DHC breakout, and the original schematic had been built in Eagle around the LSM6DSOX. When that was noticed, the IC was swapped for the ISM IC without revisiting the supporting components. I went back through it for this revision and checked that the existing support circuitry still made sense for the new part.
             </p>
             <p class="text-body-md font-body-md text-secondary mb-4">
                 <span class="text-terminal-white">Pin assignment.</span> Pin functions came from Table 1 on page 9 of the datasheet. In SPI mode, SDA becomes MOSI (pin 14), SCL becomes SCK (pin 13), CS stays on pin 12, and SDO/SA0 becomes MISO (pin 1). SDX and SCX are tied to GND, and the unused INT and auxiliary pins are marked no-connect. VDD (pin 8) and VDD_IO (pin 5) both sit on 3V3, following ST's Mode 1 hardware reference integration.
             </p>
             <p class="text-body-md font-body-md text-secondary mb-4">
-                <span class="text-terminal-white">Board outline.</span> There was plenty of free space, but I kept the original dimensions of 25.4 mm by 17.78 mm (converted from inches) so the new board is a drop-in swap.
+                <span class="text-terminal-white">Board outline.</span> There was plenty of free space, so the board was shortened vertically. The M2 mounting holes keep the exact positions of the existing boards, so the new board is a drop-in swap.
             </p>
             <p class="text-body-md font-body-md text-secondary">
-                <span class="text-terminal-white">Schematic.</span> The sheet is split into four blocks: the IMU itself, a power indicator LED (YLED0603G with a 10 k&Omega; resistor), decoupling (a 100 nF capacitor on each of V<sub>DD</sub> and V<sub>DD_IO</sub>), and the SPI port.
+                <span class="text-terminal-white">Schematic.</span> The sheet is split into four blocks: the IMU itself, a power indicator LED (YLED0603G with a 1 k&Omega; resistor), decoupling (a 100 nF capacitor on each of V<sub>DD</sub> and V<sub>DD_IO</sub>), and the SPI port.
             </p>
         </div>
 
@@ -472,9 +472,9 @@
             <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Layout principles and refinements</h3>
             <ul class="list-disc pl-6 space-y-3 text-body-md font-body-md text-secondary">
                 <li><span class="text-terminal-white">Clean signal routing.</span> SPI traces run in parallel on the same plane, kept short, with right-angle turns minimized. After a design review with Vela, U2 was positioned for symmetry relative to the 6-pin connector, so the bus (CS, SCK, MOSI, MISO) reaches the header with balanced trace lengths and minimal skew, all over the continuous Layer 2 ground plane. CS and SCK are intentionally kept tightly bundled rather than split apart, relying on vertical coupling to the unbroken bottom GND shield for their high-frequency return paths.</li>
-                <li><span class="text-terminal-white">Decoupling.</span> The 100 nF capacitor sits as close to the IC as possible, with its GND via placed right next to the capacitor's ground terminal to keep the return path short. The power architecture uses dedicated local decoupling on both supply pins, 100 nF ceramic on V<sub>DD</sub> (pin 8, analog and MEMS core) and on V<sub>DD_IO</sub> (pin 5, digital interface), a low-inductance configuration tailored to the sensor's ultra-low 1.5 mA draw and ST's datasheet recommendations.</li>
+                <li><span class="text-terminal-white">Decoupling.</span> Each 100 nF capacitor sits as close as possible to its corresponding pin on the IC, with the supply trace running perpendicular to the IC edge and through the capacitor on its way to the pin, and its GND via placed right next to the capacitor's ground terminal to keep the return path short. The power architecture uses dedicated local decoupling on both supply pins, 100 nF ceramic on V<sub>DD</sub> (pin 8, analog and MEMS core) and on V<sub>DD_IO</sub> (pin 5, digital interface), a low-inductance configuration tailored to the sensor's ultra-low 1.5 mA draw and ST's datasheet recommendations.</li>
                 <li><span class="text-terminal-white">Indicator LED placement.</span> The LED and its resistor do not affect the signal, so they sit farther out, away from the SPI lines.</li>
-                <li><span class="text-terminal-white">Same footprint.</span> Board dimensions and hole positions match the board being replaced, so swapping it in is straightforward.</li>
+                <li><span class="text-terminal-white">Same mounting holes.</span> M2 hole positions exactly match the existing boards being replaced, so swapping it in is straightforward.</li>
                 <li><span class="text-terminal-white">Avoid copper islands.</span> Traces are tightened together, and large open areas get GND stitching vias. The top-layer GND via near the bus is a deliberate return-path stitching via: it keeps the copper pour bounded by the 3.3 V trunk and the SPI lines from forming a high-impedance stub, and it sits clear of the connector footprint and silkscreen text.</li>
                 <li><span class="text-terminal-white">Vias and silkscreen.</span> GND vias do not overlap silkscreen, especially under the connector, because molten solder can wick into a via and cause physical problems. The top silkscreen carries clear board metadata (ISM330DHCXTR IMU, SPI 3.3V), net label clearances around the through-hole pads were cleaned up for DFM compliance, and the area beneath the fine-pitch LGA-14 package was tuned as a standard DFM and reflow process optimization.</li>
             </ul>
@@ -484,7 +484,7 @@
         <div class="mb-10 max-w-3xl">
             <h3 class="text-headline-md font-headline-md text-terminal-white mb-3">Summary</h3>
             <p class="text-body-md font-body-md text-secondary">
-                Rev 2.0 keeps the same design discipline as the first board but with a much shorter parts list: one IMU, a 100 nF decoupling capacitor on each supply pin, a status LED, and a single 6-pin connector. Dropping the level shifter, pull-ups and regulator removed several failure points and a good chunk of layout complexity, and the matching outline and hole pattern make it a direct replacement for the existing board.
+                Rev 2.0 keeps the same design discipline as the first board but with a much shorter parts list: one IMU, a 100 nF decoupling capacitor on each supply pin, a status LED, and a single 6-pin connector. Dropping the level shifter, pull-ups and regulator removed several failure points and a good chunk of layout complexity, and the matching M2 hole positions make it a direct replacement for the existing board.
             </p>
         </div>
     </section>
